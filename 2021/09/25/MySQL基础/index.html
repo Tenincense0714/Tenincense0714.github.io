@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">MySQL基础 | TenIncense</title>
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "さくら荘そのTenIncense";
+  mashiro_option.author_name = "TenIncense";
+  mashiro_option.site_url = "https://github.com/Tenincense0714/";
+  mashiro_option.v_appId = "GyC3NzMvd0hT9Yyd2hYIC0MN-gzGzoHsz";
+  mashiro_option.v_appKey = "mgOpfzbkHYqU92CV4IDlAUHQ";
+  mashiro_option.mathjax = "0";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(5).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(6).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(7).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(8).jpg.webp".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+</head>
+</html>
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop filter-dot">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://github.com/Tenincense0714/">
+          <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/avatar.jpg">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>须知少年凌云志，曾许人间第一流</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="http://github.com/honjun" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="sina">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/sina.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="wangyiyun">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wangyiyun.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="email">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/email.svg">
+                  </a>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">さくら荘その</span>
+            <span class="shironeko">TenIncense</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/categories/技术/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          技术
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/生活/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          生活
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/资源/">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                          资源
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/随想/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          随想
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/转载/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          转载
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/tags/悦读/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/tags/图集/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/client/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+                    客户端
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/atom.xml">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+                    RSS
+                  </span>
+                </a>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+          <header class="entry-header">
+            <h1 class="entry-title">MySQL基础</h1>
+            <p class="entry-census">&nbsp;·&nbsp;2021-9-25&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
+        <div class="entry-content">
+          <h2 id="一、基本操作"><a href="#一、基本操作" class="headerlink" title="一、基本操作"></a>一、基本操作</h2><h3 id="1、创建数据库和表"><a href="#1、创建数据库和表" class="headerlink" title="1、创建数据库和表"></a>1、创建数据库和表</h3><h4 id="创建数据库语句"><a href="#创建数据库语句" class="headerlink" title="创建数据库语句"></a>创建数据库语句</h4><pre><code class="sql">CREATE DATABASE database;</code></pre>
+<h4 id="展示所有数据库"><a href="#展示所有数据库" class="headerlink" title="展示所有数据库"></a>展示所有数据库</h4><pre><code class="sql">SHOW DATABASES;</code></pre>
+<h4 id="使用指定数据库"><a href="#使用指定数据库" class="headerlink" title="使用指定数据库"></a>使用指定数据库</h4><pre><code class="sql">USE 数据库名;</code></pre>
+<h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><pre><code class="sql">CREATE TABLE student(
+    s_no VARCHAR(20) PRIMARY KEY COMMENT&#39;学生学号&#39;,
+    s_name VARCHAR(20) NOT NULL COMMENT&#39;学生姓名 不能为空&#39;,
+    s_sex VARCHAR(10) NOT NULL COMMENT&#39;学生性别&#39;,
+    s_birthday DATETIME COMMENT&#39;学生生日&#39;,
+    s_class VARCHAR(20) COMMENT&#39;学生所在的班级&#39;
+);</code></pre>
+<h4 id="展示表"><a href="#展示表" class="headerlink" title="展示表"></a>展示表</h4><pre><code class="sql"># DESCRIBE table; 如
+DESCRIBE student；</code></pre>
+<img src="https://tenincense.oss-cn-shenzhen.aliyuncs.com/mysql/image-20220325130418722.png">
+
+<h3 id="2、对表的操作"><a href="#2、对表的操作" class="headerlink" title="2、对表的操作"></a>2、对表的操作</h3><h4 id="查询操作"><a href="#查询操作" class="headerlink" title="查询操作"></a>查询操作</h4><p>查看表中的记录</p>
+<pre><code class="sql">SELECT * FROM table;</code></pre>
+<h4 id="插入操作"><a href="#插入操作" class="headerlink" title="插入操作"></a>插入操作</h4><pre><code class="sql">INSERT INTO table(字段1,字段2...) VALUES (&#39;值1&#39;, &#39;值2&#39;...);
+INSERT INTO table VALUES (&#39;值1&#39;, &#39;值2&#39;...);</code></pre>
+<h4 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h4><pre><code class="sql">DELETE FROM table WHERE 字段 = &#39;值&#39;;</code></pre>
+<h4 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h4><pre><code class="sql">UPDATE table SET cow1 = &#39;值1&#39; WHERE cow2 = &#39;值2&#39;;</code></pre>
+<h4 id="查询结果集的去重"><a href="#查询结果集的去重" class="headerlink" title="查询结果集的去重"></a>查询结果集的去重</h4><p>使用 distinct 关键字</p>
+<pre><code class="mysql">select distinct job from emp</code></pre>
+<p><strong>distinct只能出现在所有字段的最前面。 后面的字段联合起来去重。</strong> </p>
+<pre><code class="sql">select distinct deptno,job from emp;</code></pre>
+<hr>
+<h2 id="二、约束"><a href="#二、约束" class="headerlink" title="二、约束"></a>二、约束</h2><h3 id="1、主键"><a href="#1、主键" class="headerlink" title="1、主键"></a>1、主键</h3><h4 id="相关术语"><a href="#相关术语" class="headerlink" title="相关术语"></a>相关术语</h4><ul>
+<li>主键约束：primary key</li>
+<li>主键字段：id字段添加primary key之后，id叫做主键字段</li>
+<li>主键值：id字段中的每一个值都是主键值。</li>
+</ul>
+<h4 id="主键作用"><a href="#主键作用" class="headerlink" title="主键作用"></a>主键作用</h4><ul>
+<li>表的设计三范式中有要求，第一范式就要求任何一张表都应该有主键。</li>
+<li>主键的作用：主键值是这行记录在这张表当中的唯一标识。（就像一个人的身份证号码一样。）</li>
+<li>一张表的主键约束只能有1个。（必须记住）</li>
+</ul>
+<h4 id="主键分类"><a href="#主键分类" class="headerlink" title="主键分类"></a>主键分类</h4><ul>
+<li>根据主键字段的字段数量来划分<ul>
+<li>单一主键(推荐的，常用的。)</li>
+<li>复合主键(多个字段联合起来添加一个主键约束)(复合主键不建议使用，因为复合主键违背三范式。)</li>
+</ul>
+</li>
+<li>根据主键性质划分：<ul>
+<li>自然主键：主键值最好就是一个和业务没有任何关系的自然数。</li>
+<li>业务主键：主键值和系统的业务挂钩，例如：拿着银行卡的卡号做主键，拿着身份证号码作为主键。（不推荐用）<ul>
+<li>最好不要拿着和业务挂钩的字段作为主键。因为以后的业务一旦发生改变的时候，主键值可能也需要随着发生变化，但有的时候没有办法变化，因为变化可能导致主键值重复。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>能够唯一确定表中的一条记录。我们通过给某个字段添加该约束，就可以使得该字段不重复且不为空</p>
+<pre><code class="sql">CREATE TABLE user (
+    id INT PRIMARY KEY,
+    name VARCHAR(20)
+);</code></pre>
+<h4 id="联合主键"><a href="#联合主键" class="headerlink" title="联合主键"></a>联合主键</h4><pre><code class="sql">CREATE TABLE user2 (
+    id INT,
+    name VARCHAR(20),
+    PRIMARY KEY(id, name)
+);</code></pre>
+<p>此处字段id和name一同作为主键，联合主键要求每个字段<strong>加起来不同即可</strong>（无需每个字段都不同）</p>
+<h4 id="建表后添加主键"><a href="#建表后添加主键" class="headerlink" title="建表后添加主键"></a>建表后添加主键</h4><pre><code class="sql">ALERT TABLE user2 ADD PRIMARY KEY (id);</code></pre>
+<p>或者通过<strong>修改字段</strong>的方式来添加主键</p>
+<pre><code class="sql">ALERT TABLE user2 MODIFY id INT PRIMARY KEY;</code></pre>
+<h4 id="建表后删除主键"><a href="#建表后删除主键" class="headerlink" title="建表后删除主键"></a>建表后删除主键</h4><pre><code class="sql">ALERT TABLE user2 DROP  PRIMARY KEY (id);</code></pre>
+<h3 id="2、自增约束"><a href="#2、自增约束" class="headerlink" title="2、自增约束"></a>2、自增约束</h3><pre><code class="sql">CREATE TABLE user3 (
+    id INT PRIMARY KEY AUTO_INCREAMENT,
+    name VARCHAR(20),
+);
+
+INSERT INTO user3 (name) VALUES (&#39;name&#39;); //插入成功，自动生成了id</code></pre>
+<p>自增约束一般<strong>与主键搭配使用</strong></p>
+<h3 id="3、唯一约束"><a href="#3、唯一约束" class="headerlink" title="3、唯一约束"></a>3、唯一约束</h3><p>约束修饰的字段不可以重复</p>
+<pre><code class="sql">CREATE TABLE user4 (
+    id INT PRIMARY KEY AUTO_INCREAMENT UNIQUE,
+    name VARCHAR(20)
+);</code></pre>
+<p>或者</p>
+<pre><code class="sql">CREATE TABLE user4 (
+    id INT PRIMARY KEY AUTO_INCREAMENT,
+    name VARCHAR(20),
+    UNIQUE(id, name)
+);</code></pre>
+<h3 id="4、非空约束"><a href="#4、非空约束" class="headerlink" title="4、非空约束"></a>4、非空约束</h3><pre><code class="sql">CREATE TABLE user4 (
+    id INT NOT NULL,
+    name VARCHAR(20),
+);</code></pre>
+<h3 id="5、默认约束"><a href="#5、默认约束" class="headerlink" title="5、默认约束"></a>5、默认约束</h3><pre><code class="sql">CREATE TABLE user4 (
+    id INT DEFAULT 10,
+    name VARCHAR(20),
+);</code></pre>
+<p>如果我们插入字段时没有传值，就会<strong>使用默认值</strong></p>
+<h3 id="6、外键约束"><a href="#6、外键约束" class="headerlink" title="6、外键约束"></a>6、外键约束</h3><h4 id="相关术语-1"><a href="#相关术语-1" class="headerlink" title="相关术语"></a>相关术语</h4><ul>
+<li>外键约束：foreign key</li>
+<li>外键字段：添加有外键约束的字段</li>
+<li>外键值：外键字段中的每一个值。</li>
+</ul>
+<h4 id="顺序要求"><a href="#顺序要求" class="headerlink" title="顺序要求"></a>顺序要求</h4><ul>
+<li>删除数据的时候，先删除子表，在删除父表。</li>
+<li>添加数据的时候，先添加父表，再添加子表。</li>
+<li>创建表的时候，先创建父表，在创建子表。</li>
+<li>删除表的时候，先删除子表，再删除父表。</li>
+</ul>
+<p>主表</p>
+<pre><code class="sql">CREATE TABLE master(
+    id INT PRIMARY KEY,
+    name VARCHAR(20)
+);</code></pre>
+<p>从表</p>
+<pre><code class="sql">CREATE TABLE pet(
+    id INT PRIMARY KEY,
+    name VARCHAR(20),
+    master_id int,
+    FOREIGN KEY(master_id) REFERENCES master(id)
+);</code></pre>
+<ul>
+<li>主表中没有的数据，在副表中是不可以使用的</li>
+<li>主表中的数据被副表引用时，是不可以删除的</li>
+</ul>
+<p>*外键字段引用其他表的某个字段的时候，被引用的字段必须是主键吗？</p>
+<ul>
+<li>注意：被引用的字段不一定是主键，但至少具有unique约束。</li>
+</ul>
+<p>*外键值可以为NULL？</p>
+<ul>
+<li>外键可以为NULL</li>
+</ul>
+<hr>
+<h2 id="三、存储引擎"><a href="#三、存储引擎" class="headerlink" title="三、存储引擎"></a>三、存储引擎</h2><h3 id="1-什么是存储引擎？"><a href="#1-什么是存储引擎？" class="headerlink" title="1.什么是存储引擎？"></a>1.什么是存储引擎？</h3><ul>
+<li>存储引擎这个名字只有在mysql中存在。（Oracle中有对应的机制，但是不叫做存储引擎。Oracle中没有特殊的名字，就是“表的存储方式”）</li>
+<li>mysql支持很多存储引擎，每一个存储引擎都对应一种不同的存储方式。</li>
+<li>每一个存储引擎都有自己的优缺点，需要在合适的时机选择合适的存储引擎。</li>
+</ul>
+<h4 id="查看当前mysql支持的存储引擎？"><a href="#查看当前mysql支持的存储引擎？" class="headerlink" title="查看当前mysql支持的存储引擎？"></a>查看当前mysql支持的存储引擎？</h4><pre><code class="sql">show engines \G</code></pre>
+<h3 id="2-完整的建表语句"><a href="#2-完整的建表语句" class="headerlink" title="2.完整的建表语句"></a>2.完整的建表语句</h3><pre><code class="sql">CREATE TABLE `t_x` (
+    `id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;</code></pre>
+<p>注意：在MYSQL当中，凡是标识符是可以使用飘号 `` 括起来的。最好别用，不通用。</p>
+<ul>
+<li>建表的时候可以指定存储引擎，也可以指定字符集。</li>
+<li>mysql默认使用的存储引擎是InnoDB方式。</li>
+<li>默认采用的字符集是UTF8</li>
+</ul>
+<h3 id="3-常见的存储引擎？"><a href="#3-常见的存储引擎？" class="headerlink" title="3.常见的存储引擎？"></a>3.常见的存储引擎？</h3><h4 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h4><pre><code class="sql">            Engine: MyISAM
+          Support: YES
+          Comment: MyISAM storage engine
+Transactions: NO
+                    XA: NO
+    Savepoints: NO</code></pre>
+<ul>
+<li>MyISAM这种存储引擎不支持事务。</li>
+<li>MyISAM是mysql最常用的存储引擎，但是这种引擎不是默认的。</li>
+<li>MyISAM采用三个文件组织一张表:<ul>
+<li>xxx.frm(存储格式的文件)</li>
+<li>xxx.MYD(存储表中数据的文件)</li>
+<li>xxx.MYI(存储表中索引的文件)</li>
+</ul>
+</li>
+<li>优点：可被压缩，节省存储空间。并且可以转换为只读表，提高检索效率。</li>
+<li>缺点：不支持事务。</li>
+</ul>
+<h4 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h4><pre><code class="sql">            Engine: InnoDB
+         Support: DEFAULT
+         Comment: Supports transactions, row-level locking, and
+Transactions: YES
+                  XA: YES
+    Savepoints: YES</code></pre>
+<ul>
+<li>优点：支持事务、行级锁、外键等。这种存储引擎数据的安全得到保障。</li>
+<li>表的结构存储在xxx.frm文件中</li>
+<li>数据存储在tablespace这样的表空间中(逻辑概念)，无法被压缩，无法转换成只读。</li>
+<li>这种InnoDB存储引擎在MySQL数据库奔溃之后提供自动恢复机制。</li>
+<li>InnoDB支持级联删除和级联更新。</li>
+</ul>
+<h4 id="MEMORY"><a href="#MEMORY" class="headerlink" title="MEMORY"></a>MEMORY</h4><pre><code class="sql">          Engine: MEMORY
+         Support: YES
+         Comment: Hash based, stored in memory, useful for temp
+Transactions: NO
+                  XA: NO
+    Savepoints: NO</code></pre>
+<ul>
+<li>缺点：不支持事务。数据容易丢失。因为所有数据和索引都是存储在内存当中。</li>
+<li>优点：查询速度最快。</li>
+<li>以前叫做HEPA引擎。</li>
+</ul>
+<hr>
+<h2 id="四、数据库的三大范式"><a href="#四、数据库的三大范式" class="headerlink" title="四、数据库的三大范式"></a>四、数据库的三大范式</h2><h3 id="什么是设计范式？"><a href="#什么是设计范式？" class="headerlink" title="什么是设计范式？"></a>什么是设计范式？</h3><p>设计表的依据。按照这个三范式设计的表不会出现数据冗余。</p>
+<h3 id="三范式都是哪些？"><a href="#三范式都是哪些？" class="headerlink" title="三范式都是哪些？"></a>三范式都是哪些？</h3><h4 id="1、第一范式"><a href="#1、第一范式" class="headerlink" title="1、第一范式"></a>1、第一范式</h4><p>任何一张表都应该有主键，并且每一个字段原子性不可再分。</p>
+<p><strong>字段还可以拆分的，就不满足第一范式</strong></p>
+<p>比如地址如果写为</p>
+<pre><code class="sql">地址：四川省成都市高新区天府一街</code></pre>
+<p>就是可以被拆分的</p>
+<p>如果字段写为</p>
+<pre><code class="sql">省份：四川省
+城市：成都市
+区域：高新区
+街名：天府一街</code></pre>
+<p>就是不可拆分的</p>
+<p>建表如下</p>
+<pre><code class="sql">CREATE TABLE student(
+    id INT PRIMARY KEY AUTO_INCRAEMENT,
+    name VARCHAR(20),
+    province VARCHAR(20),
+    city VARCHAR(20),
+    area VARCHAR(20),
+    street: VARCHAR(20)
+);</code></pre>
+<p>就是<strong>符合第一范式</strong>的，但<strong>并不是拆分的越详细越好</strong></p>
+<h4 id="2、第二范式"><a href="#2、第二范式" class="headerlink" title="2、第二范式"></a>2、第二范式</h4><p>建立在第一范式的基础之上，所有非主键字段完全依赖主键，不能产生部分依赖。</p>
+<ul>
+<li><p>多对多</p>
+<ul>
+<li><p>三张表，关系表两个外键。</p>
+</li>
+<li><p>例</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="sql">t_student学生表
+            sno(pk)        sname
+            -------------------
+            1                张三
+            2                李四
+            3                王五</code></pre>
+<pre><code class="sql">t_teacher 讲师表
+            tno(pk)        tname
+            ---------------------
+            1                王老师
+            2                张老师
+            3                李老师</code></pre>
+<pre><code class="sql">t_student_teacher_relation 学生讲师关系表
+            id(pk)        sno(fk)        tno(fk)
+            ----------------------------------
+            1                1                3
+            2                1                1
+            3                2                2
+            4                2                3
+            5                3                1
+            6                3                3</code></pre>
+<h4 id="3、第三范式"><a href="#3、第三范式" class="headerlink" title="3、第三范式"></a>3、第三范式</h4><p>建立在第二范式的基础之上，所有非主键字段直接依赖主键，不能产生传递依赖。  </p>
+<ul>
+<li><p>（C依赖B。B依赖A）</p>
+</li>
+<li><p>（张三–&gt;2班–&gt;班级编号2）</p>
+</li>
+<li><p>一对多</p>
+<ul>
+<li><p>两张表，多的表加外键。</p>
+</li>
+<li><p>例</p>
+<pre><code class="sql">            cno(pk)            cname
+            --------------------------
+            1                    班级1
+            2                    班级2</code></pre>
+<pre><code class="sql">学生t_student
+            sno(pk)            sname                classno(fk)
+            ---------------------------------------------
+            101                张1                1
+            102                张2                1
+            103                张3                2
+            104                张4                2
+            105                张5                2</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="五、连接查询"><a href="#五、连接查询" class="headerlink" title="五、连接查询"></a>五、连接查询</h2><h3 id="什么是连接查询？"><a href="#什么是连接查询？" class="headerlink" title="什么是连接查询？"></a>什么是连接查询？</h3><ul>
+<li>在实际开发中，大部分的情况下都不是从单表中查询数据，一般都是多张表联合查询取出最终的结果。</li>
+<li>在实际开发中，一般一个业务都会对应多张表，比如：学生和班级，起码两张表。</li>
+</ul>
+<pre><code class="sql">        stuno    stuname     chalssno    classname
+        --------------------------------------------------
+        1      zs        1    高三1班
+        2      ls        1    高三1班
+        ...</code></pre>
+<p>学生和班级信息存储到一张表中，结果就像上面一样，数据会存在大量的重复，导致数据的冗余。</p>
+<h3 id="连接查询的分类？"><a href="#连接查询的分类？" class="headerlink" title="连接查询的分类？"></a>连接查询的分类？</h3><ul>
+<li><p>根据语法出现的年代来划分的话，包括：</p>
+<ul>
+<li><p>SQL92（一些老的DBA可能还在使用这种语法。DBA：DataBase Administrator，数据库管理员）</p>
+</li>
+<li><p>SQL99（比较新的语法）</p>
+</li>
+</ul>
+</li>
+<li><p>根据表的连接方式来划分，包括：</p>
+<ul>
+<li>内连接：<ul>
+<li>等值连接</li>
+<li>非等值连接 </li>
+<li>自连接</li>
+</ul>
+</li>
+<li>外连接：<ul>
+<li>左外连接（左连接）</li>
+<li>右外连接（右连接）</li>
+<li>全连接(很少用到)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="笛卡尔积现象"><a href="#笛卡尔积现象" class="headerlink" title="笛卡尔积现象"></a>笛卡尔积现象</h3><ul>
+<li><p>当两张表进行连接查询的时候，没有任何条件进行限制，最终的查询结果条数是两张表记录条数的乘积。</p>
+</li>
+<li><p>怎么避免笛卡尔积现象？当然是加条件进行过滤。</p>
+</li>
+<li><p>思考：避免了笛卡尔积现象，会减少记录的匹配次数吗？</p>
+<ul>
+<li>不会，次数还是56次。只不过显示的是有效记录。</li>
+</ul>
+</li>
+</ul>
+<h3 id="内连接之非等值连接"><a href="#内连接之非等值连接" class="headerlink" title="内连接之非等值连接"></a>内连接之非等值连接</h3><ul>
+<li>最大的特点：<strong>连接条件中的关系是非等量关系。</strong> </li>
+</ul>
+<p>案例：找出每个员工的工资等级，要求显示员工名、工资、工资等级。</p>
+<pre><code class="sql">mysql&gt; select ename,sal from emp;</code></pre>
+<pre><code class="sql">+--------+---------+
+| ename  | sal     |
++--------+---------+
+| SMITH  |  800.00 |
+| ALLEN  | 1600.00 |
+| WARD   | 1250.00 |
+| JONES  | 2975.00 |
+| MARTIN | 1250.00 |
+| BLAKE  | 2850.00 |
+| CLARK  | 2450.00 |
+| SCOTT  | 3000.00 |
+| KING   | 5000.00 |
+| TURNER | 1500.00 |
+| ADAMS  | 1100.00 |
+| JAMES  |  950.00 |
+| FORD   | 3000.00 |
+| MILLER | 1300.00 |
++--------+---------+</code></pre>
+<pre><code class="sql">mysql&gt; select * from salgrade;</code></pre>
+<pre><code class="sql">+-------+-------+-------+
+| GRADE | LOSAL | HISAL |
++-------+-------+-------+
+|     1 |   700 |  1200 |
+|     2 |  1201 |  1400 |
+|     3 |  1401 |  2000 |
+|     4 |  2001 |  3000 |
+|     5 |  3001 |  9999 |
++-------+-------+-------+</code></pre>
+<pre><code class="sql">select
+   e.ename,e.sal,s.grade
+from
+   emp e
+join
+   salgrade s
+on 
+   e.sal between s.losal and s.hisal;</code></pre>
+<p>inner可以省略</p>
+<pre><code class="sql">select
+   e.ename,e.sal,s.grade
+from
+   emp e
+inner join
+   salgrade s
+on 
+   e.sal between s.losal and s.hisal;</code></pre>
+<pre><code class="sql">+--------+---------+-------+
+| ename  | sal     | grade |
++--------+---------+-------+
+| SMITH  |  800.00 |     1 |
+| ALLEN  | 1600.00 |     3 |
+| WARD   | 1250.00 |     2 |
+| JONES  | 2975.00 |     4 |
+| MARTIN | 1250.00 |     2 |
+| BLAKE  | 2850.00 |     4 |
+| CLARK  | 2450.00 |     4 |
+| SCOTT  | 3000.00 |     4 |
+| KING   | 5000.00 |     5 |
+| TURNER | 1500.00 |     3 |
+| ADAMS  | 1100.00 |     1 |
+| JAMES  |  950.00 |     1 |
+| FORD   | 3000.00 |     4 |
+| MILLER | 1300.00 |     2 |
++--------+---------+-------+</code></pre>
+<h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p>最大的特点是：一张表看做两张表。自己连接自己。</p>
+<p>案例：找出每个员工的上级领导，要求显示员工名和对应的领导名。</p>
+<pre><code class="sql">mysql&gt; select empno,ename,mgr from emp;</code></pre>
+<p>emp a 员工表</p>
+<pre><code class="sql">+-------+--------+------+
+| empno | ename  | mgr  |
++-------+--------+------+
+|  7369 | SMITH  | 7902 |
+|  7499 | ALLEN  | 7698 |
+|  7521 | WARD   | 7698 |
+|  7566 | JONES  | 7839 |
+|  7654 | MARTIN | 7698 |
+|  7698 | BLAKE  | 7839 |
+|  7782 | CLARK  | 7839 |
+|  7788 | SCOTT  | 7566 |
+|  7839 | KING   | NULL |
+|  7844 | TURNER | 7698 |
+|  7876 | ADAMS  | 7788 |
+|  7900 | JAMES  | 7698 |
+|  7902 | FORD   | 7566 |
+|  7934 | MILLER | 7782 |
++-------+--------+------+</code></pre>
+<p>emp b 领导表</p>
+<pre><code class="sql">+-------+--------+
+| empno | ename  |
++-------+--------+
+|  7566 | JONES  |
+|  7698 | BLAKE  |
+|  7782 | CLARK  |
+|  7788 | SCOTT  |
+|  7839 | KING   |
+|  7902 | FORD   |
++-------+--------+</code></pre>
+<p>员工的领导编号 = 领导的员工编号</p>
+<pre><code class="sql">select 
+   a.ename as &#39;员工名&#39;,b.ename as &#39;领导名&#39;
+from
+   emp a
+inner join
+   emp b
+on 
+   a.mgr = b.empno;</code></pre>
+<pre><code class="sql">+--------+--------+
+| 员工名 | 领导名     |
++--------+--------+
+| SMITH  | FORD   |
+| ALLEN  | BLAKE  |
+| WARD   | BLAKE  |
+| JONES  | KING   |
+| MARTIN | BLAKE  |
+| BLAKE  | KING   |
+| CLARK  | KING   |
+| SCOTT  | JONES  |
+| TURNER | BLAKE  |
+| ADAMS  | SCOTT  |
+| JAMES  | BLAKE  |
+| FORD   | JONES  |
+| MILLER | CLARK  |
++--------+--------+</code></pre>
+<h3 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h3><h4 id="什么是外连接，和内连接有什么区别？"><a href="#什么是外连接，和内连接有什么区别？" class="headerlink" title="什么是外连接，和内连接有什么区别？"></a>什么是外连接，和内连接有什么区别？</h4><ul>
+<li>内连接:<ul>
+<li>假设A和B表进行连接，使用内连接的话，凡是A表和B表能够匹配上的记录查询出来，这就是内连接。</li>
+<li>AB两张表没有主副之分，两张表是平等的。</li>
+</ul>
+</li>
+<li>外连接：<ul>
+<li>假设A和B表进行连接，使用外连接的话，AB两张表中有一张表是主表，一张表是副表，主要查询主表中的数据，捎带着查询副表，当副表中的数据没有和主表中的数据匹配上，副表自动模拟出NULL与之匹配。</li>
+</ul>
+</li>
+</ul>
+<h4 id="外连接的分类？"><a href="#外连接的分类？" class="headerlink" title="外连接的分类？"></a>外连接的分类？</h4><ul>
+<li>左外连接（左连接）：表示左边的这张表是主表</li>
+<li>右外连接（右连接）：表示右边的这张表是主表</li>
+</ul>
+<p>左连接有右连接的写法，右连接也会有对应的左连接的写法。</p>
+<p>案例：找出每个员工的上级领导？（所有员工必须全部查询出来。）</p>
+<p>emp a 员工表</p>
+<pre><code class="sql">+-------+--------+------+
+| empno | ename  | mgr  |
++-------+--------+------+
+|  7369 | SMITH  | 7902 |
+|  7499 | ALLEN  | 7698 |
+|  7521 | WARD   | 7698 |
+|  7566 | JONES  | 7839 |
+|  7654 | MARTIN | 7698 |
+|  7698 | BLAKE  | 7839 |
+|  7782 | CLARK  | 7839 |
+|  7788 | SCOTT  | 7566 |
+|  7839 | KING   | NULL |
+|  7844 | TURNER | 7698 |
+|  7876 | ADAMS  | 7788 |
+|  7900 | JAMES  | 7698 |
+|  7902 | FORD   | 7566 |
+|  7934 | MILLER | 7782 |
++-------+--------+------+</code></pre>
+<p>emp b 领导表</p>
+<pre><code class="sql">+-------+--------+
+| empno | ename  |
++-------+--------+
+|  7566 | JONES  |
+|  7698 | BLAKE  |
+|  7782 | CLARK  |
+|  7788 | SCOTT  |
+|  7839 | KING   |
+|  7902 | FORD   |
++-------+--------+</code></pre>
+<p><strong>内连接：</strong></p>
+<pre><code class="sql">select
+   a.ename &#39;员工&#39;, b.ename &#39;领导&#39; 
+from 
+   emp a
+join
+   emp b
+on 
+   a.mgr = b.empno;</code></pre>
+<p><strong>外连接：（左外连接/左连接）</strong></p>
+<pre><code class="sql">select
+   a.ename &#39;员工&#39;, b.ename &#39;领导&#39; 
+from 
+   emp a
+left join
+   emp b
+on 
+   a.mgr = b.empno;</code></pre>
+<p><strong>外连接：（右外连接/右连接）</strong></p>
+<pre><code class="sql">select
+   a.ename &#39;员工&#39;, b.ename &#39;领导&#39; 
+from 
+   emp b
+right join
+   emp a
+on 
+   a.mgr = b.empno;</code></pre>
+<pre><code class="sql">+--------+-------+
+| 员工      | 领导    |
++--------+-------+
+| SMITH  | FORD  |
+| ALLEN  | BLAKE |
+| WARD   | BLAKE |
+| JONES  | KING  |
+| MARTIN | BLAKE |
+| BLAKE  | KING  |
+| CLARK  | KING  |
+| SCOTT  | JONES |
+| KING   | NULL  |
+| TURNER | BLAKE |
+| ADAMS  | SCOTT |
+| JAMES  | BLAKE |
+| FORD   | JONES |
+| MILLER | CLARK |
++--------+-------+</code></pre>
+<p>外连接最重要的特点是：主表的数据无条件的全部查询出来。</p>
+<h4 id="三张表怎么链接查询？"><a href="#三张表怎么链接查询？" class="headerlink" title="三张表怎么链接查询？"></a>三张表怎么链接查询？</h4><p>案例：找出每一个员工的部门名称以及工资等级。</p>
+<p>EMP  e</p>
+<pre><code class="sql">mysql&gt; select empno,ename,sal,deptno from emp;</code></pre>
+<pre><code class="sql">+-------+--------+---------+--------+
+| empno | ename  | sal     | deptno |
++-------+--------+---------+--------+
+|  7369 | SMITH  |  800.00 |     20 |
+|  7499 | ALLEN  | 1600.00 |     30 |
+|  7521 | WARD   | 1250.00 |     30 |
+|  7566 | JONES  | 2975.00 |     20 |
+|  7654 | MARTIN | 1250.00 |     30 |
+|  7698 | BLAKE  | 2850.00 |     30 |
+|  7782 | CLARK  | 2450.00 |     10 |
+|  7788 | SCOTT  | 3000.00 |     20 |
+|  7839 | KING   | 5000.00 |     10 |
+|  7844 | TURNER | 1500.00 |     30 |
+|  7876 | ADAMS  | 1100.00 |     20 |
+|  7900 | JAMES  |  950.00 |     30 |
+|  7902 | FORD   | 3000.00 |     20 |
+|  7934 | MILLER | 1300.00 |     10 |
++-------+--------+---------+--------+</code></pre>
+<p>DEPT  d</p>
+<pre><code class="sql">mysql&gt; select * from dept;</code></pre>
+<pre><code class="sql">+--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+</code></pre>
+<p>SALGRADE s</p>
+<pre><code class="sql">mysql&gt; select * from salgrade;</code></pre>
+<pre><code class="sql">+-------+-------+-------+
+| GRADE | LOSAL | HISAL |
++-------+-------+-------+
+|     1 |   700 |  1200 |
+|     2 |  1201 |  1400 |
+|     3 |  1401 |  2000 |
+|     4 |  2001 |  3000 |
+|     5 |  3001 |  9999 |
++-------+-------+-------+</code></pre>
+<p>注意：</p>
+<pre><code class="sql">    ....
+       A
+    join
+       B
+    join
+       C
+    on
+       ...
+    # 表示：A表和B表现进行表连接，连接之后A表继续和C表进行连接。</code></pre>
+<pre><code class="sql">    select
+       e.ename,d.dname,s.grade
+    from 
+       emp e
+    join
+       dept d
+    on
+       e.deptno = d.deptno
+    join
+       salgrade s
+    on
+       e.sal between s.losal and s.hisal;</code></pre>
+<pre><code class="sql">    +--------+------------+-------+
+    | ename  | dname      | grade |
+    +--------+------------+-------+
+    | SMITH  | RESEARCH   |     1 |
+    | ALLEN  | SALES      |     3 |
+    | WARD   | SALES      |     2 |
+    | JONES  | RESEARCH   |     4 |
+    | MARTIN | SALES      |     2 |
+    | BLAKE  | SALES      |     4 |
+    | CLARK  | ACCOUNTING |     4 |
+    | SCOTT  | RESEARCH   |     4 |
+    | KING   | ACCOUNTING |     5 |
+    | TURNER | SALES      |     3 |
+    | ADAMS  | RESEARCH   |     1 |
+    | JAMES  | SALES      |     1 |
+    | FORD   | RESEARCH   |     4 |
+    | MILLER | ACCOUNTING |     2 |
+    +--------+------------+-------+</code></pre>
+<p>案例：找出每一个员工的部门名称、工资等级、以及上级领导。</p>
+<pre><code class="sql">    select
+       e.ename &#39;领导&#39;,d.dname,s.grade,e1.ename &#39;领导&#39;
+    from 
+       emp e
+    join
+       dept d
+    on
+       e.deptno = d.deptno
+    join
+       salgrade s
+    on
+       e.sal between s.losal and s.hisal
+    left join
+       emp e1
+    on 
+       e.mgr = e1.empno;</code></pre>
+<pre><code class="sql">+--------+------------+-------+-------+
+| 领导     | dname      | grade | 领导    |
++--------+------------+-------+-------+
+| SMITH  | RESEARCH   |     1 | FORD  |
+| ALLEN  | SALES      |     3 | BLAKE |
+| WARD   | SALES      |     2 | BLAKE |
+| JONES  | RESEARCH   |     4 | KING  |
+| MARTIN | SALES      |     2 | BLAKE |
+| BLAKE  | SALES      |     4 | KING  |
+| CLARK  | ACCOUNTING |     4 | KING  |
+| SCOTT  | RESEARCH   |     4 | JONES |
+| KING   | ACCOUNTING |     5 | NULL  |
+| TURNER | SALES      |     3 | BLAKE |
+| ADAMS  | RESEARCH   |     1 | SCOTT |
+| JAMES  | SALES      |     1 | BLAKE |
+| FORD   | RESEARCH   |     4 | JONES |
+| MILLER | ACCOUNTING |     2 | CLARK |
++--------+------------+-------+-------+</code></pre>
+<hr>
+<h2 id="六、子查询"><a href="#六、子查询" class="headerlink" title="六、子查询"></a>六、子查询</h2><h3 id="什么是子查询"><a href="#什么是子查询" class="headerlink" title="什么是子查询"></a>什么是子查询</h3><p>select 语句当中嵌套select语句，被嵌套的select语句是子查询。</p>
+<h3 id="子查询都可以出现在哪里？"><a href="#子查询都可以出现在哪里？" class="headerlink" title="子查询都可以出现在哪里？"></a>子查询都可以出现在哪里？</h3><pre><code class="sql">        select
+           ...(select).
+        from
+           ...(select).
+        where
+           ...(select).</code></pre>
+<h3 id="where子句中使用子查询"><a href="#where子句中使用子查询" class="headerlink" title="where子句中使用子查询"></a>where子句中使用子查询</h3><p>案例：找出高于平均薪资的员工信息。</p>
+<pre><code class="sql">select * from emp where sal &gt; avg(sal); #错误的写法，where后面不能直接使用分组函数。</code></pre>
+<ul>
+<li><p>第一步： 找出平均薪资</p>
+<ul>
+<li><pre><code class="sql">select avg(sal) from emp;</code></pre>
+</li>
+<li><pre><code class="sql">    +-------------+
+    | avg(sal)    |
+    +-------------+
+    | 2073.214286 |
+    +-------------+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>第二步：where过滤</p>
+<ul>
+<li><pre><code class="sql">select * from emp where sal &gt; 2073.214286;</code></pre>
+</li>
+<li><pre><code class="sql">    +-------+-------+-----------+------+------------+---------+------+--------+
+    | EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
+    +-------+-------+-----------+------+------------+---------+------+--------+
+    |  7566 | JONES | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
+    |  7698 | BLAKE | MANAGER   | 7839 | 1981-05-01 | 2850.00 | NULL |     30 |
+    |  7782 | CLARK | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+    |  7788 | SCOTT | ANALYST   | 7566 | 1987-04-19 | 3000.00 | NULL |     20 |
+    |  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+    |  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
+    +-------+-------+-----------+------+------------+---------+------+--------+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>第一步和第二步合并：</p>
+<ul>
+<li><pre><code class="sql">select * from emp where sal &gt; (    select avg(sal) from emp);</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="from后面嵌套子查询"><a href="#from后面嵌套子查询" class="headerlink" title="from后面嵌套子查询"></a>from后面嵌套子查询</h3><p>案例：找出每个部门平均薪水的薪资等级。</p>
+<ul>
+<li><p>第一步：找出每个部门平均薪水（按照部门编号分组，求sal的平均值）</p>
+<ul>
+<li><pre><code class="sql">select deptno,avg(sal) as avgsal from emp group by deptno;</code></pre>
+</li>
+<li><pre><code class="sql">+--------+-------------+
+| deptno | avgsal      |
++--------+-------------+
+|     10 | 2916.666667 |
+|     20 | 2175.000000 |
+|     30 | 1566.666667 |
++--------+-------------+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>第二步：将以上的查询结果当做临时表t，让t表和salgrade表连接，条件是：t.avgsal between s.losal and s.hisal</p>
+<ul>
+<li><pre><code class="sql">select
+   t.*,s.grade
+from
+   (select deptno,avg(sal) as avgsal from emp group by deptno) t
+join
+   salgrade s
+on 
+   t.avgsal between s.losal and s.hisal;</code></pre>
+</li>
+<li><pre><code class="sql">+--------+-------------+-------+
+| deptno | avgsal      | grade |
++--------+-------------+-------+
+|     30 | 1566.666667 |     3 |
+|     10 | 2916.666667 |     4 |
+|     20 | 2175.000000 |     4 |
++--------+-------------+-------+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="在select后面嵌套子查询"><a href="#在select后面嵌套子查询" class="headerlink" title="在select后面嵌套子查询"></a>在select后面嵌套子查询</h3><p>案例：找出每个员工所在的部门名称，要求显示员工名和部门名。</p>
+<pre><code class="sql">select 
+    e.ename,(select d.dname from dept d where e.deptno = d.deptno) as dname 
+from 
+    emp e;</code></pre>
+<pre><code class="sql">+--------+------------+
+| ename  | dname      |
++--------+------------+
+| SMITH  | RESEARCH   |
+| ALLEN  | SALES      |
+| WARD   | SALES      |
+| JONES  | RESEARCH   |
+| MARTIN | SALES      |
+| BLAKE  | SALES      |
+| CLARK  | ACCOUNTING |
+| SCOTT  | RESEARCH   |
+| KING   | ACCOUNTING |
+| TURNER | SALES      |
+| ADAMS  | RESEARCH   |
+| JAMES  | SALES      |
+| FORD   | RESEARCH   |
+| MILLER | ACCOUNTING |
++--------+------------+</code></pre>
+<h3 id="union-可以将查询结果集相加）"><a href="#union-可以将查询结果集相加）" class="headerlink" title="union (可以将查询结果集相加）"></a>union (可以将查询结果集相加）</h3><p>案例：找出工作岗位是SALESMAN和MANAGER的员工？</p>
+<ul>
+<li><p>第一种</p>
+<ul>
+<li><pre><code class="sql">select ename,job from emp where job = &#39;MANAGER&#39; or job = &#39;SALESMAN&#39;;</code></pre>
+</li>
+</ul>
+</li>
+<li><p>第二种</p>
+<ul>
+<li><pre><code class="sql">select ename,job from emp where job in (&#39;MANAGER&#39;,&#39;SALESMAN&#39;);</code></pre>
+</li>
+</ul>
+</li>
+<li><p>第三种：union</p>
+<ul>
+<li><pre><code class="sql">select ename,job from emp where job = &#39;MANAGER&#39;
+union
+select ename,job from emp where job = &#39;SALESMAN&#39;;</code></pre>
+</li>
+</ul>
+</li>
+<li><pre><code class="sql">+--------+----------+
+| ename  | job      |
++--------+----------+
+| JONES  | MANAGER  |
+| BLAKE  | MANAGER  |
+| CLARK  | MANAGER  |
+| ALLEN  | SALESMAN |
+| WARD   | SALESMAN |
+| MARTIN | SALESMAN |
+| TURNER | SALESMAN |
++--------+----------+</code></pre>
+</li>
+</ul>
+<p>两张不相干的表中的数据拼接在一起显示？</p>
+<pre><code class="sql">select ename from emp
+union
+select dname from dept;</code></pre>
+<pre><code class="sql">+------------+
+| ename      |
++------------+
+| SMITH      |
+| ALLEN      |
+| WARD       |
+| JONES      |
+| MARTIN     |
+| BLAKE      |
+| CLARK      |
+| SCOTT      |
+| KING       |
+| TURNER     |
+| ADAMS      |
+| JAMES      |
+| FORD       |
+| MILLER     |
+| ACCOUNTING |
+| RESEARCH   |
+| SALES      |
+| OPERATIONS |
++------------+</code></pre>
+<hr>
+<h2 id="七、limit"><a href="#七、limit" class="headerlink" title="七、limit"></a>七、limit</h2><ul>
+<li>limit是mysql特有的，其它数据库中没有，不通用。(Oracle中有一个相同的机制，叫做rownum)</li>
+<li>limit取结果集中的部分数据，这是它的作用。</li>
+</ul>
+<h3 id="语法机制"><a href="#语法机制" class="headerlink" title="语法机制"></a>语法机制</h3><ul>
+<li>limit startIndex, length        <ul>
+<li>startIndex表示起始位置，从0开始，0表示第一条数据。</li>
+<li>length表示取几个</li>
+</ul>
+</li>
+</ul>
+<p>案例：取出工资前5名的员工(思路：降序取前5个)</p>
+<pre><code class="sql">select ename,sal from emp order by sal desc;</code></pre>
+<p>取前5个</p>
+<pre><code class="sql">select ename,sal from emp order by sal desc limit 0,5;
+#或者
+select ename,sal from emp order by sal desc limit 5; </code></pre>
+<p><strong>limit是sql语句最后执行的一个环节：</strong></p>
+<pre><code class="sql">    select        #5
+        ...
+    from        #1
+        ...
+    where        #2
+        ...
+    group by    #3
+        ...
+    having        #4
+        ...
+    order by    #6
+        ...
+    limit        #7
+        ...;</code></pre>
+<h3 id="通用的标准分页sql？"><a href="#通用的标准分页sql？" class="headerlink" title="通用的标准分页sql？"></a>通用的标准分页sql？</h3><p>每页显示3条记录：<br>第一页：0,3<br>第二页：3,3<br>第三页：6,3<br>第四页；9,3<br>第五页：12,3</p>
+<ul>
+<li>每页显示pageSize条记录：<code>(n-1)3,3</code></li>
+<li>第pageNo页：<code>(pageNo-1) * pageSize,pageSize</code><ul>
+<li>pageSize是什么？<ul>
+<li>每页显示多少条记录</li>
+</ul>
+</li>
+<li>pageNo是什么?<ul>
+<li>显示第几页</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="八、数据类型"><a href="#八、数据类型" class="headerlink" title="八、数据类型"></a>八、数据类型</h2><h3 id="MySQL-常见数据类型"><a href="#MySQL-常见数据类型" class="headerlink" title="MySQL 常见数据类型"></a>MySQL 常见数据类型</h3><table>
+<thead>
+<tr>
+<th>int</th>
+<th>整数型</th>
+<th>对应java中的int</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bigint</td>
+<td>长整型</td>
+<td>对应java中的long</td>
+</tr>
+<tr>
+<td>float</td>
+<td>浮点型</td>
+<td>对应java中的float double</td>
+</tr>
+<tr>
+<td>char</td>
+<td>定长字符串</td>
+<td>String</td>
+</tr>
+<tr>
+<td>varchar</td>
+<td>可变长字符串</td>
+<td>StringBuffer/StringBuilder</td>
+</tr>
+<tr>
+<td>date</td>
+<td>日期类型</td>
+<td>对应java中的java.sql.Date类型</td>
+</tr>
+<tr>
+<td>BLOB</td>
+<td>二进制大对象（存储图片、视频等流媒体信息）Binary Large OBject</td>
+<td>对应java中的Object</td>
+</tr>
+<tr>
+<td>CLOB</td>
+<td>字符大对象（存储较大文本，比如，可以存储4G的字符串。）Character Large OBject</td>
+<td>对应java中的Object</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="char和varchar怎么选择？"><a href="#char和varchar怎么选择？" class="headerlink" title="char和varchar怎么选择？"></a>char和varchar怎么选择？</h3><ul>
+<li>在实际的开发中，当某个字段中的数据长度不发生改变的时候，是定长的，例如：性别、生日等都是采用char。</li>
+<li>当一个字段的数据长度不确定，例如：简介、姓名等都是采用varchar。</li>
+</ul>
+<h3 id="BLOB和CLOB类型的使用？"><a href="#BLOB和CLOB类型的使用？" class="headerlink" title="BLOB和CLOB类型的使用？"></a>BLOB和CLOB类型的使用？</h3><p>电影表：t_movie</p>
+<pre><code class="sql">        id(int)        name(varchar)        playtime(date/char)        haibao(BLOB)        history(ClOB)
+        -----------------------------------------------------------------------------------------
+        1                蜘蛛侠        
+        2
+        3</code></pre>
+<hr>
+<h2 id="九、事务"><a href="#九、事务" class="headerlink" title="九、事务"></a>九、事务</h2><h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>一个事务是一个完整的业务逻辑单元，不可再分。</p>
+<p>多条sql语句<strong>要么同时成功，要么同时失败</strong>，这时就要用到事务</p>
+<ul>
+<li><p>比如：银行账户转账，从A账户向B账户转账10000，需要执行两条update语句。</p>
+<ul>
+<li><pre><code class="sql">update t_act set balance = balance - 10000 where actno = &#39;act-001&#39;;</code></pre>
+</li>
+<li><pre><code class="sql">update t_act set balance = balance + 10000 where actno = &#39;act-002&#39;;</code></pre>
+</li>
+<li><p>以上两条DML语句必须同时成功，或者同时失败，不允许出现一条成功，一条失败。</p>
+</li>
+<li><p>要想保证以上的两条DML语句同时成功或者同时失败，那么就需要使用数据库的“事务机制”。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="事务相关的语句"><a href="#事务相关的语句" class="headerlink" title="事务相关的语句"></a>事务相关的语句</h3><p>和事务相关的语句只有：DML语句。(insert delete update)</p>
+<p>savepoint 回滚点（存档）</p>
+<ul>
+<li>为什么<ul>
+<li>因为它们这三个语句都是和数据库表当中的“数据”相关的。</li>
+</ul>
+</li>
+<li>事务的存在是为了保证数据的完整性，安全性。</li>
+</ul>
+<h3 id="假设所有的业务都能使用1条DML语句搞定，还需要事务机制吗？"><a href="#假设所有的业务都能使用1条DML语句搞定，还需要事务机制吗？" class="headerlink" title="假设所有的业务都能使用1条DML语句搞定，还需要事务机制吗？"></a>假设所有的业务都能使用1条DML语句搞定，还需要事务机制吗？</h3><ul>
+<li>不需要事务。</li>
+<li>但实际情况不是这样的，通常一个“事儿”（事务【业务】）需要多条DML语句共同联合完成。</li>
+</ul>
+<h3 id="事务的特性"><a href="#事务的特性" class="headerlink" title="事务的特性"></a>事务的特性</h3><p>事务包括四大特性：ACID</p>
+<ul>
+<li>A：原子性：事务是最小的工作单元，不可再分。</li>
+<li>C：一致性：事务必须保证多条DML语句同时成功或者同时失败。</li>
+<li>I：隔离性：事务A与事务B之间具有隔离。</li>
+<li>D：持久性：持久性说的是最终数据必须持久化到硬盘文件中，事务才算成功的结束。</li>
+</ul>
+<h3 id="事务之间的隔离性"><a href="#事务之间的隔离性" class="headerlink" title="事务之间的隔离性"></a>事务之间的隔离性</h3><ul>
+<li>第一级别：读未提交（read uncommitted）<ul>
+<li>对方事务还没有提交，我们当前事务可以读取到对方未提交的数据。</li>
+<li>读未提交存在脏读(Dirty Read)现象：表示读到了脏的数据。</li>
+</ul>
+</li>
+<li>第二级别：读已提交(read committed)<ul>
+<li>对方事务提交之后的数据我方可以读取到。</li>
+<li>这种隔离级别解决了：脏读现象没有了。</li>
+<li>读已提交存在的问题是：不可重复读。</li>
+</ul>
+</li>
+<li>第三级别：可重复读(repeatable read)<ul>
+<li>这种隔离级别解决了不可重复读的问题</li>
+<li>这种隔离级别存在的问题是：读取到的数据是幻象。</li>
+</ul>
+</li>
+<li>第四级别：序列化读/串行化读<ul>
+<li>解决了所有问题。</li>
+<li>效率低。需要事务排队。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>oracle数据库默认的隔离级别是：读已提交。<br>mysql数据库默认的隔离级别是：可重复度。</p>
+</blockquote>
+<p>查看数据库的隔离级别</p>
+<pre><code class="sql">版本 5.x
+SELECT @@global.tx_isolation;
+
+版本 8.0
+SELECT @@global.transaction_isolation;</code></pre>
+<p>修改数据库的隔离级别</p>
+<pre><code class="sql">set global transaction isolation level read committed;</code></pre>
+<h3 id="事务的并发问题"><a href="#事务的并发问题" class="headerlink" title="事务的并发问题"></a>事务的并发问题</h3><ul>
+<li>脏读：事务A读取了事务B更新的数据，然后<strong>B回滚操作</strong>，那么<strong>A读取到的数据是脏数据</strong></li>
+<li>不可重复读：事务 A 多次读取同一数据，事务B在事务A多次读取的过程中，对数据作了<strong>更新并提交</strong>，<strong>导致事务A多次读取同一数据时，结果不一致</strong></li>
+<li>幻读：系统管理员A将数据库中所有学生的成绩从具体分数改为ABCDE等级，但是系统管理员B就在这个时候插入了一条具体分数的记录，当系统管理员A改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读</li>
+</ul>
+<p><strong>总结</strong>：不可重复读的和幻读很容易混淆，<strong>不可重复读侧重于修改，幻读侧重于新增或删除</strong></p>
+<p> 解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表</p>
+<hr>
+<h2 id="十、索引"><a href="#十、索引" class="headerlink" title="十、索引"></a>十、索引</h2><h3 id="什么是索引？有什么用？"><a href="#什么是索引？有什么用？" class="headerlink" title="什么是索引？有什么用？"></a>什么是索引？有什么用？</h3><p>索引就相当于一本书的目录，通过目录可以快速的找到对应的资源。</p>
+<p>在数据库方面，查询一张表的时候有两种检索方式：</p>
+<ul>
+<li>第一种方式：全表扫描</li>
+<li>第二种方式：根据索引检索(效率很高)</li>
+</ul>
+<h3 id="索引为什么可以提高检索效率呢？"><a href="#索引为什么可以提高检索效率呢？" class="headerlink" title="索引为什么可以提高检索效率呢？"></a>索引为什么可以提高检索效率呢？</h3><ul>
+<li><p>其实最根本的原理是缩小了扫描的范围。</p>
+</li>
+<li><p>索引虽然可以提高检索效率，但是不能随意的添加索引，因为索引也是数据库中的对象，也需要数据库不断的维护。是有维护成本的。比如，表中的数据经常被修改这样就不适合添加索引，因为数据一旦修改，索引需要重新排序，进行维护。</p>
+</li>
+<li><p>添加索引是给某一个字段，或者说某些字段添加索引。</p>
+<ul>
+<li><pre><code class="sql">select ename,sal from emp where ename = &#39;SMITH&#39;;</code></pre>
+</li>
+<li><p>当ename字段上没有添加索引的时候，以上sql语句会进行全表扫描，扫描ename字段中所有的值。</p>
+</li>
+<li><p>当ename字段上没有添加索引的时候，以上sql语句会根据索引扫描，快速定位。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="怎么创建索引对象？怎么删除索引对象？"><a href="#怎么创建索引对象？怎么删除索引对象？" class="headerlink" title="怎么创建索引对象？怎么删除索引对象？"></a>怎么创建索引对象？怎么删除索引对象？</h3><h4 id="创建索引对象："><a href="#创建索引对象：" class="headerlink" title="创建索引对象："></a>创建索引对象：</h4><pre><code class="sql">create index 索引名称 on 表名(字段名);</code></pre>
+<h4 id="删除索引对象："><a href="#删除索引对象：" class="headerlink" title="删除索引对象："></a>删除索引对象：</h4><pre><code class="sql">drop index 索引名称 on 表名;</code></pre>
+<h3 id="什么时候考虑给字段添加索引？-满足什么条件"><a href="#什么时候考虑给字段添加索引？-满足什么条件" class="headerlink" title="什么时候考虑给字段添加索引？(满足什么条件)"></a>什么时候考虑给字段添加索引？(满足什么条件)</h3><ul>
+<li>数据量庞大。（根据客户的需求，根据线上的环境）</li>
+<li>该字段很少的DML操作。（因为字段进行修改操作，索引页需要维护）</li>
+<li>该字段经常出现在where子句中。（经常根据哪个字段查询）</li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ul>
+<li>主键和具有unique约束的字段自动会添加索引。</li>
+<li>根据主键查询效率较高。尽量根据主键检索。</li>
+</ul>
+<h3 id="索引底层采用的数据结构"><a href="#索引底层采用的数据结构" class="headerlink" title="索引底层采用的数据结构"></a>索引底层采用的数据结构</h3><p>B + Tree</p>
+<h3 id="索引的实现原理？"><a href="#索引的实现原理？" class="headerlink" title="索引的实现原理？"></a>索引的实现原理？</h3><p>通过B Tree缩小扫描范围，底层索引进行了排序，分区，索引会携带数据在表中的“物理地址”，最终通过索引检索到数据之后，获取到关联的物理地址，通过物理地址定位表中的数据，效率是最高的。</p>
+<pre><code class="sql">select ename from emp where ename = &#39;SMITH&#39;;</code></pre>
+<p>通过索引转换为：</p>
+<pre><code class="sql">select ename from emp where 物理地址 = 0x3;</code></pre>
+<h3 id="索引的分类？"><a href="#索引的分类？" class="headerlink" title="索引的分类？"></a>索引的分类？</h3><ul>
+<li>单一索引：给单个字段添加索引</li>
+<li>复合索引：给多个字段联合起来添加1个索引</li>
+<li>主键索引：主键上会自动添加索引</li>
+<li>唯一索引：有unique约束的字段上会自动添加索引</li>
+<li>…</li>
+</ul>
+<h3 id="索引什么时候失效？"><a href="#索引什么时候失效？" class="headerlink" title="索引什么时候失效？"></a>索引什么时候失效？</h3><pre><code class="sql">select ename from emp where ename like &#39;%A%&#39;;</code></pre>
+<p>模糊查询的时候，第一个通配符使用的是%，这个时候索引是失效的。</p>
+<hr>
+<h2 id="十一、DBA命令"><a href="#十一、DBA命令" class="headerlink" title="十一、DBA命令"></a>十一、DBA命令</h2><h3 id="将数据库当中的数据导出"><a href="#将数据库当中的数据导出" class="headerlink" title="将数据库当中的数据导出"></a>将数据库当中的数据导出</h3><p>在windows的dos命令窗口中执行：（导出整个库）</p>
+<pre><code class="sql">mysqldump bjpowernode&gt;D:\bjpowernode.sql -uroot -p333</code></pre>
+<p>在windows的dos命令窗口中执行：（导出指定数据库当中的指定表）</p>
+<pre><code class="sql">mysqldump bjpowernode emp&gt;D:\bjpowernode.sql -uroot –p123</code></pre>
+<h3 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h3><pre><code class="sql">create database bjpowernode;
+use bjpowernode;
+source D:\bjpowernode.sql</code></pre>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/2021/11/26/Redis/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                Redis</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/2021/08/24/Spring/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                Spring</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "GyC3NzMvd0hT9Yyd2hYIC0MN-gzGzoHsz",
+        appKey: "mgOpfzbkHYqU92CV4IDlAUHQ",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+
+
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="" class="profile gravatar"><img src="" itemprop="image" alt="" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="" itemprop="url" rel="author"></a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i></p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 TenIncense<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2018</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/avatar.jpg">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">さくら荘そのTenIncense</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="http://github.com/honjun" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="http://weibo.com/mashirozx?is_all=1" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+        <a href="https://wpa.qq.com/msgrd?v=3&uin=954655431&site=qq&menu=yes" class="fa fa-qq" target="_blank" style="color: #25c6fe; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/categories/技术/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  技术
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/生活/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  生活
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/资源/">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  资源
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/随想/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  随想
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/转载/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  转载
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/tags/悦读/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags/图集/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/client/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+            客户端
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/atom.xml">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+            RSS
+          </span>
+        </a>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
+</html>

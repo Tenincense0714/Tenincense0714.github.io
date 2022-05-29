@@ -1,0 +1,2697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">设计模式 | TenIncense</title>
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "さくら荘そのTenIncense";
+  mashiro_option.author_name = "TenIncense";
+  mashiro_option.site_url = "https://github.com/Tenincense0714/";
+  mashiro_option.v_appId = "GyC3NzMvd0hT9Yyd2hYIC0MN-gzGzoHsz";
+  mashiro_option.v_appKey = "mgOpfzbkHYqU92CV4IDlAUHQ";
+  mashiro_option.mathjax = "0";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(5).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(6).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(7).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(8).jpg.webp".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+</head>
+</html>
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop filter-dot">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://github.com/Tenincense0714/">
+          <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/avatar.jpg">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>须知少年凌云志，曾许人间第一流</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="http://github.com/honjun" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="sina">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/sina.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="wangyiyun">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wangyiyun.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="email">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/email.svg">
+                  </a>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">さくら荘その</span>
+            <span class="shironeko">TenIncense</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/categories/技术/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          技术
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/生活/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          生活
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/资源/">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                          资源
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/随想/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          随想
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/转载/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          转载
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/tags/悦读/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/tags/图集/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/client/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+                    客户端
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/atom.xml">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+                    RSS
+                  </span>
+                </a>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+          <header class="entry-header">
+            <h1 class="entry-title">设计模式</h1>
+            <p class="entry-census">&nbsp;·&nbsp;2022-4-8&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
+        <div class="entry-content">
+          <h2 id="一、设计模式概述"><a href="#一、设计模式概述" class="headerlink" title="一、设计模式概述"></a>一、设计模式概述</h2><h3 id="一、软件设计模式产生背景"><a href="#一、软件设计模式产生背景" class="headerlink" title="一、软件设计模式产生背景"></a>一、软件设计模式产生背景</h3><p>“设计模式”最初并不是出现在软件设计中，而是被用于<code>建筑领域</code>的设计中。</p>
+<p><code>1977</code>年美国著名建筑大师、加利福尼亚大学伯克利分校环境结构中心主任 <code>克里斯托夫·亚历山大 （Christopher Alexander）</code> 在他的著作《建筑模式语言：城镇、建筑、构造》中描述了一些常见的</p>
+<p>建筑设计问题，并提出了 253 种关于对城镇、邻里、住宅、花园和房间等进行设计的基本模式。</p>
+<p><code>1990</code>年软件工程界开始研讨设计模式的话题，后来召开了多次关于设计模式的研讨会。直到<code>1995</code> 年，<code>艾瑞克·伽马（ErichGamma）</code>、<code>理査德·海尔姆（Richard Helm）</code>、<code>拉尔夫·约翰森（Ralph Johnson）</code>、<code>约翰·威利斯迪斯（John Vlissides）</code>等 4 位作者合作出版了《设计模式：可复用面 向对象软件的基础》一书，在此书中收录了 <code>23 个设计模式</code>，这是设计模式领域里程碑的事件，导致 了软件设计模式的突破。这 4 位作者在软件开发领域里也以他们的“<code>四人组</code>”（Gang of Four， <code>GoF</code>）著称。</p>
+<h3 id="二、软件设计模式概念"><a href="#二、软件设计模式概念" class="headerlink" title="二、软件设计模式概念"></a>二、软件设计模式概念</h3><p>软件设计模式（Software Design Pattern），又称设计模式，是一套被反复使用、多数人知晓 的、经过分类编目的、代码设计经验的总结。它描述了在软件设计过程中的一些<code>不断重复</code>发生的问题， 以及该问题的<code>解决方案</code>。也就是说，它是解决特定问题的一系列套路，是前辈们的代码设计经验的<code>总结</code>，具有一定的普遍性，可以<code>反复使用</code>。</p>
+<h3 id="三、学习设计模式的必要性"><a href="#三、学习设计模式的必要性" class="headerlink" title="三、学习设计模式的必要性"></a>三、学习设计模式的必要性</h3><p>设计模式的<code>本质是面向对象设计原则的实际运用</code>，是对类的封装性、继承性和多态性以及类的关联关系和组合关系的充分理解。</p>
+<p>正确使用设计模式具有以下优点。</p>
+<ul>
+<li>可以提高程序员的思维能力、编程能力和<code>设计能力</code>。 </li>
+<li>使程序设计更加标准化、代码编制更加工程化，使软件开发效率大大提高，从而缩短软件的开发周期。 </li>
+<li>使设计的代码可重用性高、可读性强、可靠性高、灵活性好、可维护性强。</li>
+</ul>
+<h3 id="四、设计模式分类"><a href="#四、设计模式分类" class="headerlink" title="四、设计模式分类"></a>四、设计模式分类</h3><ul>
+<li><p><strong>创建型模式</strong> </p>
+<p>用于描述“<code>怎样创建对象</code>”，它的主要<code>特点</code>是“<code>将对象的创建与使用分离</code>”。GoF（四人组）书中提 供了单例、原型、工厂方法、抽象工厂、建造者等 5 种创建型模式。</p>
+</li>
+<li><p><strong>结构型模式</strong> </p>
+<p>用于描述如何<code>将类或对象按某种布局组成更大的结构</code>，GoF（四人组）书中提供了代理、适配器、 桥接、装饰、外观、享元、组合等 7 种结构型模式。</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>行为型模式</strong> </p>
+<p>用于描述类或对象之间怎样相互协作共同完成单个对象无法单独完成的任务，以及怎样分配职责。 GoF（四人组）书中提供了模板方法、策略、命令、职责链、状态、观察者、中介者、迭代器、访问者、备忘录、解释器等 11 种行为型模式。</p>
+</li>
+</ul>
+<h2 id="二、UML"><a href="#二、UML" class="headerlink" title="二、UML"></a>二、UML</h2><p>统一建模语言（Unified Modeling Language，UML）是用来设计软件的可视化建模语言。它的特 点是简单、统一、图形化、能表达软件设计中的动态与静态信息。</p>
+<p>UML 从目标系统的不同角度出发，定义了用例图、类图、对象图、状态图、活动图、时序图、协作 图、构件图、部署图等 9 种图。</p>
+<h3 id="一、类图概述"><a href="#一、类图概述" class="headerlink" title="一、类图概述"></a>一、类图概述</h3><p>类图(Class diagram)是显示了<code>模型的静态结构</code>，特别是模型中存在的类、类的内部结构以及它们与其他类的<code>关系</code>等。类图不显示暂时性的信息。类图是面向对象建模的主要组成部分。</p>
+<h3 id="二、类图的作用"><a href="#二、类图的作用" class="headerlink" title="二、类图的作用"></a>二、类图的作用</h3><ul>
+<li>在软件工程中，类图是一种静态的结构图，描述了系统的类的集合，类的属性和类之间的关系，可 以简化了人们对系统的理解； </li>
+<li>类图是系统分析和<code>设计阶段</code>的重要产物，是系统编码和测试的重要模型。</li>
+</ul>
+<blockquote>
+<p>说白了就是以图形化的形式让我们更好的去理解类和类之间的关系、结构等等</p>
+</blockquote>
+<h3 id="三、类图表示法"><a href="#三、类图表示法" class="headerlink" title="三、类图表示法"></a>三、类图表示法</h3><h4 id="一、类的表示方式"><a href="#一、类的表示方式" class="headerlink" title="一、类的表示方式"></a>一、类的表示方式</h4><p>在UML类图中，类使用包含类名、属性(field) 和方法(method) 且带有分割线的矩形来表示，比如 下图表示一个Employee类，它包含name,age和address这3个属性，以及work()方法。</p>
+<p><img src="https://cdn.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202204082103102.png" alt></p>
+<p>属性/方法名称前加的加号和减号表示了这个属性/方法的可见性，UML类图中表示可见性的符号有三 种：</p>
+<p>+：表示public </p>
+<p>-：表示private </p>
+<p>#：表示protected</p>
+<p>属性的完整表示方式是： <strong>可见性 名称 ：类型 [ = 缺省值]</strong> </p>
+<p>方法的完整表示方式是： <strong>可见性 名称(参数列表) [ ： 返回类型]</strong></p>
+<blockquote>
+<p>注意： </p>
+<p>1、中括号中的内容表示是可选的 </p>
+<p>2、也有将类型放在变量名前面，返回值类型放在方法名前面</p>
+</blockquote>
+<p>举个栗子：</p>
+<p><img src="https://cdn.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202204082105409.png" alt></p>
+<p>上图Demo类定义了三个方法：</p>
+<ul>
+<li>method()方法：修饰符为public，没有参数，没有返回值。 </li>
+<li>method1()方法：修饰符为private，没有参数，返回值类型为String。 </li>
+<li>method2()方法：修饰符为protected，接收两个参数，第一个参数类型为int，第二个参数类 型为String，返回值类型是int。</li>
+</ul>
+<h4 id="二、类与类之间关系的表示方式"><a href="#二、类与类之间关系的表示方式" class="headerlink" title="二、类与类之间关系的表示方式"></a>二、类与类之间关系的表示方式</h4><h5 id="1、关联关系"><a href="#1、关联关系" class="headerlink" title="1、关联关系"></a>1、关联关系</h5><p>关联关系是对象之间的一种<code>引用关系</code>，用于表示一类对象与另一类对象之间的联系，如老师和学生、师 傅和徒弟、丈夫和妻子等。关联关系是类与类之间最常用的一种关系，分为一般关联关系、聚合关系和 组合关系。我们先介绍一般关联。</p>
+<ul>
+<li><p>关联又可以分为</p>
+<ul>
+<li><p>单向关联</p>
+</li>
+<li><p>双向关联</p>
+</li>
+<li><p>自关联</p>
+</li>
+</ul>
+</li>
+</ul>
+<h6 id="1、单向关联"><a href="#1、单向关联" class="headerlink" title="1、单向关联"></a>1、单向关联</h6><p><img src="https://cdn.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202204082116826.png" alt></p>
+<p>在UML类图中单向关联用一个带箭头的实线表示。上图表示每个顾客都有一个地址，这通过让 Customer类持有一个类型为Address的成员变量类实现。</p>
+<h6 id="2、双向关联"><a href="#2、双向关联" class="headerlink" title="2、双向关联"></a>2、双向关联</h6><p><img src="https://cdn.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202204082120967.png" alt></p>
+<p>从上图中我们很容易看出，所谓的双向关联就是双方各自持有对方类型的成员变量。</p>
+<p>在UML类图中，双向关联用一个不带箭头的直线表示。上图中在Customer类中维护一个 List<product>，表示一个顾客可以购买多个商品；在Product类中维护一个Customer类型的成员 变量表示这个产品被哪个顾客所购买。</product></p>
+<h6 id="3、自关联"><a href="#3、自关联" class="headerlink" title="3、自关联"></a>3、自关联</h6><p><img src="https://cdn.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202204082235873.png" alt></p>
+<p>自关联在UML类图中用一个带有箭头且指向自身的线表示。上图的意思就是Node类包含类型为Node的 成员变量，也就是“自己包含自己”。</p>
+<h5 id="2、聚合关系"><a href="#2、聚合关系" class="headerlink" title="2、聚合关系"></a>2、聚合关系</h5><p>聚合关系是关联关系的一种，是<code>强关联关系</code>，是<code>整体和部分</code>之间的关系。</p>
+<p>聚合关系也是通过<code>成员对象</code>来实现的，其中成员对象是整体对象的一部分，但是成员对象可以脱离整体对象而<code>独立存在</code>。例如，学校与老师的关系，学校包含老师，但如果学校停办了，老师依然存在。</p>
+<p>在 UML 类图中，聚合关系可以用带<code>空心菱形的实线</code>来表示，菱形指向整体。下图所示是大学和教师的 关系图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204082326765.png" alt></p>
+<h5 id="3、组合关系"><a href="#3、组合关系" class="headerlink" title="3、组合关系"></a>3、组合关系</h5><p>组合表示类之间的整体与部分的关系，但它是一种更强烈的聚合关系。</p>
+<p>在组合关系中，整体对象可以控制部分对象的生命周期，一旦整体对象不存在，部分对象也将不存在， 部分对象<code>不能脱离整体对象而存在</code>。例如，头和嘴的关系，没有了头，嘴也就不存在了。</p>
+<p>在 UML 类图中，组合关系用带<code>实心菱形的实线</code>来表示，菱形指向整体。下图所示是头和嘴的关系图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204090005470.png" alt></p>
+<h5 id="4、依赖关系"><a href="#4、依赖关系" class="headerlink" title="4、依赖关系"></a>4、依赖关系</h5><p>依赖关系是一种使用关系，它是对象之间<code>耦合度最弱</code>的一种关联方式，是临时性的关联。在代码中，某个类的方法通过局部变量、方法的参数或者对静态方法的调用来访问另一个类（被依赖类）中的某些方 法来完成一些职责。</p>
+<p>在 UML 类图中，依赖关系使用带箭头的虚线来表示，箭头<code>从使用类指向被依赖的类</code>。下图所示是司机和汽车的关系图，司机驾驶汽车：</p>
+<p><img src="https://cdn.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202204082333108.png" alt></p>
+<h5 id="5、继承关系"><a href="#5、继承关系" class="headerlink" title="5、继承关系"></a>5、继承关系</h5><p>继承关系是对象之间<code>耦合度最大</code>的一种关系，表示一般与特殊的关系，是父类与子类之间的关系，是一种继承关系。</p>
+<p>在 UML 类图中，泛化关系用带空心三角箭头的实线来表示，箭头从子类指向父类。在代码实现时，使用面向对象的继承机制来实现泛化关系。例如，Student 类和 Teacher 类都是 Person 类的子类，其类图如下图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202204082339737.png" alt></p>
+<h5 id="6、实现关系"><a href="#6、实现关系" class="headerlink" title="6、实现关系"></a>6、实现关系</h5><p>实现关系是<code>接口与实现类</code>之间的关系。在这种关系中，类实现了接口，类中的操作实现了接口中所声明的所有的抽象操作。</p>
+<p>在 UML 类图中，实现关系使用带空心三角箭头的虚线来表示，箭头从实现类指向接口。例如，汽车和船实现了交通工具，其类图如图所示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202204082343351.png" alt></p>
+<h2 id="三、软件设计原则"><a href="#三、软件设计原则" class="headerlink" title="三、软件设计原则"></a>三、软件设计原则</h2><blockquote>
+<p>在软件开发中，为了提高软件系统的<code>可维护性</code>和<code>可复用性</code>，增加软件的<code>可扩展性</code>和<code>灵活性</code>，程序员要尽量根据6条原则来开发程序，从而提高软件开发效率、节约软件开发成本和维护成本。</p>
+</blockquote>
+<h3 id="1、开闭原则"><a href="#1、开闭原则" class="headerlink" title="1、开闭原则"></a>1、开闭原则</h3><blockquote>
+<p>对扩展开放，对修改关闭。</p>
+</blockquote>
+<ul>
+<li><p>在程序需要进行拓展的时候，不能去修改原有的代码，实现一个热插拔的效果。简言之，是为了使程序的扩展性好，易于维护和升级。</p>
+</li>
+<li><p>想要达到这样的效果，我们需要使用<code>接口</code>和<code>抽象类</code>。</p>
+<ul>
+<li>因为抽象灵活性好，适应性广，只要抽象的合理，可以基本保持软件架构的稳定。而软件中易变的细节 可以从抽象派生来的实现类来进行扩展，当软件需要发生变化时，只需要根据需求重新派生一个实现类来扩展就可以了。</li>
+</ul>
+</li>
+</ul>
+<p>下面以<code>搜狗输入法</code>的皮肤为例介绍开闭原则的应用。</p>
+<ul>
+<li>【例】搜狗输入法 的皮肤设计。<ul>
+<li>分析：搜狗输入法 的皮肤是输入法背景图片、窗口颜色和声音等元素的组合。用户可以根据自己的喜 爱更换自己的输入法的皮肤，也可以从网上下载新的皮肤。这些皮肤有共同的特点，可以为其定义一个 抽象类（AbstractSkin），而每个具体的皮肤（DefaultSpecificSkin和 HeimaSpecificSkin）是其子类。用户窗体可以根据需要选择或者增加新的主题，而不需要修改原代码，所以它是满足开闭原则的。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204090716629.png" alt></p>
+<h4 id="1、搜狗输入法皮肤设计代码"><a href="#1、搜狗输入法皮肤设计代码" class="headerlink" title="1、搜狗输入法皮肤设计代码"></a>1、搜狗输入法皮肤设计代码</h4><h5 id="1、抽象皮肤类"><a href="#1、抽象皮肤类" class="headerlink" title="1、抽象皮肤类"></a>1、抽象皮肤类</h5><pre><code class="java">package com.tenincense.principles.demo1;
+
+/**
+ * @version v1.0
+ * @ClassName AbstractSkin
+ * @Description 抽象皮肤类
+ * @Author TenIncense
+ */
+public abstract class AbstractSkin {
+    //显示皮肤的方法
+    public abstract void display();
+}</code></pre>
+<h5 id="2、默认皮肤类"><a href="#2、默认皮肤类" class="headerlink" title="2、默认皮肤类"></a>2、默认皮肤类</h5><pre><code class="java">package com.tenincense.principles.demo1;
+
+/**
+ * @version v1.0
+ * @ClassName DefaultSkin
+ * @Description 默认皮肤类
+ * @Author  TenIncense
+ */
+public class DefaultSkin extends AbstractSkin{
+    @Override
+    public void display() {
+        System.out.println(&quot;默认皮肤&quot;);
+    }
+}</code></pre>
+<h5 id="3、黑马皮肤类"><a href="#3、黑马皮肤类" class="headerlink" title="3、黑马皮肤类"></a>3、黑马皮肤类</h5><pre><code class="java">package com.tenincense.principles.demo1;
+
+/**
+ * @version v1.0
+ * @ClassName HeimaSkin
+ * @Description 黑马皮肤
+ * @Author TenIncense
+ */
+public class HeimaSkin extends AbstractSkin{
+    @Override
+    public void display() {
+        System.out.println(&quot;黑马皮肤&quot;);
+    }
+}
+</code></pre>
+<h5 id="4、搜狗输入法类"><a href="#4、搜狗输入法类" class="headerlink" title="4、搜狗输入法类"></a>4、搜狗输入法类</h5><pre><code class="java">package com.tenincense.principles.demo1;
+
+/**
+ * @version v1.0
+ * @ClassName SouGouInput
+ * @Description 搜狗输入法
+ * @Author TenIncense
+ */
+public class SouGouInput {
+
+    private AbstractSkin skin;
+
+    //setter
+    public void setSkin(AbstractSkin skin) {
+        this.skin = skin;
+    }
+
+    //显示皮肤方法
+    public void display(){
+        skin.display();
+    }
+}</code></pre>
+<h5 id="5、测试类"><a href="#5、测试类" class="headerlink" title="5、测试类"></a>5、测试类</h5><pre><code class="java">package com.tenincense.principles.demo1;
+
+/**
+ * @version v1.0
+ * @ClassName Client
+ * @Description 测试显示皮肤功能的测试类
+ * @Author TenIncense
+ */
+public class Client {
+    public static void main(String[] args) {
+        //1.创建搜狗输入法对象
+        SouGouInput input = new SouGouInput();
+        //2.创建皮肤对象
+        //DefaultSkin skin = new DefaultSkin();
+        HeimaSkin skin = new HeimaSkin();
+        //3.将皮肤设置到输入法中
+        input.setSkin(skin);
+
+        //4.显示皮肤
+        input.display();
+    }
+}</code></pre>
+<h3 id="2、里氏代换原则"><a href="#2、里氏代换原则" class="headerlink" title="2、里氏代换原则"></a>2、里氏代换原则</h3><blockquote>
+<p>里氏代换原则是面向对象设计的基本原则之一。 </p>
+</blockquote>
+<ul>
+<li>里氏代换原则：任何基类可以出现的地方，子类一定可以出现。<ul>
+<li>通俗理解：子类可以扩展父类的功能， 但不能改变父类原有的功能。</li>
+<li>换句话说，子类继承父类时，除添加新的方法完成新增功能外，尽量不要重写父类的方法。</li>
+</ul>
+</li>
+</ul>
+<p>如果通过重写父类的方法来完成新的功能，这样写起来虽然简单，但是整个继承体系的可复用性会比较 差，特别是运用多态比较频繁时，程序运行出错的概率会非常大。</p>
+<ul>
+<li>下面看一个里氏替换原则中经典的一个例子</li>
+</ul>
+<p>【例】正方形不是长方形。 </p>
+<p>在数学领域里，正方形毫无疑问是长方形，它是一个长宽相等的长方形。所以，我们开发的一个与几何图形相关的软件系统，就可以顺理成章的让正方形继承自长方形。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204091412416.png" alt></p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><h5 id="1、长方形类"><a href="#1、长方形类" class="headerlink" title="1、长方形类"></a>1、长方形类</h5><pre><code class="java">package com.tenincense.principles.demo2.before;
+
+/**
+ * @version v1.0
+ * @ClassName Rectangle
+ * @Description 长方形类
+ * @Author TenIncense
+ */
+public class Rectangle {
+    private double length;
+    private double width;
+
+    public double getLength() {
+        return length;
+    }
+
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+}</code></pre>
+<h5 id="2、正方形类"><a href="#2、正方形类" class="headerlink" title="2、正方形类"></a>2、正方形类</h5><pre><code class="java">package com.tenincense.principles.demo2.before;
+
+/**
+ * @version v1.0
+ * @ClassName Square
+ * @Description 正方形类
+ * @Author TenIncense
+ */
+public class Square extends Rectangle{
+
+    @Override
+    public void setLength(double length) {
+        super.setLength(length);
+        super.setWidth(length);
+    }
+
+    @Override
+    public void setWidth(double width) {
+        super.setLength(width);
+        super.setWidth(width);
+    }
+}</code></pre>
+<h5 id="3、测试类"><a href="#3、测试类" class="headerlink" title="3、测试类"></a>3、测试类</h5><pre><code class="java">package com.tenincense.principles.demo2.before;
+
+/**
+ * @version v1.0
+ * @ClassName: RectangleDemo
+ * @Description: 测试类
+ * @Author: TenIncense
+ */
+public class RectangleDemo {
+    public static void main(String[] args) {
+        //创建长方形对象
+        Rectangle r = new Rectangle();
+        //设置长和宽
+        r.setLength(20);
+        r.setWidth(10);
+        //调用 resize 方法进行扩宽
+        resize(r);
+        printLengthAndWidth(r);
+
+        System.out.println(&quot;=======================&quot;);
+
+        //创建正方形对象
+        Square s = new Square();
+        ///设置长和宽
+        s.setLength(10);
+        //调用 resize 方法进行扩宽
+        resize(s);
+        printLengthAndWidth(s);
+    }
+
+    //扩宽方法
+    public static void resize(Rectangle rectangle){
+        //判断宽如果比长小,进行扩宽的操作
+        while (rectangle.getWidth() &lt;= rectangle.getLength()){
+            rectangle.setWidth(rectangle.getWidth() + 1);
+        }
+    }
+
+    //打印长和宽
+    public static void printLengthAndWidth(Rectangle rectangle){
+        System.out.println(&quot;长:&quot; + rectangle.getLength());
+        System.out.println(&quot;宽:&quot; + rectangle.getWidth());
+    }
+}</code></pre>
+<p>我们运行一下这段代码就会发现，假如我们把一个普通长方形作为参数传入resize方法，就会看到长 方形宽度逐渐增长的效果，当宽度大于长度,代码就会停止，这种行为的结果符合我们的预期；假如我 们再把一个正方形作为参数传入resize方法后，就会看到正方形的宽度和长度都在不断增长，代码会 一直运行下去，直至系统产生溢出错误。所以，普通的长方形是适合这段代码的，正方形不适合。 </p>
+<p>我们得出结论：在resize方法中，Rectangle类型的参数是不能被Square类型的参数所代替，如果进行了替换就得不到预期结果。因此，Square类和Rectangle类之间的继承关系违反了里氏代换原则， 它们之间的继承关系不成立，正方形不是长方形。</p>
+<ul>
+<li>如何改进呢？<ul>
+<li>此时我们需要重新设计他们之间的关系。抽象出来一个四边形接口(Quadrilateral)， 让Rectangle类和Square类实现Quadrilateral接口</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204091428725.png" alt></p>
+<h4 id="2、改进后的代码"><a href="#2、改进后的代码" class="headerlink" title="2、改进后的代码"></a>2、改进后的代码</h4><h5 id="1、定义四边形接口"><a href="#1、定义四边形接口" class="headerlink" title="1、定义四边形接口"></a>1、定义四边形接口</h5><pre><code class="java">package com.tenincense.principles.demo2.after;
+
+/**
+ * @version v1.0
+ * @ClassName: Quadrilateral
+ * @Description: 四边形接口
+ * @Author: TenIncense
+ */
+public interface Quadrilateral {
+    //获取长
+    double getLength();
+
+    //获取宽
+    double getWidth();
+}</code></pre>
+<h5 id="2、定义正方形类"><a href="#2、定义正方形类" class="headerlink" title="2、定义正方形类"></a>2、定义正方形类</h5><pre><code class="java">package com.tenincense.principles.demo2.after;
+
+/**
+ * @version v1.0
+ * @ClassName: Square
+ * @Description: 正方形
+ * @Author: TenIncense
+ */
+public class Square implements Quadrilateral{
+
+    //边长
+    private double side;
+
+    public double getSide() {
+        return side;
+    }
+
+    public void setSide(double side) {
+        this.side = side;
+    }
+
+    @Override
+    public double getLength() {
+        return side;
+    }
+
+    @Override
+    public double getWidth() {
+        return side;
+    }
+}</code></pre>
+<h5 id="3、定义长方形类"><a href="#3、定义长方形类" class="headerlink" title="3、定义长方形类"></a>3、定义长方形类</h5><pre><code class="java">package com.tenincense.principles.demo2.after;
+
+/**
+ * @version v1.0
+ * @ClassName: Rectangle
+ * @Description: 长方形类
+ * @Author: TenIncense
+ */
+public class Rectangle implements Quadrilateral{
+
+    private double length;
+    private double width;
+
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    @Override
+    public double getLength() {
+        return length;
+    }
+
+    @Override
+    public double getWidth() {
+        return width;
+    }
+}</code></pre>
+<h5 id="4、定义测试类"><a href="#4、定义测试类" class="headerlink" title="4、定义测试类"></a>4、定义测试类</h5><pre><code class="java">package com.tenincense.principles.demo2.after;
+
+/**
+ * @version v1.0
+ * @ClassName: RectangleDemo
+ * @Description: 测试类
+ * @Author: TenIncense
+ */
+public class RectangleDemo {
+    public static void main(String[] args) {
+        //创建长方形对象
+        Rectangle r = new Rectangle();
+        r.setLength(20);
+        r.setWidth(10);
+        //调用方法进行扩宽操作
+        resize(r);
+
+        printLengthAndWidth(r);
+    }
+
+    //扩宽的方法
+    public static void resize(Rectangle rectangle){
+        //判断宽如果比长小,进行扩宽的操作
+        while (rectangle.getWidth() &lt;= rectangle.getLength()){
+            rectangle.setWidth(rectangle.getWidth() + 1);
+        }
+    }
+
+    //打印长和宽
+    public static void printLengthAndWidth(Quadrilateral quadrilateral){
+        System.out.println(&quot;长:&quot; + quadrilateral.getLength());
+        System.out.println(&quot;宽:&quot; + quadrilateral.getWidth());
+    }
+}</code></pre>
+<h3 id="3、依赖倒转原则"><a href="#3、依赖倒转原则" class="headerlink" title="3、依赖倒转原则"></a>3、依赖倒转原则</h3><blockquote>
+<p>高层模块不应该依赖低层模块，两者都应该依赖其抽象；抽象不应该依赖细节，细节应该依赖抽象。简单的说就是要求对抽象进行编程，不要对实现进行编程，这样就降低了客户与实现模块间的耦合。</p>
+</blockquote>
+<ul>
+<li>下面看一个例子来理解依赖倒转原则</li>
+</ul>
+<p>【例】组装电脑</p>
+<p>现要组装一台电脑，需要配件cpu，硬盘，内存条。只有这些配置都有了，计算机才能正常的运行。选 择cpu有很多选择，如Intel，AMD等，硬盘可以选择希捷，西数等，内存条可以选择金士顿，海盗船等。</p>
+<p><strong>类图如下：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204091453245.png" alt></p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><h5 id="1、希捷硬盘类（XiJieHardDisk）"><a href="#1、希捷硬盘类（XiJieHardDisk）" class="headerlink" title="1、希捷硬盘类（XiJieHardDisk）:"></a>1、希捷硬盘类（XiJieHardDisk）:</h5><pre><code class="java">package com.tenincense.principles.demo3.before;
+
+/**
+ * @version v1.0
+ * @ClassName: XiJieHardDisk
+ * @Description: 希捷硬盘
+ * @Author: TenIncense
+ */
+public class XiJieHardDisk {
+
+    //存储数据的方法
+    public void save(String data){
+        System.out.println(&quot;使用希捷硬盘存储数据为:&quot; + data);
+    }
+
+    //获取数据的方法
+    public String get(){
+        System.out.println(&quot;使用希捷希捷硬盘取数据&quot;); 
+        return &quot;数据&quot;;
+    }
+}</code></pre>
+<h5 id="2、Intel处理器（IntelCpu）："><a href="#2、Intel处理器（IntelCpu）：" class="headerlink" title="2、Intel处理器（IntelCpu）："></a>2、Intel处理器（IntelCpu）：</h5><pre><code class="java">package com.tenincense.principles.demo3.before;
+
+/**
+ * @version v1.0
+ * @ClassName: IntelCpu
+ * @Description: Intel cpu
+ * @Author: TenIncense
+ */
+public class IntelCpu {
+    public void run(){
+        System.out.println(&quot;使用Intel处理器&quot;);
+    }
+}</code></pre>
+<h5 id="3、金士顿内存条（KingstonMemory）："><a href="#3、金士顿内存条（KingstonMemory）：" class="headerlink" title="3、金士顿内存条（KingstonMemory）："></a>3、金士顿内存条（KingstonMemory）：</h5><pre><code class="java">package com.tenincense.principles.demo3.before;
+
+/**
+ * @version v1.0
+ * @ClassName: KingstonMemory
+ * @Description: 金士顿内存条类
+ * @Author: TenIncense
+ */
+public class KingstonMemory {
+
+    public void save(){
+        System.out.println(&quot;使用金士顿内存条&quot;);
+    }
+}</code></pre>
+<h5 id="4、电脑（Computer）："><a href="#4、电脑（Computer）：" class="headerlink" title="4、电脑（Computer）："></a>4、电脑（Computer）：</h5><pre><code class="java">package com.tenincense.principles.demo3.before;
+
+/**
+ * @version v1.0
+ * @ClassName: Computer
+ * @Description: 电脑类
+ * @Author: TenIncense
+ */
+public class Computer {
+    private XiJieHardDisk hardDisk;
+    private IntelCpu cpu;
+    private KingstonMemory memory;
+
+    public XiJieHardDisk getHardDisk() {
+        return hardDisk;
+    }
+
+    public void setHardDisk(XiJieHardDisk hardDisk) {
+        this.hardDisk = hardDisk;
+    }
+
+    public IntelCpu getCpu() {
+        return cpu;
+    }
+
+    public void setCpu(IntelCpu cpu) {
+        this.cpu = cpu;
+    }
+
+    public KingstonMemory getMemory() {
+        return memory;
+    }
+
+    public void setMemory(KingstonMemory memory) {
+        this.memory = memory;
+    }
+
+    //运行计算机的方法
+    public void run(){
+        System.out.println(&quot;运行计算机&quot;);
+        String data = hardDisk.get();
+        System.out.println(&quot;从硬盘上获取的数据是&quot; + data);
+        cpu.run();
+        memory.save();
+    }
+}</code></pre>
+<h5 id="5、测试类-1"><a href="#5、测试类-1" class="headerlink" title="5、测试类"></a>5、测试类</h5><pre><code class="java">package com.tenincense.principles.demo3.before;
+
+/**
+ * @version v1.0
+ * @ClassName: ComputerDemo
+ * @Description: 测试类
+ * @Author: TenIncense
+ */
+public class ComputerDemo {
+    public static void main(String[] args) {
+        //创建组件对象
+        XiJieHardDisk hardDisk = new XiJieHardDisk();
+        IntelCpu cpu = new IntelCpu();
+        KingstonMemory memory = new KingstonMemory();
+
+        //创建计算机对象
+        Computer c = new Computer();
+        //组装计算机
+        c.setCpu(cpu);
+        c.setHardDisk(hardDisk);
+        c.setMemory(memory);
+
+        //运行计算机
+        c.run();
+    }
+}
+</code></pre>
+<p>上面代码可以看到已经组装了一台电脑，但是似乎组装的电脑的cpu只能是Intel的，内存条只能是金士顿的，硬盘只能是希捷的，这对用户肯定是不友好的，用户有了机箱肯定是想按照自己的喜好，选择自己喜欢的配件。</p>
+<h4 id="根据依赖倒转原则进行改进："><a href="#根据依赖倒转原则进行改进：" class="headerlink" title="根据依赖倒转原则进行改进："></a>根据依赖倒转原则进行改进：</h4><p>代码我们只需要修改Computer类，让Computer类依赖抽象（各个配件的接口），而不是依赖于各个 组件具体的实现类。</p>
+<p><strong>类图如下：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204091518159.png" alt></p>
+<h5 id="改进后的代码"><a href="#改进后的代码" class="headerlink" title="改进后的代码"></a>改进后的代码</h5><h6 id="1、定义硬盘接口"><a href="#1、定义硬盘接口" class="headerlink" title="1、定义硬盘接口"></a>1、定义硬盘接口</h6><pre><code class="java">package com.tenincense.principles.demo3.after;
+
+/**
+ * @version v1.0
+ * @ClassName: HardDisk
+ * @Description: 硬盘接口
+ * @Author: TenIncense
+ */
+public interface HardDisk {
+
+    //存储数据
+    public void save(String data);
+
+    //获取数据
+    public String get(); 
+}</code></pre>
+<h6 id="2、定义硬盘接口实现类"><a href="#2、定义硬盘接口实现类" class="headerlink" title="2、定义硬盘接口实现类"></a>2、定义硬盘接口实现类</h6><pre><code class="java">package com.tenincense.principles.demo3.after;
+
+/**
+ * @version v1.0
+ * @ClassName: XiJieHardDisk
+ * @Description: 希捷硬盘
+ * @Author: TenIncense
+ */
+public class XiJieHardDisk implements HardDisk{
+
+    //存储数据的方法
+    @Override
+    public void save(String data){
+        System.out.println(&quot;使用希捷硬盘存储数据为:&quot; + data);
+    }
+
+    //获取数据的方法
+    @Override
+    public String get(){
+        System.out.println(&quot;使用希捷希捷硬盘取数据&quot;);
+        return &quot;数据&quot;;
+    }
+}</code></pre>
+<h6 id="3、定义-cpu-接口"><a href="#3、定义-cpu-接口" class="headerlink" title="3、定义 cpu 接口"></a>3、定义 cpu 接口</h6><pre><code class="java">package com.tenincense.principles.demo3.after;
+
+/**
+ * @version v1.0
+ * @ClassName: Cpu
+ * @Description: Cpu 接口
+ * @Author: TenIncense
+ */
+public interface Cpu {
+    //运行 cpu
+    public void run();
+}</code></pre>
+<h6 id="4、定义cpu接口实现类"><a href="#4、定义cpu接口实现类" class="headerlink" title="4、定义cpu接口实现类"></a>4、定义cpu接口实现类</h6><pre><code class="java">package com.tenincense.principles.demo3.after;
+
+/**
+ * @version v1.0
+ * @ClassName: IntelCpu
+ * @Description: Intel cpu
+ * @Author: TenIncense
+ */
+public class IntelCpu implements Cpu{
+    @Override
+    public void run(){
+        System.out.println(&quot;使用Intel处理器&quot;);
+    }
+}</code></pre>
+<h6 id="5、定义内存条接口"><a href="#5、定义内存条接口" class="headerlink" title="5、定义内存条接口"></a>5、定义内存条接口</h6><pre><code class="java">package com.tenincense.principles.demo3.after;
+
+/**
+ * @version v1.0
+ * @ClassName: Memory
+ * @Description: 内存条接口
+ * @Author: TenIncense
+ */
+public interface Memory {
+    //存储数据方法
+    public void save();
+}</code></pre>
+<h6 id="6、定义内存条接口实现类"><a href="#6、定义内存条接口实现类" class="headerlink" title="6、定义内存条接口实现类"></a>6、定义内存条接口实现类</h6><pre><code class="java">package com.tenincense.principles.demo3.after;
+
+/**
+ * @version v1.0
+ * @ClassName: KingstonMemory
+ * @Description: 金士顿内存条类
+ * @Author: TenIncense
+ */
+public class KingstonMemory implements Memory{
+
+    @Override
+    public void save(){
+        System.out.println(&quot;使用金士顿内存条&quot;);
+    }
+}</code></pre>
+<h6 id="7、定义电脑类"><a href="#7、定义电脑类" class="headerlink" title="7、定义电脑类"></a>7、定义电脑类</h6><pre><code class="java">package com.tenincense.principles.demo3.after;
+
+/**
+ * @version v1.0
+ * @ClassName: Computer
+ * @Description: 电脑类
+ * @Author: TenIncense
+ */
+public class Computer {
+
+    private HardDisk hardDisk;
+    private Cpu cpu;
+    private Memory memory;
+
+    public HardDisk getHardDisk() {
+        return hardDisk;
+    }
+
+    public void setHardDisk(HardDisk hardDisk) {
+        this.hardDisk = hardDisk;
+    }
+
+    public Cpu getCpu() {
+        return cpu;
+    }
+
+    public void setCpu(Cpu cpu) {
+        this.cpu = cpu;
+    }
+
+    public Memory getMemory() {
+        return memory;
+    }
+
+    public void setMemory(Memory memory) {
+        this.memory = memory;
+    }
+
+    //运行计算机
+    public void run(){
+        System.out.println(&quot;运行计算机&quot;);
+        String data = hardDisk.get();
+        System.out.println(&quot;从硬盘上获取的数据是&quot; + data);
+        cpu.run();
+        memory.save();
+    }
+}</code></pre>
+<h6 id="8、定义测试类"><a href="#8、定义测试类" class="headerlink" title="8、定义测试类"></a>8、定义测试类</h6><pre><code class="java">package com.tenincense.principles.demo3.after;
+
+/**
+ * @version v1.0
+ * @ClassName: ComputerDemo
+ * @Description: 测试类
+ * @Author: TenIncense
+ */
+public class ComputerDemo {
+    public static void main(String[] args) {
+
+        //创建计算机组件对象
+        HardDisk hardDisk = new XiJieHardDisk();
+        Cpu cpu = new IntelCpu();
+        Memory memory = new KingstonMemory();
+
+        //创建计算机对象
+        Computer c = new Computer();
+        //组装计算机
+        c.setHardDisk(hardDisk);
+        c.setCpu(cpu);
+        c.setMemory(memory);
+
+        //运行计算机
+        c.run();
+    }
+}</code></pre>
+<blockquote>
+<p>面向对象的开发很好的解决了这个问题，一般情况下抽象的变化概率很小，让用户程序依赖于抽象，实现的细节也依赖于抽象。即使实现细节不断变动，只要抽象不变，客户程序就不需要变化。这大大降低了客户程序与实现细节的耦合度。</p>
+</blockquote>
+<h3 id="4、接口隔离原则"><a href="#4、接口隔离原则" class="headerlink" title="4、接口隔离原则"></a>4、接口隔离原则</h3><blockquote>
+<p>客户端不应该被迫依赖于它不使用的方法；一个类对另一个类的依赖应该建立在最小的接口上。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204091834887.png" alt></p>
+<ul>
+<li>下面看一个例子来理解接口隔离原则</li>
+</ul>
+<p>【例】安全门案例</p>
+<p>我们需要创建一个 黑马 品牌的安全门，该安全门具有防火、防水、防盗的功能。可以将防火，防水，防盗功能提取成一个接口，形成一套规范。类图如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204091815937.png" alt></p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><h5 id="1、定义安全门接口"><a href="#1、定义安全门接口" class="headerlink" title="1、定义安全门接口"></a>1、定义安全门接口</h5><pre><code class="java">package com.tenincense.principles.demo4.before;
+
+/**
+ * @version v1.0
+ * @ClassName: SafetyDoor
+ * @Description: 安全门接口
+ * @Author: TenIncense
+ */
+public interface SafetyDoor {
+
+    //防盗
+    void antiTheft();
+
+    //防火
+    void fireProof();
+
+    //防水
+    void waterProof();
+}</code></pre>
+<h5 id="2、定义安全门接口实现类"><a href="#2、定义安全门接口实现类" class="headerlink" title="2、定义安全门接口实现类"></a>2、定义安全门接口实现类</h5><pre><code class="java">package com.tenincense.principles.demo4.before;
+
+/**
+ * @version v1.0
+ * @ClassName: HeimaSafetyDoor
+ * @Description: 黑马品牌的安全门
+ * @Author: TenIncense
+ */
+public class HeimaSafetyDoor implements SafetyDoor {
+    @Override
+    public void antiTheft() {
+        System.out.println(&quot;防盗&quot;);
+    }
+
+    @Override
+    public void fireProof() {
+        System.out.println(&quot;防火&quot;);
+    }
+
+    @Override
+    public void waterProof() {
+        System.out.println(&quot;防水&quot;);
+    }
+}</code></pre>
+<h5 id="3、定义测试类"><a href="#3、定义测试类" class="headerlink" title="3、定义测试类"></a>3、定义测试类</h5><pre><code class="java">package com.tenincense.principles.demo4.before;
+
+/**
+ * @version v1.0
+ * @ClassName: Client
+ * @Description: 测试类
+ * @Author: TenIncense
+ */
+public class Client {
+    public static void main(String[] args) {
+        HeimaSafetyDoor door = new HeimaSafetyDoor();
+        door.antiTheft();
+        door.fireProof();
+        door.waterProof();
+    }
+}</code></pre>
+<p>上面的设计我们发现了它存在的问题，黑马品牌的安全门具有防盗，防水，防火的功能。现在如果我们还需要再创建一个传智品牌的安全门，而该安全门只具有防盗、防水功能呢？很显然如果实现 SafetyDoor接口就违背了接口隔离原则，那么我们如何进行修改呢？看如下类图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204091820201.png" alt></p>
+<h4 id="改进后的代码-1"><a href="#改进后的代码-1" class="headerlink" title="改进后的代码"></a>改进后的代码</h4><h5 id="1、AntiTheft（防盗接口）"><a href="#1、AntiTheft（防盗接口）" class="headerlink" title="1、AntiTheft（防盗接口）"></a>1、AntiTheft（防盗接口）</h5><pre><code class="java">package com.tenincense.principles.demo4.after;
+
+/**
+ * @version v1.0
+ * @ClassName: AntiTheft
+ * @Description: 防盗接口
+ * @Author: TenIncense
+ */
+public interface AntiTheft {
+    void antiTheft();
+}</code></pre>
+<h5 id="2、Fireproof（防火接口）"><a href="#2、Fireproof（防火接口）" class="headerlink" title="2、Fireproof（防火接口）"></a>2、Fireproof（防火接口）</h5><pre><code class="java">package com.tenincense.principles.demo4.after;
+
+/**
+ * @version v1.0
+ * @ClassName: Fireproof
+ * @Description: 防火接口
+ * @Author: TenIncense
+ */
+public interface Fireproof {
+    void fireproof();
+}</code></pre>
+<h5 id="3、Waterproof（防水接口）"><a href="#3、Waterproof（防水接口）" class="headerlink" title="3、Waterproof（防水接口）"></a>3、Waterproof（防水接口）</h5><pre><code class="java">package com.tenincense.principles.demo4.after;
+
+/**
+ * @version v1.0
+ * @ClassName: Waterproof
+ * @Description: 防水接口
+ * @Author: TenIncense
+ */
+public interface Waterproof {
+    void waterproof();
+}</code></pre>
+<h5 id="4、HeiMaSafetyDoor（黑马品牌安全门类）"><a href="#4、HeiMaSafetyDoor（黑马品牌安全门类）" class="headerlink" title="4、HeiMaSafetyDoor（黑马品牌安全门类）"></a>4、HeiMaSafetyDoor（黑马品牌安全门类）</h5><pre><code class="java">package com.tenincense.principles.demo4.after;
+
+/**
+ * @version v1.0
+ * @ClassName: HeiMaSafetyDoor
+ * @Description: 黑马安全门类
+ * @Author: TenIncense
+ */
+public class HeiMaSafetyDoor implements AntiTheft,Fireproof,Waterproof{
+    @Override
+    public void antiTheft() {
+        System.out.println(&quot;防盗&quot;);
+    }
+
+    @Override
+    public void fireproof() {
+        System.out.println(&quot;防火&quot;);
+    }
+
+    @Override
+    public void waterproof() {
+        System.out.println(&quot;防水&quot;);
+    }
+}</code></pre>
+<h5 id="5、ItcastSafetyDoor（传智安全门类）"><a href="#5、ItcastSafetyDoor（传智安全门类）" class="headerlink" title="5、ItcastSafetyDoor（传智安全门类）"></a>5、ItcastSafetyDoor（传智安全门类）</h5><pre><code class="java">package com.tenincense.principles.demo4.after;
+
+/**
+ * @version v1.0
+ * @ClassName: ItcastSafetyDoor
+ * @Description: 传智安全门类
+ * @Author: TenIncense
+ */
+public class ItcastSafetyDoor implements AntiTheft,Fireproof{
+    @Override
+    public void antiTheft() {
+        System.out.println(&quot;防盗&quot;);
+    }
+
+    @Override
+    public void fireproof() {
+        System.out.println(&quot;防火&quot;);
+    }
+}</code></pre>
+<h5 id="6、测试类"><a href="#6、测试类" class="headerlink" title="6、测试类"></a>6、测试类</h5><pre><code class="java">package com.tenincense.principles.demo4.after;
+
+/**
+ * @version v1.0
+ * @ClassName: Client
+ * @Description: TODO(一句话描述该类的功能)
+ * @Author: TenIncense
+ */
+public class Client {
+    public static void main(String[] args) {
+        //创建黑马安全门对象
+        HeiMaSafetyDoor door = new HeiMaSafetyDoor();
+        //调用功能
+        door.antiTheft();
+        door.fireproof();
+        door.waterproof();
+
+        System.out.println(&quot;===========================&quot;);
+
+        //创建传智安全门对象
+        ItcastSafetyDoor door1 = new ItcastSafetyDoor();
+        door1.antiTheft();
+        door1.fireproof();
+    }
+}</code></pre>
+<h3 id="5、迪米特法则"><a href="#5、迪米特法则" class="headerlink" title="5、迪米特法则"></a>5、迪米特法则</h3><blockquote>
+<p>迪米特法则又叫<code>最少知识原则</code>。</p>
+<p>只和你的直接朋友交谈，不跟“陌生人”说话（Talk only to your immediate friends and not to strangers）。</p>
+<p>其含义是：如果两个软件实体无须直接通信，那么就不应当发生直接的相互调用，可以通过第三方转发该调用。其目的是降低类之间的耦合度，提高模块的相对独立性。</p>
+<p>迪米特法则中的“朋友”是指：当前对象本身、当前对象的成员对象、当前对象所创建的对象、当前对象的方法参数等，这些对象同当前对象存在关联、聚合或组合关系，可以直接访问这些对象的方法。</p>
+</blockquote>
+<ul>
+<li>下面看一个例子来理解迪米特法则</li>
+</ul>
+<p>【例】明星与经纪人的关系实例</p>
+<p>明星由于全身心投入艺术，所以许多日常事务由经纪人负责处理，如和粉丝的见面会，和媒体公司的业 务洽淡等。这里的经纪人是明星的朋友，而粉丝和媒体公司是陌生人，所以适合使用迪米特法则。</p>
+<p>类图如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204091911856.png" alt></p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><h5 id="1、明星类（Star）"><a href="#1、明星类（Star）" class="headerlink" title="1、明星类（Star）"></a>1、明星类（Star）</h5><pre><code class="java">package com.tenincense.principles.demo5;
+
+/**
+ * @version v1.0
+ * @ClassName: Star
+ * @Description: 明星类
+ * @Author: TenIncense
+ */
+public class Star {
+    private String name;
+
+    public Star(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}</code></pre>
+<h5 id="2、粉丝类（Fans）"><a href="#2、粉丝类（Fans）" class="headerlink" title="2、粉丝类（Fans）"></a>2、粉丝类（Fans）</h5><pre><code class="java">package com.tenincense.principles.demo5;
+
+/**
+ * @version v1.0
+ * @ClassName: Fans
+ * @Description: 粉丝类
+ * @Author: TenIncense
+ */
+public class Fans {
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public Fans(String name) {
+        this.name = name;
+    }
+}</code></pre>
+<h5 id="3、媒体公司类（Company）"><a href="#3、媒体公司类（Company）" class="headerlink" title="3、媒体公司类（Company）"></a>3、媒体公司类（Company）</h5><pre><code class="java">package com.tenincense.principles.demo5;
+
+/**
+ * @version v1.0
+ * @ClassName: Company
+ * @Description: 媒体公司类
+ * @Author: TenIncense
+ */
+public class Company {
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public Company(String name) {
+        this.name = name;
+    }
+}</code></pre>
+<h5 id="4、经纪人类（Agent）"><a href="#4、经纪人类（Agent）" class="headerlink" title="4、经纪人类（Agent）"></a>4、经纪人类（Agent）</h5><pre><code class="java">package com.tenincense.principles.demo5;
+
+/**
+ * @version v1.0
+ * @ClassName: Agent
+ * @Description: 经纪人类
+ * @Author: TenIncense
+ */
+public class Agent {
+    private Star star;
+    private Fans fans;
+    private Company company;
+
+    public void setStar(Star star) {
+        this.star = star;
+    }
+
+    public void setFans(Fans fans) {
+        this.fans = fans;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    //和粉丝见面的方法
+    public void meeting(){
+        System.out.println(star.getName() + &quot;和粉丝&quot; + fans.getName() + &quot;见面&quot;);
+    }
+
+    //和媒体公司洽谈的方法
+    public void business(){
+        System.out.println(star.getName() + &quot;和&quot; + company.getName() + &quot;洽谈&quot;);
+    }
+}</code></pre>
+<h5 id="5、测试类-2"><a href="#5、测试类-2" class="headerlink" title="5、测试类"></a>5、测试类</h5><pre><code class="java">package com.tenincense.principles.demo5;
+
+/**
+ * @version v1.0
+ * @ClassName: Client
+ * @Description: 测试类
+ * @Author: TenIncense
+ */
+public class Client {
+    public static void main(String[] args) {
+        //创建经纪人类
+        Agent agent = new Agent();
+        //创建明星对象
+        Star star = new Star(&quot;林青霞&quot;);
+        agent.setStar(star);
+        //创建粉丝对象
+        Fans fans = new Fans(&quot;李四&quot;);
+        agent.setFans(fans);
+        //创建媒体公司对象
+        Company company = new Company(&quot;黑马媒体公司&quot;);
+        agent.setCompany(company);
+
+        agent.meeting();//和粉丝见面
+        agent.business();//和媒体公司洽谈业务
+    }
+}</code></pre>
+<h3 id="6、合成复用原则"><a href="#6、合成复用原则" class="headerlink" title="6、合成复用原则"></a>6、合成复用原则</h3><blockquote>
+<p>合成复用原则是指：尽量先使用<code>组合</code>或者<code>聚合</code>等关联关系来实现，其次才考虑使用继承关系来实现。 通常类的复用分为<code>继承复用</code>和<code>合成复用</code>两种。</p>
+</blockquote>
+<ul>
+<li><p>继承复用虽然有简单和易实现的优点，但它也存在以下<code>缺点</code>：</p>
+<ol>
+<li>继承复用破坏了类的封装性。因为继承会将父类的实现细节暴露给子类，父类对子类是透明的，所以这种复用又称为“<code>白箱</code>”复用。</li>
+<li>子类与父类的<code>耦合度高</code>。父类的实现的任何改变都会导致子类的实现发生变化，这不利于类的扩展 与维护。</li>
+<li>它限制了复用的灵活性。从父类继承而来的实现是<code>静态</code>的，在编译时已经定义，所以在运行时不可能发生变化。</li>
+</ol>
+</li>
+<li><p>采用组合或聚合复用时，可以将已有对象纳入新对象中，使之成为新对象的一部分，新对象可以调用已 有对象的功能，它有以下<code>优点</code>：</p>
+<ol>
+<li>它维持了类的封装性。因为成分对象的内部细节是新对象看不见的，所以这种复用又称为“<code>黑箱</code>” 复用。</li>
+<li>对象间的<code>耦合度低</code>。可以在类的成员位置声明抽象。</li>
+<li>复用的灵活性高。这种复用可以在运行时动态进行，新对象可以动态地引用与成分对象类型相同的 对象。</li>
+</ol>
+</li>
+</ul>
+<p>下面看一个例子来理解合成复用原则</p>
+<p>【例】汽车分类管理程序</p>
+<p>汽车按“动力源”划分可分为汽油汽车、电动汽车等；按“颜色”划分可分为白色汽车、黑色汽车和红色汽车等。如果同时考虑这两种分类，其组合就很多。类图如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204101218879.png" alt></p>
+<p>从上面类图我们可以看到使用继承复用产生了很多子类，如果现在又有新的动力源或者新的颜色的话， 就需要再定义新的类。我们试着将继承复用改为<code>聚合复用</code>看一下。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204101224386.png" alt></p>
+<h2 id="四、创建者模式"><a href="#四、创建者模式" class="headerlink" title="四、创建者模式"></a>四、创建者模式</h2><ul>
+<li>创建型模式的主要关注点是“怎样创建对象？”，它的主要特点是“<code>将对象的创建与使用分离</code>”。</li>
+<li>这样可以降低系统的耦合度，<code>使用者不需要关注对象的创建细节</code>。</li>
+</ul>
+<p>创建型模式分为：</p>
+<ul>
+<li>单例模式 </li>
+<li>工厂方法模式 </li>
+<li>抽象工厂模式 </li>
+<li>原型模式 </li>
+<li>建造者模式</li>
+</ul>
+<h3 id="1、单例模式"><a href="#1、单例模式" class="headerlink" title="1、单例模式"></a>1、单例模式</h3><p>单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个<code>单一</code>的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<h4 id="1-1、单例模式的结构"><a href="#1-1、单例模式的结构" class="headerlink" title="1.1、单例模式的结构"></a>1.1、单例模式的结构</h4><p>单例模式的主要有以下角色：</p>
+<ul>
+<li><code>单例类</code>。只能创建一个实例的类 </li>
+<li><code>访问类</code>。使用单例类</li>
+</ul>
+<h4 id="1-2、单例模式的实现"><a href="#1-2、单例模式的实现" class="headerlink" title="1.2、单例模式的实现"></a>1.2、单例模式的实现</h4><blockquote>
+<p>单例设计模式分类两种：</p>
+<ul>
+<li><code>饿汉式</code>：类加载就会导致该单实例对象被创建</li>
+<li><code>懒汉式</code>：类加载不会导致该单实例对象被创建，而是首次使用该对象时才会创建</li>
+</ul>
+</blockquote>
+<h5 id="1-饿汉式-方式1（静态变量方式）"><a href="#1-饿汉式-方式1（静态变量方式）" class="headerlink" title="1.饿汉式-方式1（静态变量方式）"></a>1.饿汉式-方式1（静态变量方式）</h5><pre><code class="java">package com.tenincense.pattern.singleton.demo1;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 饿汉式: 静态成员变量
+ * @Author: TenIncense
+ */
+public class Singleton {
+
+    //1. 私有构造方法
+    private Singleton(){}
+
+    //2. 在本类中创建本类对象
+    private static Singleton instance = new Singleton();
+
+    //3. 提供一个公共的访问方式,让外界获取该对象
+    public static Singleton getInstance(){
+        return instance;
+    }
+}</code></pre>
+<p>测试类验证</p>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo1;
+
+/**
+ * @version v1.0
+ * @ClassName: Client
+ * @Description: 测试类
+ * @Author: TenIncense
+ */
+public class Client {
+    public static void main(String[] args) {
+        //创建 Singleton 类的对象
+        Singleton instance = Singleton.getInstance();
+
+        Singleton instance1 = Singleton.getInstance();
+
+        //判断获取到的两个是否是同一个对象
+        System.out.println(instance == instance1); //true
+    }
+
+}</code></pre>
+<p><strong><code>说明：</code></strong></p>
+<p>该方式在成员位置声明Singleton类型的静态变量，并创建Singleton类的对象instance。 instance对象是随着类的加载而创建的。如果该对象足够大的话，而一直没有使用就会造成内存的浪费。</p>
+<h5 id="2-饿汉式-方式2（静态代码块方式）"><a href="#2-饿汉式-方式2（静态代码块方式）" class="headerlink" title="2.饿汉式-方式2（静态代码块方式）"></a>2.饿汉式-方式2（静态代码块方式）</h5><pre><code class="java">package com.tenincense.pattern.singleton.demo2;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 饿汉式: 静态代码块
+ * @Author: TenIncense
+ */
+public class Singleton {
+
+    //私有构造方法
+    private Singleton(){}
+
+    //声明 Singleton 类型的变量
+    private static Singleton instance; //null
+
+    //在静态代码块中进行赋值
+    static {
+        instance = new Singleton();
+    }
+
+    //对外提供获取该类对象的方法
+    public static Singleton getInstance(){
+        return instance;
+    }
+}</code></pre>
+<p><strong><code>说明：</code></strong></p>
+<p>该方式在成员位置声明Singleton类型的静态变量，而对象的创建是在静态代码块中，也是随着类的加载而创建。所以和饿汉式的方式1基本上一样，当然该方式也存在内存浪费问题。</p>
+<h5 id="3-懒汉式-方式1（线程不安全）"><a href="#3-懒汉式-方式1（线程不安全）" class="headerlink" title="3.懒汉式-方式1（线程不安全）"></a>3.懒汉式-方式1（线程不安全）</h5><pre><code class="java">package com.tenincense.pattern.singleton.demo3;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 懒汉式 线程不安全
+ * @Author: TenIncense
+ */
+public class Singleton {
+
+    //私有构造方法
+    private Singleton(){}
+
+    //声明 Singleton 类型的变量 instance
+    private static Singleton instance;  //只是声明一个该类型的变量,并没有进行赋值
+
+    //对外提供访问方式
+    public static Singleton getInstance() {
+        //判断 instance 是否为 null,如果为 null,说明还没有创建 Singleton 类的对象
+        //如果没有,创建一个并返回,如果有,直接返回
+        if (instance == null) {
+            //线程 1 等待,线程 2 获取 cpu 的执行权,也会进入到该判断里面
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}</code></pre>
+<p><strong><code>说明：</code></strong></p>
+<p>从上面代码我们可以看出该方式在成员位置声明Singleton类型的静态变量，并没有进行对象的 赋值操作，那么什么时候赋值的呢？当调用getInstance()方法获取Singleton类的对象的时 候才创建Singleton类的对象，这样就实现了懒加载的效果。但是，如果是多线程环境，会出现 线程安全问题。</p>
+<h5 id="4-懒汉式-方式2（线程安全）"><a href="#4-懒汉式-方式2（线程安全）" class="headerlink" title="4.懒汉式-方式2（线程安全）"></a>4.懒汉式-方式2（线程安全）</h5><pre><code class="java">package com.tenincense.pattern.singleton.demo3;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 懒汉式 线程安全
+ * @Author: TenIncense
+ */
+public class Singleton {
+
+    //私有构造方法
+    private Singleton(){}
+
+    //声明 Singleton 类型的变量 instance
+    private static Singleton instance;  //只是声明一个该类型的变量,并没有进行赋值
+
+    //对外提供访问方式
+    public static synchronized Singleton getInstance() {
+        //判断 instance 是否为 null,如果为 null,说明还没有创建 Singleton 类的对象
+        //如果没有,创建一个并返回,如果有,直接返回
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}</code></pre>
+<p><strong><code>说明：</code></strong></p>
+<p>该方式也实现了懒加载效果，同时又解决了线程安全问题。但是在getInstance()方法上添加了 synchronized关键字，导致该方法的执行效果特别低。从上面代码我们可以看出，其实就是在 初始化instance的时候才会出现线程安全问题，一旦初始化完成就不存在了。</p>
+<h5 id="5-懒汉式-方式3（双重检查锁）"><a href="#5-懒汉式-方式3（双重检查锁）" class="headerlink" title="5.懒汉式-方式3（双重检查锁）"></a>5.懒汉式-方式3（双重检查锁）</h5><p>再来讨论一下懒汉模式中加锁的问题，对于 getInstance() 方法来说，绝大部分的操作都是<code>读操作</code>，读操作是线程安全的，所以我们没必让每个线程必须持有锁才能调用该方法，我们需要调整加锁的时机。由此也产生了一种新的实现模式：<code>双重检查锁模式</code></p>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo4;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 懒汉式 : 双重检查锁方式
+ * @Author: TenIncense
+ */
+public class Singleton {
+
+    //私有构造方法
+    private Singleton(){}
+
+    //声明 Singleton 类型的变量
+    private static Singleton instance;
+
+    //对外提供公共的访问方式
+    public static Singleton getInstance(){
+        //第一次判断 ,如果 instance 的值不为 null ,不需要抢占锁,直接返回对象
+        if (instance == null){
+            synchronized (Singleton.class){
+                //第二次判断,即抢到锁之后再次判断是否为null
+                if (instance == null){
+                    instance = new Singleton();
+                }
+            }
+        }
+
+        return instance;
+    }
+}</code></pre>
+<p>双重检查锁模式是一种非常好的单例实现模式，解决了单例、性能、线程安全问题，上面的双重检 测锁模式看上去完美无缺，其实是存在问题，在多线程的情况下，可能会出现空指针问题，出现问题的原因是JVM在实例化对象的时候会进行优化和指令重排序操作。</p>
+<p>要解决双重检查锁模式带来空指针异常的问题，只需要使用 <code>volatile</code> 关键字 , volatile 关键字可以保证可见性和<code>有序性</code>。</p>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo4;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 懒汉式 : 双重检查锁方式
+ * @Author: TenIncense
+ */
+public class Singleton {
+
+    //私有构造方法
+    private Singleton(){}
+
+    //声明 Singleton 类型的变量
+    private static volatile Singleton instance;
+
+    //对外提供公共的访问方式
+    public static Singleton getInstance(){
+        //第一次判断 ,如果 instance 的值不为 null ,不需要抢占锁,直接返回对象
+        if (instance == null){
+            synchronized (Singleton.class){
+                //第二次判断
+                if (instance == null){
+                    instance = new Singleton();
+                }
+            }
+        }
+
+        return instance;
+    }
+}</code></pre>
+<blockquote>
+<p><strong>小结：</strong></p>
+<p>添加 <code>volatile</code> 关键字之后的<code>双重检查锁模式</code>是一种比较好的单例实现模式，能够保证在多线程的情况下线程安全也不会有性能问题。</p>
+</blockquote>
+<h5 id="6-懒汉式-方式4（静态内部类方式）"><a href="#6-懒汉式-方式4（静态内部类方式）" class="headerlink" title="6.懒汉式-方式4（静态内部类方式）"></a>6.懒汉式-方式4（静态内部类方式）</h5><p>静态内部类单例模式中实例由内部类创建，由于 <code>JVM 在加载外部类的过程中, 是不会加载静态内部类的, 只有内部类的属性/方法被调用时才会被加载, 并初始化其静态属性</code>。静态属性由于被 static 修饰，保证只被<code>实例化一次</code>，并且严格保证实例化顺序。</p>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo5;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 懒汉式 : 静态内部类方式
+ * @Author: TenIncense
+ */
+public class Singleton {
+
+    //私有构造方法
+    private Singleton(){}
+
+    //定义一个静态内部类
+    private static class SingletonHolder{
+        //在内部类中声明并初始化外部类的对象
+        private static final Singleton INSTANCE = new Singleton();
+    }
+
+    //提供公共的访问方式
+    public static Singleton getInstance(){
+        return SingletonHolder.INSTANCE;
+    }
+}</code></pre>
+<p><strong><code>说明：</code></strong></p>
+<p>第一次加载Singleton类时不会去初始化INSTANCE，只有第一次调用getInstance，虚拟机加载SingletonHolder并初始化INSTANCE，这样不仅能确保线程安全，也能保证 Singleton 类的唯一性。</p>
+<blockquote>
+<p><strong>小结：</strong></p>
+<p>静态内部类单例模式是一种优秀的单例模式，是开源项目中比较常用的一种单例模式。在没有加任 何锁的情况下，保证了多线程下的安全，并且没有任何性能影响和空间的浪费。</p>
+</blockquote>
+<h5 id="7-饿汉式-枚举方式"><a href="#7-饿汉式-枚举方式" class="headerlink" title="7.饿汉式-枚举方式"></a>7.饿汉式-枚举方式</h5><p>枚举类实现单例模式是极力推荐的单例实现模式，因为枚举类型是线程安全的，并且只会装载一 次，设计者充分的利用了枚举的这个特性来实现单例模式，枚举的写法非常简单，而且枚举类型是 所用单例实现中唯一一种不会被破坏的单例实现模式。</p>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo6;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 饿汉式 : 枚举实现方式
+ * @Author: TenIncense
+ */
+public enum Singleton {
+    INSTANCE;
+}</code></pre>
+<p>测试</p>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo6;
+
+/**
+ * @version v1.0
+ * @ClassName: Client
+ * @Description: 测试类
+ * @Author: TenIncense
+ */
+public class Client {
+    public static void main(String[] args) {
+        Singleton instance = Singleton.INSTANCE;
+        Singleton instance1 = Singleton.INSTANCE;
+
+        System.out.println(instance == instance1); //true
+
+    }
+}</code></pre>
+<p><strong><code>说明：</code></strong></p>
+<p>枚举方式属于恶汉式方式。在不考虑浪费内存空间的情况下，可以优先考虑枚举方式。</p>
+<h4 id="1-3、存在的问题"><a href="#1-3、存在的问题" class="headerlink" title="1.3、存在的问题"></a>1.3、存在的问题</h4><h5 id="破坏单例模式："><a href="#破坏单例模式：" class="headerlink" title="破坏单例模式："></a>破坏单例模式：</h5><p>使上面定义的单例类（Singleton）可以创建多个对象，枚举方式除外。有两种方式，分别是<code>序列化</code>和<code>反射</code>。</p>
+<h6 id="1、序列化反序列化"><a href="#1、序列化反序列化" class="headerlink" title="1、序列化反序列化"></a>1、序列化反序列化</h6><ul>
+<li><p>序列化反序列化</p>
+<ul>
+<li>Singleton类：</li>
+</ul>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo7;
+
+import java.io.Serializable;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 懒汉式 : 静态内部类方式
+ * @Author: TenIncense
+ */
+public class Singleton implements Serializable {
+
+    private static final long serialVersionUID = -828899860348748658L;
+
+    //私有构造方法
+    private Singleton(){}
+
+    //定义一个静态内部类
+    private static class SingletonHolder{
+        //在内部类中声明并初始化外部类的对象
+        private static final Singleton INSTANCE = new Singleton();
+    }
+
+    //提供公共的访问方式
+    public static Singleton getInstance(){
+        return SingletonHolder.INSTANCE;
+    }
+}</code></pre>
+<ul>
+<li>测试类</li>
+</ul>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo7;
+
+import java.io.*;
+
+/**
+ * @version v1.0
+ * @ClassName: Client
+ * @Description: 测试类
+ *          测试使用反射破坏单例模式
+ *
+ *          文件路径: /Users/shixiang/Test/File
+ * @Author: TenIncense
+ */
+public class Client {
+    public static void main(String[] args) throws Exception {
+        //writeObjectToFile();
+        readObjectFromFile();   //com.tenincense.pattern.singleton.demo7.Singleton@4dd8dc3
+        readObjectFromFile();   //com.tenincense.pattern.singleton.demo7.Singleton@6d03e736
+    }
+
+    //从文件中读取数据(对象)
+    public static void readObjectFromFile() throws Exception {
+        //1. 创建对象输入流对象
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(&quot;/Users/shixiang/Test/File/a.txt&quot;));
+        //2. 读取对象
+        Singleton instance = (Singleton) ois.readObject();
+
+        System.out.println(instance);
+
+        //3. 释放资源
+        ois.close();
+    }
+
+    //向文件中写数据(对象)
+    public static void writeObjectToFile() throws Exception {
+        //1. 获取 Singleton 对象
+        Singleton instance = Singleton.getInstance();
+        //2. 创建对象输出流对象
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;/Users/shixiang/Test/File/a.txt&quot;));
+        //3. 写对象
+        oos.writeObject(instance);
+        //4. 释放资源
+        oos.close();
+    }
+}</code></pre>
+<blockquote>
+<p>上面代码中打印出来的两个对象不是同一对象，表明序列化和反序列化已经破坏了单例设计模式</p>
+</blockquote>
+</li>
+</ul>
+<h6 id="2、反射"><a href="#2、反射" class="headerlink" title="2、反射"></a>2、反射</h6><ul>
+<li><p>反射</p>
+<ul>
+<li>Singleton类：</li>
+</ul>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo5;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 懒汉式 : 静态内部类方式
+ * @Author: TenIncense
+ */
+public class Singleton {
+
+    //私有构造方法
+    private Singleton(){}
+
+    //定义一个静态内部类
+    private static class SingletonHolder{
+        //在内部类中声明并初始化外部类的对象
+        private static final Singleton INSTANCE = new Singleton();
+    }
+
+    //提供公共的访问方式
+    public static Singleton getInstance(){
+        return SingletonHolder.INSTANCE;
+    }
+}</code></pre>
+<ul>
+<li>测试类</li>
+</ul>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo8;
+
+import java.lang.reflect.Constructor;
+
+/**
+ * @version v1.0
+ * @ClassName: Client
+ * @Description:
+ *        测试使用反射破坏单例模式
+ * @Author: TenIncense
+ */
+public class Client {
+    public static void main(String[] args) throws Exception {
+        //1. 获取 Singleton 的字节码对象
+        Class&lt;Singleton&gt; clazz = Singleton.class;
+        //2. 获取无参构造方法对象
+        Constructor&lt;Singleton&gt; cons = clazz.getDeclaredConstructor();
+        //3. 取消访问检查(打破封装)
+        cons.setAccessible(true);
+        //4. 创建Singleton对象
+        Singleton s1 = (Singleton)cons.newInstance();
+        Singleton s2 = (Singleton)cons.newInstance();
+
+        //如果返回的是 true,说明并没有破坏单例模式,如果是 false,说明破坏了单例模式
+        System.out.println(s1 == s2);   //false
+    }
+}</code></pre>
+<blockquote>
+<p>上面代码运行结果是 false，表明反射破坏了单例模式</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p><code>注意</code>：枚举方式不会出现这两个问题。</p>
+</blockquote>
+<h4 id="1-4、问题的解决"><a href="#1-4、问题的解决" class="headerlink" title="1.4、问题的解决"></a>1.4、问题的解决</h4><h5 id="1、序列化反序列化破坏单例模式解决方法"><a href="#1、序列化反序列化破坏单例模式解决方法" class="headerlink" title="1、序列化反序列化破坏单例模式解决方法"></a>1、序列化反序列化破坏单例模式解决方法</h5><ul>
+<li><p>序列化、反序列方式破坏单例模式的解决方法</p>
+<p>在Singleton类中添加 <code>readResolve()</code> 方法，在反序列化时被反射调用，如果定义了这个方法， 就返回这个方法的值，如果没有定义，则返回新new出来的对象。</p>
+<ul>
+<li>Singleton类：</li>
+</ul>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo7;
+
+import java.io.Serializable;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 懒汉式 : 静态内部类方式
+ * @Author: TenIncense
+ */
+public class Singleton implements Serializable {
+
+    private static final long serialVersionUID = -828899860348748658L;
+
+    //私有构造方法
+    private Singleton(){}
+
+    //定义一个静态内部类
+    private static class SingletonHolder{
+        //在内部类中声明并初始化外部类的对象
+        private static final Singleton INSTANCE = new Singleton();
+    }
+
+    //提供公共的访问方式
+    public static Singleton getInstance(){
+        return SingletonHolder.INSTANCE;
+    }
+
+    /**
+     * 下面是为了解决序列化反序列化破解单例模式
+     */
+    //当进行反序列化时,会自动调用该方法,将该方法的返回值直接返回
+    public Object readResolve(){
+        return SingletonHolder.INSTANCE;
+    }
+}</code></pre>
+<ul>
+<li>测试类</li>
+</ul>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo7;
+
+import java.io.*;
+
+/**
+ * @version v1.0
+ * @ClassName: Client
+ * @Description: 测试类
+ *          测试使用反射破坏单例模式
+ *
+ *          文件路径: /Users/shixiang/Test/File
+ * @Author: TenIncense
+ */
+public class Client {
+    public static void main(String[] args) throws Exception {
+        //writeObjectToFile();
+        readObjectFromFile(); //com.tenincense.pattern.singleton.demo7.Singleton@4dd8dc3
+        readObjectFromFile(); //com.tenincense.pattern.singleton.demo7.Singleton@4dd8dc3
+    }
+
+    //从文件中读取数据(对象)
+    public static void readObjectFromFile() throws Exception {
+        //1. 创建对象输入流对象
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(&quot;/Users/shixiang/Test/File/a.txt&quot;));
+        //2. 读取对象
+        Singleton instance = (Singleton) ois.readObject();
+
+        System.out.println(instance);
+
+        //3. 释放资源
+        ois.close();
+    }
+
+    //向文件中写数据(对象)
+    public static void writeObjectToFile() throws Exception {
+        //1. 获取 Singleton 对象
+        Singleton instance = Singleton.getInstance();
+        //2. 创建对象输出流对象
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;/Users/shixiang/Test/File/a.txt&quot;));
+        //3. 写对象
+        oos.writeObject(instance);
+        //4. 释放资源
+        oos.close();
+    }
+}</code></pre>
+<blockquote>
+<p>看到反序列化的两个对象的内存地址是一样的，是同一对象</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="源码解析："><a href="#源码解析：" class="headerlink" title="源码解析："></a>源码解析：</h5><ul>
+<li><p>ObjectInputStream类</p>
+<pre><code class="java">public final Object readObject() throws IOException, ClassNotFoundException{
+    ...
+    // if nested read, passHandle contains handle of enclosing object 
+  int outerHandle = passHandle; 
+  try { Object obj = readObject0(false);//重点查看readObject0方法 
+    ......
+}
+
+private Object readObject0(boolean unshared) throws IOException { 
+  ...
+    try { 
+    switch (tc) { 
+      ...
+            case TC_OBJECT:
+                return checkResolve(readOrdinaryObject(unshared));//重点 查看readOrdinaryObject方法 
+        ...
+        } 
+  } finally { 
+    depth--; 
+    bin.setBlockDataMode(oldMode); 
+  }
+}
+
+private Object readOrdinaryObject(boolean unshared) throws IOException {
+    ...
+    //isInstantiable 返回true，执行 desc.newInstance()，通过反射创建新的单例 类，
+  obj = desc.isInstantiable() ? desc.newInstance() : null; ...
+    // 在Singleton类中添加 readResolve 方法后 desc.hasReadResolveMethod() 方法执行结果为true 
+  if (obj != null &amp;&amp; handles.lookupException(passHandle) == null &amp;&amp; desc.hasReadResolveMethod()) { 
+      // 通过反射调用 Singleton 类中的 readResolve 方法，将返回值赋值给rep变 量 
+      // 这样多次调用ObjectInputStream类中的readObject方法，继而就会调用我们定义的readResolve方法，所以返回的是同一个对象。 
+    Object rep = desc.invokeReadResolve(obj); 
+    ...
+    } 
+  return obj; 
+}</code></pre>
+</li>
+</ul>
+<h5 id="2、反射方式破解单例的解决方法"><a href="#2、反射方式破解单例的解决方法" class="headerlink" title="2、反射方式破解单例的解决方法"></a>2、反射方式破解单例的解决方法</h5><ul>
+<li><p>Singleton类：</p>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo8;
+
+import java.io.Serializable;
+
+/**
+ * @version v1.0
+ * @ClassName: Singleton
+ * @Description: 懒汉式 : 静态内部类方式
+ * @Author: TenIncense
+ */
+public class Singleton {
+    private static boolean flag = false;
+
+    //私有构造方法
+    private Singleton(){
+        synchronized (Singleton.class) {
+            //判断 flag 的值是否是 true,如果是 true,说明是非第一次访问,直接抛一个异常,如果是 false,说明第一次访问
+            if (flag){
+                throw new RuntimeException(&quot;不能创建多个对象&quot;);
+            }
+            //将 flag 的值设置为 true
+            flag = true;
+        }
+    }
+
+    //定义一个静态内部类
+    private static class SingletonHolder{
+        //在内部类中声明并初始化外部类的对象
+        private static final Singleton INSTANCE = new Singleton();
+    }
+
+    //提供公共的访问方式
+    public static Singleton getInstance(){
+        return SingletonHolder.INSTANCE;
+    }
+}</code></pre>
+</li>
+<li><p>测试类</p>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo8;
+
+import java.lang.reflect.Constructor;
+
+/**
+ * @version v1.0
+ * @ClassName: Client
+ * @Description:
+ *        测试使用反射破坏单例模式
+ * @Author: TenIncense
+ */
+public class Client {
+    public static void main(String[] args) throws Exception {
+        //1. 获取 Singleton 的字节码对象
+        Class&lt;Singleton&gt; clazz = Singleton.class;
+        //2. 获取无参构造方法对象
+        Constructor&lt;Singleton&gt; cons = clazz.getDeclaredConstructor();
+        //3. 取消访问检查(打破封装)
+        cons.setAccessible(true);
+        //4. 创建Singleton对象
+        Singleton s1 = (Singleton)cons.newInstance();
+        Singleton s2 = (Singleton)cons.newInstance();
+
+        System.out.println(s1 == s2);   
+    }
+}</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202204111728919.png" alt></p>
+</li>
+</ul>
+<p><strong><code>说明:</code></strong></p>
+<p>这种方式比较好理解。当通过反射方式调用构造方法进行创建创建时，直接抛异常。不运行此中操作。</p>
+<h4 id="1-5、JDK源码解析-Runtime类"><a href="#1-5、JDK源码解析-Runtime类" class="headerlink" title="1.5、JDK源码解析-Runtime类"></a>1.5、JDK源码解析-Runtime类</h4><blockquote>
+<p>Runtime类就是使用的单例设计模式。</p>
+</blockquote>
+<ol>
+<li><p>通过源代码查看使用的是哪儿种单例模式</p>
+<pre><code class="java">public class Runtime {
+    private static Runtime currentRuntime = new Runtime();
+
+    /**
+     * Returns the runtime object associated with the current Java application.
+     * Most of the methods of class &lt;code&gt;Runtime&lt;/code&gt; are instance
+     * methods and must be invoked with respect to the current runtime object.
+     *
+     * @return  the &lt;code&gt;Runtime&lt;/code&gt; object associated with the current
+     *          Java application.
+     */
+    public static Runtime getRuntime() {
+        return currentRuntime;
+    }
+
+    /** Don&#39;t let anyone else instantiate this class */
+    private Runtime() {}
+  ...
+}</code></pre>
+<p>从上面源代码中可以看出Runtime类使用的是<code>饿汉式（静态属性）</code>方式来实现单例模式的。</p>
+</li>
+<li><p>使用Runtime类中的方法</p>
+<pre><code class="java">package com.tenincense.pattern.singleton.demo9;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * @version v1.0
+ * @ClassName: RuntimeDemo
+ * @Description: 测试Runtime类
+ * @Author: TenIncense
+ */
+public class RuntimeDemo {
+    public static void main(String[] args) throws IOException {
+        //获取 Runtime 类的对象
+        Runtime runtime = Runtime.getRuntime();
+
+        //调用 runtime 的方法exec,参数要的是一个命令
+        Process process = runtime.exec(&quot;ifconfig&quot;);    //windows系统命令使用 ipconfig
+        //调用 process 对象的获取输入流的方法
+        InputStream is = process.getInputStream();
+        byte[] arr = new byte[1024 * 1024 * 100];
+        //读取数据
+        int len = is.read(arr); //返回读到的字节的个数
+        //将字节数组转换为字符串输出到控制台
+        System.out.println(new String(arr,0,len,&quot;GBK&quot;));
+    }
+}</code></pre>
+</li>
+</ol>
+<hr>
+<h3 id="2、工厂模式"><a href="#2、工厂模式" class="headerlink" title="2、工厂模式"></a>2、工厂模式</h3><h4 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h4><ul>
+<li><p>需求：设计一个咖啡店点餐系统。</p>
+<ul>
+<li>设计一个咖啡类（Coffee），并定义其两个子类（美式咖啡【AmericanCoffee】和拿铁咖啡 【LatteCoffee】）；再设计一个咖啡店类（CoffeeStore），咖啡店具有点咖啡的功能。</li>
+</ul>
+</li>
+<li><p>具体类的设计如下：</p>
+</li>
+</ul>
+<h4 id="2、简单工厂模式"><a href="#2、简单工厂模式" class="headerlink" title="2、简单工厂模式"></a>2、简单工厂模式</h4><h4 id="3、工厂方法模式"><a href="#3、工厂方法模式" class="headerlink" title="3、工厂方法模式"></a>3、工厂方法模式</h4><h4 id="4、抽象工厂模式"><a href="#4、抽象工厂模式" class="headerlink" title="4、抽象工厂模式"></a>4、抽象工厂模式</h4><h4 id="5、模式扩展"><a href="#5、模式扩展" class="headerlink" title="5、模式扩展"></a>5、模式扩展</h4><h4 id="6、JDK源码解析-Collection-iterator-方法"><a href="#6、JDK源码解析-Collection-iterator-方法" class="headerlink" title="6、JDK源码解析-Collection.iterator 方法"></a>6、JDK源码解析-Collection.iterator 方法</h4><h3 id="3、原型模式"><a href="#3、原型模式" class="headerlink" title="3、原型模式"></a>3、原型模式</h3><h3 id="4、建造者模式"><a href="#4、建造者模式" class="headerlink" title="4、建造者模式"></a>4、建造者模式</h3><h2 id="五、结构型模式"><a href="#五、结构型模式" class="headerlink" title="五、结构型模式"></a>五、结构型模式</h2><h3 id="1、代理模式"><a href="#1、代理模式" class="headerlink" title="1、代理模式"></a>1、代理模式</h3><h3 id="2、适配器模式"><a href="#2、适配器模式" class="headerlink" title="2、适配器模式"></a>2、适配器模式</h3><h3 id="3、桥接模式"><a href="#3、桥接模式" class="headerlink" title="3、桥接模式"></a>3、桥接模式</h3><h3 id="4、装饰者模式"><a href="#4、装饰者模式" class="headerlink" title="4、装饰者模式"></a>4、装饰者模式</h3><h3 id="5、外观模式"><a href="#5、外观模式" class="headerlink" title="5、外观模式"></a>5、外观模式</h3><h3 id="6、享元模式"><a href="#6、享元模式" class="headerlink" title="6、享元模式"></a>6、享元模式</h3><h3 id="7、组合模式"><a href="#7、组合模式" class="headerlink" title="7、组合模式"></a>7、组合模式</h3><h2 id="六、行为型模式"><a href="#六、行为型模式" class="headerlink" title="六、行为型模式"></a>六、行为型模式</h2><h3 id="1、模板方法模式"><a href="#1、模板方法模式" class="headerlink" title="1、模板方法模式"></a>1、模板方法模式</h3><h3 id="2、策略模式"><a href="#2、策略模式" class="headerlink" title="2、策略模式"></a>2、策略模式</h3><h3 id="3、命令模式"><a href="#3、命令模式" class="headerlink" title="3、命令模式"></a>3、命令模式</h3><h3 id="4、职责链模式"><a href="#4、职责链模式" class="headerlink" title="4、职责链模式"></a>4、职责链模式</h3><h3 id="5、状态模式"><a href="#5、状态模式" class="headerlink" title="5、状态模式"></a>5、状态模式</h3><h3 id="6、观察者模式"><a href="#6、观察者模式" class="headerlink" title="6、观察者模式"></a>6、观察者模式</h3><h3 id="7、中介者模式"><a href="#7、中介者模式" class="headerlink" title="7、中介者模式"></a>7、中介者模式</h3><h3 id="8、迭代器模式"><a href="#8、迭代器模式" class="headerlink" title="8、迭代器模式"></a>8、迭代器模式</h3><h3 id="9、访问者模式"><a href="#9、访问者模式" class="headerlink" title="9、访问者模式"></a>9、访问者模式</h3><h3 id="10、备忘录模式"><a href="#10、备忘录模式" class="headerlink" title="10、备忘录模式"></a>10、备忘录模式</h3><h3 id="11、解释器模式"><a href="#11、解释器模式" class="headerlink" title="11、解释器模式"></a>11、解释器模式</h3><h2 id="七、自定义-spring-框架"><a href="#七、自定义-spring-框架" class="headerlink" title="七、自定义 spring 框架"></a>七、自定义 spring 框架</h2><h4 id="1、分析-spring-核心功能结构"><a href="#1、分析-spring-核心功能结构" class="headerlink" title="1、分析 spring 核心功能结构"></a>1、分析 spring 核心功能结构</h4><h4 id="2、确定-spring-核心功能使用的设计模式"><a href="#2、确定-spring-核心功能使用的设计模式" class="headerlink" title="2、确定 spring 核心功能使用的设计模式"></a>2、确定 spring 核心功能使用的设计模式</h4><h4 id="3、功能实现"><a href="#3、功能实现" class="headerlink" title="3、功能实现"></a>3、功能实现</h4><h5 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h5>
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/2022/04/16/Apollo分布式配置中心/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                Apollo分布式配置中心</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/2022/04/01/MongDB5-x/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                MongDB5.x</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "GyC3NzMvd0hT9Yyd2hYIC0MN-gzGzoHsz",
+        appKey: "mgOpfzbkHYqU92CV4IDlAUHQ",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+
+
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="" class="profile gravatar"><img src="" itemprop="image" alt="" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="" itemprop="url" rel="author"></a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i></p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 TenIncense<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2018</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/custom/avatar.jpg">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">さくら荘そのTenIncense</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="http://github.com/honjun" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="http://weibo.com/mashirozx?is_all=1" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+        <a href="https://wpa.qq.com/msgrd?v=3&uin=954655431&site=qq&menu=yes" class="fa fa-qq" target="_blank" style="color: #25c6fe; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/categories/技术/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  技术
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/生活/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  生活
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/资源/">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  资源
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/随想/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  随想
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/转载/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  转载
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/tags/悦读/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags/图集/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/client/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-android faa-vertical" aria-hidden="true"></i>
+            客户端
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/atom.xml">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+            RSS
+          </span>
+        </a>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
+</html>

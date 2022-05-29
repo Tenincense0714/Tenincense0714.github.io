@@ -12,7 +12,7 @@
   
   <meta http-equiv="x-dns-prefetch-control" content="on">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
-  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="//fastly.jsdelivr.net">
   <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
   <link rel="stylesheet" href="/css/lib.min.css" media="all">
   <link rel="stylesheet" href="/css/font.css" media="all">
@@ -44,7 +44,7 @@
   mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
   mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
 
-  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.jsdelivr_css_src = "https://fastly.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
   // mashiro_option.float_player_on = true;
 
   /*End of Initial Variables*/
@@ -86,7 +86,7 @@
         <p>起风了，我在等风，也在等你。</p>
         <div class="top-social_v2">
           <li id="bg-pre">
-            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+            <img class="flipx" src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
           </li>
           
             
@@ -111,7 +111,7 @@
             
           
           <li id="bg-next">
-            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+            <img src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
           </li>
         </div>
       </div>
@@ -363,7 +363,7 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/14.jpg);" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/14.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/14.jpg);" src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/14.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
@@ -1318,7 +1318,7 @@ public class MyBenchmark {
 
 <p>可以看到，关闭锁消除优化后，两个方法性能差距差了很多，说明每次都要进入到同步代码块，对性能的影响很大</p>
 <h4 id="（8）锁粗化"><a href="#（8）锁粗化" class="headerlink" title="（8）锁粗化"></a>（8）锁粗化</h4><p>对相同对象多次加锁，导致线程发生多次重入，可以使用锁粗化方式来优化，这不同于之前讲的细分锁的粒度。</p>
-<h3 id="6、wait-notify"><a href="#6、wait-notify" class="headerlink" title="6、wait/notify"></a>6、wait/notify</h3><h4 id="1、原理"><a href="#1、原理" class="headerlink" title="1、原理"></a>1、原理</h4><img width="75%" src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/20220327150847.png">
+<h3 id="6、wait-notify"><a href="#6、wait-notify" class="headerlink" title="6、wait/notify"></a>6、wait/notify</h3><h4 id="1、原理"><a href="#1、原理" class="headerlink" title="1、原理"></a>1、原理</h4><img width="75%" src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/20220327150847.png">
 
 <ul>
 <li><p>锁对象调用wait方法（obj.wait），就会使当前线程进入WaitSet中，变为WAITING状态</p>
@@ -1384,7 +1384,7 @@ synchronized (LOCK) {
 <li>JDK 中，join 的实现、Future 的实现，采用的就是此模式</li>
 <li>因为要等待另一方的结果，因此归类到同步模式</li>
 </ul>
-<img width="75%" src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/image-20220327212856289.png">
+<img width="75%" src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/image-20220327212856289.png">
 
 <h4 id="2、实现"><a href="#2、实现" class="headerlink" title="2、实现"></a>2、实现</h4><pre><code class="java">public class Test2 {
     public static void main(String[] args) {
@@ -1497,7 +1497,7 @@ throws InterruptedException {
 }</code></pre>
 <h4 id="5、扩展-2"><a href="#5、扩展-2" class="headerlink" title="5、扩展 2"></a>5、扩展 2</h4><p>下图中 Futures 就好比居民楼一层的信箱（每个信箱有房间编号），左侧的 t0，t2，t4 就好比等待邮件的居民，右 侧的 t1，t3，t5 就好比邮递员</p>
 <p>如果需要在多个类之间使用 GuardedObject 对象，作为参数传递不是很方便，因此设计一个用来解耦的中间类， 这样不仅能够解耦【结果等待者】和【结果生产者】，还能够同时支持多个任务的管理</p>
-<img width="75%" src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/image-20220329150235737.png">
+<img width="75%" src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/image-20220329150235737.png">
 
 <pre><code class="java">class GuardedObject {
 
@@ -1626,7 +1626,7 @@ class Postman extends Thread {
 <li>消息队列是有容量限制的，满时不会再加入数据，空时不会再消耗数据 </li>
 <li>JDK 中各种阻塞队列，采用的就是这种模式</li>
 </ul>
-<img width="75%" src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/image-20220330192638044.png">
+<img width="75%" src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/image-20220330192638044.png">
 
 
 
@@ -1782,7 +1782,7 @@ LockSupport.unpark(thread);</code></pre>
 <li>线程继续运行并将counter的值设为0</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/Tenincense0714/imgbed/master/img/202203310012290.png" alt></p>
-<p><img src="https://cdn.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202203310056767.png" alt></p>
+<p><img src="https://fastly.jsdelivr.net/gh//Tenincense0714/imgbed@master/img/202203310056767.png" alt></p>
 </li>
 </ul>
 </li>
@@ -1834,7 +1834,7 @@ LockSupport.unpark(thread);</code></pre>
           
             <a href="/2022/03/24/JVM/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/15.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/15.jpg">
+                <img class="lazyload" src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/15.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/15.jpg">
               </div>
               <span class="label">
               Previous Post</span>
@@ -1852,7 +1852,7 @@ LockSupport.unpark(thread);</code></pre>
           
             <a href="/2021/11/26/Redis/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E8%83%8C%E6%99%AF%202/03.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E8%83%8C%E6%99%AF%202/03.jpg">
+                <img class="lazyload" src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E8%83%8C%E6%99%AF%202/03.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E8%83%8C%E6%99%AF%202/03.jpg">
               </div>
               <span class="label">
               Next Post</span>
@@ -1943,8 +1943,8 @@ LockSupport.unpark(thread);</code></pre>
   <div class="site-info">
     <div class="footertext">
       <div class="img-preload">
-        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
-        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+        <img src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
       </div>
       <p style="color: #666666;">&copy 2018</p>
     </div>
@@ -1961,7 +1961,7 @@ LockSupport.unpark(thread);</code></pre>
 
 <!-- <script src="/js/tocbot.js"></script> -->
 <script type="text/javascript" src="/js/lib.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 <script type="text/javascript" src="/js/InsightSearch.js"></script>
 <script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
 <script type="text/javascript" src="/js/zoom.min.js"></script>
@@ -2238,10 +2238,10 @@ $(document).ready(function() {
   <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
 </div>
 <button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+  <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://fastly.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
 <!-- require MetingJS -->
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 <style>
   .aplayer .aplayer-lrc {
     height: 35px;

@@ -390,7 +390,7 @@
           <h2 id="一、原理"><a href="#一、原理" class="headerlink" title="一、原理"></a>一、原理</h2><h3 id="1、MySQL-逻辑分层、存储引擎"><a href="#1、MySQL-逻辑分层、存储引擎" class="headerlink" title="1、MySQL 逻辑分层、存储引擎"></a>1、MySQL 逻辑分层、存储引擎</h3><ul>
 <li>连接层 、服务层 、引擎层 、存储层</li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211143180.png" alt></p>
+<p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211143180.png" alt></p>
 <blockquote>
 <p>InnoDB(MySQL默认) : 事务优先 （适合高并发操作； 行锁）</p>
 <p>MyISAM : 性能优先 （表锁）</p>
@@ -400,9 +400,9 @@
 </ul>
 <pre><code class="sql">show engines;
 show engines \G</code></pre>
-<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211146671.png" alt></p>
+<p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211146671.png" alt></p>
 <h4 id="2-查看当前使用的引擎"><a href="#2-查看当前使用的引擎" class="headerlink" title="2.查看当前使用的引擎"></a>2.查看当前使用的引擎</h4><pre><code class="sql">show variables like &#39;%storage_engine%&#39;;</code></pre>
-<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211151669.png" alt></p>
+<p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211151669.png" alt></p>
 <h4 id="3-指定数据库对象的引擎"><a href="#3-指定数据库对象的引擎" class="headerlink" title="3.指定数据库对象的引擎"></a>3.指定数据库对象的引擎</h4><pre><code class="sql"># 1.use 数据库
 # 2.create 数据库表的时候指定
 # 如
@@ -430,7 +430,7 @@ create table tb (
 </ul>
 </li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211847507.png" alt></p>
+<p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211847507.png" alt></p>
 <ul>
 <li>索引的弊端<ul>
 <li>1.索引本身很大，可以存放在内存/硬盘（通常为硬盘）</li>
@@ -449,7 +449,7 @@ create table tb (
 </ul>
 </li>
 </ul>
-<h2 id="三、B树"><a href="#三、B树" class="headerlink" title="三、B树"></a>三、B树</h2><p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211923512.png" alt></p>
+<h2 id="三、B树"><a href="#三、B树" class="headerlink" title="三、B树"></a>三、B树</h2><p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211923512.png" alt></p>
 <h2 id="四、索引"><a href="#四、索引" class="headerlink" title="四、索引"></a>四、索引</h2><h3 id="1、分类"><a href="#1、分类" class="headerlink" title="1、分类"></a>1、分类</h3><ul>
 <li><p><strong>主键索引</strong>：不能重复。id         不能是 null</p>
 </li>
@@ -492,9 +492,9 @@ SHOW INDEX FROM 表名 \G</code></pre>
 <li>b.MySQL 查询优化器会干扰我们的优化</li>
 </ul>
 <p>优化方法，<a href="https://dev.mysql.com/doc/refman/5.5/en/optimization.html" target="_blank" rel="noopener">官网</a></p>
-<p>查询执行计划： EXPLAIN + SQL语句</p>
+<h3 id="EXPLAIN"><a href="#EXPLAIN" class="headerlink" title="EXPLAIN"></a>EXPLAIN</h3><p>查询执行计划： EXPLAIN + SQL语句</p>
 <pre><code class="sql">EXPLAIN SELECT * FROM tb;</code></pre>
-<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205212037432.png" alt></p>
+<p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205212037432.png" alt></p>
 <ul>
 <li>id：编号</li>
 <li>select_type：查询类型</li>
@@ -506,7 +506,7 @@ SHOW INDEX FROM 表名 \G</code></pre>
 <li>rows：优化器预估的记录扫描行数</li>
 <li>Extra：额外的信息</li>
 </ul>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><h4 id="1、准备数据"><a href="#1、准备数据" class="headerlink" title="1、准备数据"></a>1、准备数据</h4><p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205212256650.png" alt></p>
+<h4 id="一、id"><a href="#一、id" class="headerlink" title="一、id"></a>一、id</h4><h5 id="1、准备数据"><a href="#1、准备数据" class="headerlink" title="1、准备数据"></a>1、准备数据</h5><p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205212256650.png" alt></p>
 <pre><code class="sql">-- course 表
 CREATE TABLE course (
     cid int(3),
@@ -537,12 +537,11 @@ INSERT INTO teacher VALUES (3,&#39;tl&#39;,3);
 INSERT INTO teacherCard VALUES (1,&#39;tzdesc&#39;);
 INSERT INTO teacherCard VALUES (2,&#39;twdesc&#39;);
 INSERT INTO teacherCard VALUES (3,&#39;tldesc&#39;);</code></pre>
-<h4 id="2、查询"><a href="#2、查询" class="headerlink" title="2、查询"></a>2、查询</h4><p>1、<strong>查询课程编号为 2 或教师证编号为 3 的老师信息</strong> </p>
+<h5 id="2、查询"><a href="#2、查询" class="headerlink" title="2、查询"></a>2、查询</h5><p>1、<strong>查询课程编号为 2 或教师证编号为 3 的老师信息</strong> </p>
 <pre><code class="sql">SELECT t.* FROM teacher t,course c,teacherCard tc WHERE t.tid = c.tid AND t.tcid = tc.tcid AND (c.cid = 2 OR tc.tcid = 3);</code></pre>
 <p>2、<strong>EXPLAIN + SQL</strong> </p>
-<p><img src="https://cdn.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205212317818.png" alt>    </p>
+<p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205212317818.png" alt>    </p>
 <ul>
-<li><code>id</code>：<ul>
 <li>id 值相同：从上往下顺序执行。 <ul>
 <li>t(3条数据) - tc(3条数据) - c(4条数据)</li>
 <li>tc(3条数据) - c(4条数据) - t(6条数据)<ul>
@@ -554,6 +553,89 @@ INSERT INTO teacherCard VALUES (3,&#39;tldesc&#39;);</code></pre>
 </li>
 <li>id 值不同：id 值越大越优先查询</li>
 </ul>
+<p>2、<strong>查询教授 SQL 课程的老师的描述(desc)</strong></p>
+<pre><code class="sql">EXPLAIN SELECT tc.tcdesc FROM teacherCard tc , course c , teacher t WHERE c.tid = t.tid AND t.tcid = tc.tcid AND c.cname = &#39;sql&#39;;</code></pre>
+<ul>
+<li><p>将以上多表查询转为子查询形式：</p>
+<pre><code class="sql">EXPLAIN SELECT tc.tcdesc FROM teacherCard tc WHERE tc.tcid = (SELECT t.tcid FROM teacher t WHERE t.tid = (SELECT tid FROM course c WHERE c.cname = &#39;sql&#39;));</code></pre>
+<p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205232028671.png" alt></p>
+</li>
+</ul>
+<p>子查询+多表：</p>
+<pre><code class="sql">EXPLAIN SELECT t.tname , tc.tcdesc FROM teacher t , teacherCard tc WHERE t.tcid = tc.tcid AND t.tid = (SELECT c.tid FROM course c WHERE cname = &#39;sql&#39;);</code></pre>
+<blockquote>
+<p>id 值不同：id 值越大越优先查询（本质：在嵌套子查询时，先查内层 再查外层）</p>
+<p>id值由相同，又有不同：id 值越大越优先，id 值相同，从上往下 顺序执行</p>
+</blockquote>
+<h4 id="二、select-type：查询类型"><a href="#二、select-type：查询类型" class="headerlink" title="二、select_type：查询类型"></a>二、select_type：查询类型</h4><ul>
+<li><p><code>PRIMARY</code>：包含子查询 SQL 中的主查询（最外层）</p>
+</li>
+<li><p><code>SUBQUERY</code>：包含子查询 SQL 中的子查询（非最外层）</p>
+</li>
+<li><p><code>SIMPLE</code>：简单查询（不包含子查询、union）</p>
+</li>
+<li><p><code>DERIVED</code>：衍生查询（使用到了临时表）</p>
+<ul>
+<li><p>a. 在FROM子查询只有一张表</p>
+<ul>
+<li><pre><code class="sql">-- 如
+EXPLAIN SELECT cname FROM  (SELECT * FROM course WHERE tid in (1,2) ) cr;</code></pre>
+</li>
+</ul>
+</li>
+<li><p>b. 在 FROM 子查询中，如果有 table1 union table2，则 table1 就是 derived ,table2就是 union</p>
+<ul>
+<li><pre><code class="sql">-- 如
+EXPLAIN SELECT cname FROM  (SELECT * FROM course WHERE tid = 1 UNION SELECT * FROM course WHERE tid = 2 ) cr;</code></pre>
+<p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205232245143.png" alt></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><code>UINION</code>：上例</p>
+</li>
+<li><p><code>UNION RESULT</code>：告知开发人员，哪些表之间存在 UNION 查询</p>
+</li>
+</ul>
+<h4 id="三、type：索引类型、类型"><a href="#三、type：索引类型、类型" class="headerlink" title="三、type：索引类型、类型"></a>三、type：索引类型、类型</h4><ul>
+<li>system &gt; const &gt; eq_ref &gt; ref &gt; range &gt; index &gt; all<ul>
+<li>越往左性能越高</li>
+<li>其中：system，const 只是理想情况。实际能达到 ref &gt; range</li>
+<li>要对 type 进行优化的前提：有索引</li>
+</ul>
+</li>
+</ul>
+<h5 id="1-system（忽略）"><a href="#1-system（忽略）" class="headerlink" title="1.system（忽略）"></a>1.system（忽略）</h5><p>只有一条数据的系统表 或 衍生表只有一条数据的主查询</p>
+<pre><code class="sql">CREATE TABLE test01(
+    tid int(3),
+  tname varchar(20)
+);
+
+INSERT INTO test01 VALUES(1,&#39;a&#39;);
+COMMIT;
+--  增加索引
+ALTER TABLE test01 ADD CONSTRAINT tid_pk PRIMARY KEY(tid);
+EXPLAIN SELECT * FROM (SELECT * FROM test01) t WHERE tid = 1;</code></pre>
+<h5 id="2-const"><a href="#2-const" class="headerlink" title="2.const"></a>2.const</h5><p>仅仅能查到一条数据的 SQL，用于 <code>PRIMARY KEY</code> 或 <code>UNIQUE 索引</code> （类型与索引类型有关）</p>
+<pre><code class="sql">EXPLAIN SELECT tid FROM test01 WHERE tid = 1;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202205292038488.png" alt="image-20220528193539219"></p>
+<pre><code class="SQL">ALTER TABLE test01 DROP PRIMARY KEY;
+CREATE INDEX test01_index ON test01(tid);
+EXPLAIN SELECT tid FROM test01 WHERE tid = 1;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202205292039115.png" alt="image-20220528204227990"></p>
+<h5 id="3-eq-ref"><a href="#3-eq-ref" class="headerlink" title="3.eq_ref"></a>3.eq_ref</h5><ul>
+<li><p>唯一性索引：对于每个索引键的查询，返回匹配唯一行数据（有且只有 1 个，不能多、不能为 0）</p>
+<ul>
+<li><p>如 select…from…where name = …</p>
+</li>
+<li><p>给 name 加索引，name 查到的值都是唯一的，如查到 20 条数据，每条数据都是唯一的，张三一个，李四一个等，张三不能有两个，就能达到 eq_ref</p>
+</li>
+</ul>
+</li>
+<li><p>常见于唯一索引和主键索引。</p>
 </li>
 </ul>
 
@@ -605,7 +687,7 @@ INSERT INTO teacherCard VALUES (3,&#39;tldesc&#39;);</code></pre>
           
             <div class="post-nepre half next">
           
-            <a href="/2022/05/18/每日一记/" rel="next">
+            <a href="/2022/05/18/日记/" rel="next">
               <div class="background">
                 <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/09.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/09.jpg">
               </div>

@@ -387,7 +387,7 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h3 id="1、SQL优化之查询是否存在数据"><a href="#1、SQL优化之查询是否存在数据" class="headerlink" title="1、SQL优化之查询是否存在数据"></a>1、SQL优化之查询是否存在数据</h3><ul>
+          <h2 id="一、MYSQL"><a href="#一、MYSQL" class="headerlink" title="一、MYSQL"></a>一、MYSQL</h2><h3 id="1、SQL优化之查询是否存在数据"><a href="#1、SQL优化之查询是否存在数据" class="headerlink" title="1、SQL优化之查询是否存在数据"></a>1、SQL优化之查询是否存在数据</h3><ul>
 <li><p>常见写法</p>
 <pre><code class="sql">SELECT count(*) FROM table WHERE a = 1 AND b = 2</code></pre>
 </li>
@@ -403,28 +403,57 @@
 <hr>
 <h3 id="3、MySQL-中的索引类型"><a href="#3、MySQL-中的索引类型" class="headerlink" title="3、MySQL 中的索引类型"></a>3、MySQL 中的索引类型</h3><p><strong>MySQL索引有哪几种类型？</strong> </p>
 <ul>
-<li><code>主键索引</code>：PRIMARY KEY</li>
-<li><code>普通索引</code>：INDEX</li>
-<li><code>唯一索引</code>：UNIQUE INDEX</li>
-<li><code>全文索引</code>：FULLTEXT INDEX</li>
+<li><p><code>主键索引</code>：PRIMARY KEY    （数据列不允许重复，不允许为 NULL，一个表只能有一个主键）</p>
+</li>
+<li><p><code>唯一索引</code>：UNIQUE INDEX    （数据列不允许重复，允许为 NULL 值，一个表允许多个列创建唯一索引）</p>
+<ul>
+<li>可以通过 <code>ALTER TABLE table_name ADD UNIQUE INDEX index_name(column);</code>  或 <code>CREATE UNIQUE INDEX index_name ON table_name(column);</code>创建唯一索引</li>
+<li>可以通过 <code>ALTER TABLE table_name ADD UNIQUE INDEX index_name(column1,column2);</code> 或 <code>CREATE UNIQUE INDEX index_name ON table_name(column1,column2);</code></li>
+</ul>
+</li>
+<li><p><code>普通索引</code>：INDEX    （基本的索引类型，没有唯一性的限制，允许为 NULL 值，一个表允许多个列创建普通索引）</p>
+<ul>
+<li>可以通过 <code>ALTER TABLE table_name ADD INDEX index_name(column);</code> 或 <code>CREATE INDEX index_name ON table_name(column);</code> 创建普通索引</li>
+<li>可以通过 <code>ALTER TABLE table_name ADD INDEX index_name(column1,column2,column3);</code> 或 <code>CREATE INDEX index_name ON table_name(column1,column2,column3);</code> 创建组合索引</li>
+</ul>
+</li>
+<li><p><code>全文索引</code>：FULLTEXT INDEX   （是目前搜索引擎使用的一种关键技术，MyISAM 存储引擎才有全文索引）</p>
+<ul>
+<li>可以通过 <code>ALTER TABLE table_name ADD FULLTEXT (column);</code> 创建全文索引</li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <p>前三种用的比较多，一般来说每张表都会有主键，那么主键索引一定会存在</p>
 <p>普通索引和唯一索引一般是用来优化 SQL 的查询速度</p>
 <p>全文索引基本不会使用，有其它的替代方案</p>
 </blockquote>
-<ul>
-<li>主键索引和唯一索引区别<ul>
-<li>主键索引不能为 null</li>
-<li>唯一索引可以为 null</li>
-</ul>
-</li>
-</ul>
 <hr>
 <h3 id="4、联合索引最左前缀匹配原则"><a href="#4、联合索引最左前缀匹配原则" class="headerlink" title="4、联合索引最左前缀匹配原则"></a>4、联合索引最左前缀匹配原则</h3><p><strong>什么是最左前缀匹配原则？</strong> </p>
 <ul>
 <li>MySQL 建立联合索引会遵守最左前缀匹配原则，即最左优先，在检索数据时从联合索引的最左边开始匹配。</li>
 </ul>
+<hr>
+<h3 id="5、数据库三大范式是什么"><a href="#5、数据库三大范式是什么" class="headerlink" title="5、数据库三大范式是什么?"></a>5、数据库三大范式是什么?</h3><ul>
+<li>第一范式：每个列都不可以再拆分。</li>
+<li>第二范式：在第一范式的基础上，非主键列完全依赖于主键，而不能是依赖于主键的一部分。</li>
+<li>第三范式：在第二范式的基础上，非主键列只依赖于主键，不依赖于其他非主键。</li>
+</ul>
+<blockquote>
+<p>在设计数据库表结构的时候，要尽量遵守三大范式，如果不遵守，必须有足够的理由。比如性能，事实上我们经常会为了性能而妥协数据库的设计。</p>
+</blockquote>
+<hr>
+<h3 id="6、索引设计原则"><a href="#6、索引设计原则" class="headerlink" title="6、索引设计原则"></a>6、索引设计原则</h3><p>索引虽好，但也不是无限制的使用，最好符合以下几个原则</p>
+<ol>
+<li>为常作为查询条件的字段建立索引，where 子句中的列，或者连接子句中指定的列</li>
+<li>为经常需要排序、分组操作的字段建立索引</li>
+<li>更新频繁字段不适合创建索引</li>
+<li>不能有效区分数据的列不适合做索引列（如性别，男女未知，最多也就三种，区分度实在太低）</li>
+<li>对于定义为 text、image 和 bit 的数据类型的列不要建立索引</li>
+<li>最左前缀原则，就是最左边的优先，指的是联合索引中，优先走最左边的索引。对于多个字段的联合索引，如 index(a,b,c)联合索引，则相当于创建了 a 单列索引，(b,c)联合索引，和(a,b,c)联合索引（但并不是建立了多个索引树），mysql 会一直向右匹配直到遇到范围查询（&gt;、&lt;、between、like）就停止匹配，比如 a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的，如果建立(a,b,c)的索引则都可以用到，a,b,d的顺序可以任意调整。使用短索引，如果对长字符串列进行索引，应该指定一个前缀长度，这样能够节省大量索引空间</li>
+<li>非空字段：应该指定列为 NOT NULL ，除非你想存储 NULL，在 mysql 中，含有空值的列很难进行查询优化，因为它们使得索引、索引的统计信息以及比较运算更加复杂。你应该用 0、一个特殊的值或者一个空串代替空值</li>
+<li>不要过度索引。索引需要额外的磁盘空间，并降低写操作的性能。在修改表内容的时候，索引会进行更新甚至重构，索引列越多，这个时间就会越长。</li>
+</ol>
 <hr>
 
         </div>

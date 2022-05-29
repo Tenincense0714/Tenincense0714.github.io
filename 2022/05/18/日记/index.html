@@ -99,6 +99,22 @@
               
             
               
+                <li>
+                  <a href="https://music.163.com/" target="_blank" class="social-github" title="wangyiyun">
+                    <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/wangyiyun.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="https://mail.163.com/" target="_blank" class="social-github" title="email">
+                    <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202205300006276.png">
+                  </a>
+                </li>
+              
+            
+              
                 <li class="wechat">
                   <a href="/#">
                     <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E8%83%8C%E6%99%AF%202/wechat.png">
@@ -458,6 +474,8 @@
 <li>对于定义为 text、image 和 bit 的数据类型的列不要建立索引</li>
 <li>最左前缀原则，就是最左边的优先，指的是联合索引中，优先走最左边的索引。对于多个字段的联合索引，如 index(a,b,c)联合索引，则相当于创建了 a 单列索引，(b,c)联合索引，和(a,b,c)联合索引（但并不是建立了多个索引树），mysql 会一直向右匹配直到遇到范围查询（&gt;、&lt;、between、like）就停止匹配，比如 a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的，如果建立(a,b,c)的索引则都可以用到，a,b,d的顺序可以任意调整。使用短索引，如果对长字符串列进行索引，应该指定一个前缀长度，这样能够节省大量索引空间</li>
 <li>非空字段：应该指定列为 NOT NULL ，除非你想存储 NULL，在 mysql 中，含有空值的列很难进行查询优化，因为它们使得索引、索引的统计信息以及比较运算更加复杂。你应该用 0、一个特殊的值或者一个空串代替空值</li>
+</ol>
+<ol>
 <li>不要过度索引。索引需要额外的磁盘空间，并降低写操作的性能。在修改表内容的时候，索引会进行更新甚至重构，索引列越多，这个时间就会越长。</li>
 </ol>
 <hr>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2022-05-30T16:05:11.680Z</updated>
+  <updated>2022-05-30T17:04:43.713Z</updated>
   <id>/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="/2022/05/29/PhotoShop%E6%95%99%E7%A8%8B/"/>
     <id>/2022/05/29/PhotoShop教程/</id>
     <published>2022-05-28T16:28:08.000Z</published>
-    <updated>2022-05-30T16:05:11.680Z</updated>
+    <updated>2022-05-30T17:04:43.713Z</updated>
     
     <summary type="html">
     
@@ -32,9 +32,7 @@
       <category term="生活" scheme="/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="web" scheme="/tags/web/"/>
-    
-      <category term="悦读" scheme="/tags/%E6%82%A6%E8%AF%BB/"/>
+      <category term="ps" scheme="/tags/ps/"/>
     
   </entry>
   
@@ -43,7 +41,7 @@
     <link href="/2022/05/21/SQL%E4%BC%98%E5%8C%96-MySQL%E7%89%88%E6%9C%AC/"/>
     <id>/2022/05/21/SQL优化-MySQL版本/</id>
     <published>2022-05-21T03:08:49.000Z</published>
-    <updated>2022-05-29T13:25:31.263Z</updated>
+    <updated>2022-05-30T17:05:04.671Z</updated>
     
     <summary type="html">
     
@@ -54,9 +52,7 @@
       <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="web" scheme="/tags/web/"/>
-    
-      <category term="悦读" scheme="/tags/%E6%82%A6%E8%AF%BB/"/>
+      <category term="SQL" scheme="/tags/SQL/"/>
     
   </entry>
   
@@ -65,7 +61,7 @@
     <link href="/2022/05/18/%E6%97%A5%E8%AE%B0/"/>
     <id>/2022/05/18/日记/</id>
     <published>2022-05-17T16:24:53.000Z</published>
-    <updated>2022-05-29T16:13:03.912Z</updated>
+    <updated>2022-05-30T17:04:19.186Z</updated>
     
     <summary type="html">
     
@@ -76,9 +72,7 @@
       <category term="随想" scheme="/categories/%E9%9A%8F%E6%83%B3/"/>
     
     
-      <category term="web" scheme="/tags/web/"/>
-    
-      <category term="悦读" scheme="/tags/%E6%82%A6%E8%AF%BB/"/>
+      <category term="随笔" scheme="/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
@@ -87,7 +81,7 @@
     <link href="/2022/05/16/Final-Cut-Pro%E6%95%99%E7%A8%8B/"/>
     <id>/2022/05/16/Final-Cut-Pro教程/</id>
     <published>2022-05-15T16:34:33.000Z</published>
-    <updated>2022-05-29T16:13:26.096Z</updated>
+    <updated>2022-05-30T17:04:34.320Z</updated>
     
     <summary type="html">
     
@@ -98,9 +92,7 @@
       <category term="生活" scheme="/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="web" scheme="/tags/web/"/>
-    
-      <category term="悦读" scheme="/tags/%E6%82%A6%E8%AF%BB/"/>
+      <category term="剪辑" scheme="/tags/%E5%89%AA%E8%BE%91/"/>
     
   </entry>
   
@@ -263,7 +255,7 @@
     <link href="/2021/09/25/MySQL%E5%9F%BA%E7%A1%80/"/>
     <id>/2021/09/25/MySQL基础/</id>
     <published>2021-09-25T04:11:12.000Z</published>
-    <updated>2022-05-29T06:15:05.995Z</updated>
+    <updated>2022-05-30T17:05:12.353Z</updated>
     
     <summary type="html">
     
@@ -274,9 +266,7 @@
       <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="web" scheme="/tags/web/"/>
-    
-      <category term="悦读" scheme="/tags/%E6%82%A6%E8%AF%BB/"/>
+      <category term="SQL" scheme="/tags/SQL/"/>
     
   </entry>
   

@@ -649,6 +649,24 @@ EXPLAIN SELECT tid FROM test01 WHERE tid = 1;</code></pre>
 <li><p>常见于唯一索引和主键索引。</p>
 </li>
 </ul>
+<pre><code class="sql">ALTER TABLE teacherCard ADD CONSTRAINT pk_tcid PRIMARY KEY(tcid);
+ALTER TABLE teacher ADD CONSTRAINT uk_tcid UNIQUE INDEX(tcid);
+
+EXPLAIN SELECT t.tcid FROM teacher t,teacherCard tc WHERE t.tcid = tc.tcid;</code></pre>
+<p>以上 SQL，用到的索引是 t.tcid ，即 teacher 表中的 tcid 字段；</p>
+<p>如果 teacher 表的数据个数和连接查询的数据个数一致（都是 3 条数据），则有可能满足 eq_ref 级别；否则无法满足</p>
+<h5 id="4-ref"><a href="#4-ref" class="headerlink" title="4.ref"></a>4.ref</h5><ul>
+<li>非唯一性索引，对于每个索引键的查询呢，返回匹配的所有行（可以是0个，可以是多个）</li>
+</ul>
+<p>准备数据</p>
+<pre><code class="sql">insert into teacherCard value(4,&#39;tz222&#39;,4);
+insert into teacherCard value(4,&#39;tz222&#39;);</code></pre>
+<p>测试</p>
+<pre><code class="sql"># 给 tname 加索引
+ALTER TABLE teacher ADD INDEX index_name(tname);
+# 根据索引查询 where tname = &#39;tz&#39;
+EXPLAIN SELECT * FROM teacher WHERE tname = &#39;tz&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202205312327650.png" alt></p>
 
         </div>
         <!-- .entry-content -->

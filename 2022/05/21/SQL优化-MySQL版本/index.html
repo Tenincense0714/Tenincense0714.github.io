@@ -667,6 +667,75 @@ ALTER TABLE teacher ADD INDEX index_name(tname);
 # 根据索引查询 where tname = &#39;tz&#39;
 EXPLAIN SELECT * FROM teacher WHERE tname = &#39;tz&#39;;</code></pre>
 <p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202205312327650.png" alt></p>
+<h5 id="5-range"><a href="#5-range" class="headerlink" title="5.range"></a>5.range</h5><ul>
+<li>检索指定范围的行，where 后面是一个范围查询（between ， in ， &gt; &lt; &gt;= ）</li>
+</ul>
+<pre><code class="sql">ALTER TABLE teacher ADD INDEX tid_index(tid);
+EXPLAIN SELECT t.* FROM teacher t WHERE t.tid IN (1,2);</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206011958701.png" alt></p>
+<blockquote>
+<p>注意：in 有时候会失效，从而转为无索引 all（和数据量有关，大于数据量的一般就会全表扫描）</p>
+</blockquote>
+<h5 id="6-index"><a href="#6-index" class="headerlink" title="6.index"></a>6.index</h5><ul>
+<li>查询全部索引中的数据</li>
+</ul>
+<pre><code class="sql">EXPLAIN SELECT tid FROM teacher;</code></pre>
+<p>tid是索引，只需要扫描索引树，不需要扫描全部数据</p>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206012006056.png" alt></p>
+<h5 id="7-all"><a href="#7-all" class="headerlink" title="7.all"></a>7.all</h5><pre><code class="sql">show index from course;
+EXPLAIN SELECT cid FROM course;</code></pre>
+<ul>
+<li>查询全部表中的数据</li>
+</ul>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206012015054.png" alt></p>
+<p>cid不是索引，需要全表扫描</p>
+<h5 id="8-总结"><a href="#8-总结" class="headerlink" title="8.总结"></a>8.总结</h5><p>system / conset： 结果只有一条数据</p>
+<p>eq_ref：结果多条。但是每条数据是唯一的</p>
+<p>ref：结果多条。但是每条数据是 0 或多条</p>
+<h4 id="四、possible-keys"><a href="#四、possible-keys" class="headerlink" title="四、possible_keys"></a>四、possible_keys</h4><p>可能用到的索引，是一种预测，不准。</p>
+<pre><code class="sql">alter table course add index cname_index(cname);
+EXPLAIN SELECT tc.tcdesc FROM teacherCard tc WHERE tc.tcid = (SELECT t.tcid FROM teacher t WHERE t.tid = (SELECT tid FROM course c WHERE c.cname = &#39;sql&#39;));</code></pre>
+<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206012026281.png" style="zoom:50%;">
+
+<h4 id="五、key"><a href="#五、key" class="headerlink" title="五、key"></a>五、key</h4><p>实际使用到的索引</p>
+<blockquote>
+<p>如果 possible_keys / keys 为 NULL，则说明没用索引</p>
+</blockquote>
+<h5 id="六、key-len"><a href="#六、key-len" class="headerlink" title="六、key_len"></a>六、key_len</h5><p>索引的长度</p>
+<p>作用：用于判断复合索引是否被完全使用。（a,b,c）</p>
+<pre><code class="sql">CREATE TABLE test_k1(
+    name CHAR(20) NOT NULL DEFAULT &#39;&#39;
+);
+ALTER TABLE test_k1 ADD INDEX index_name(name);
+EXPLAIN SELECT * FROM test_k1 WHERE name = &#39;&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206012154963.png" alt></p>
+<pre><code class="markdown">**结果发现 key_len 为 60**
+`在utf8: 1个字符占 3 个字节，因此 key_len 为 60`
+&gt; 所以可以看出是使用到了索引</code></pre>
+<pre><code class="sql">ALTER TABLE test_k1 ADD COLUMN name1 CHAR(20); -- name1可以为 NULL
+ALTER TABLE test_k1 ADD INDEX index_name1(name1);</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206012159716.png" alt></p>
+<pre><code class="markdown">&gt; 如果索引字段可以为 NULL，MySQL 则会使用 1 个字节用于标识</code></pre>
+<pre><code class="sql">DROP INDEX index_name ON test_k1;
+DROP INDEX index_name1 ON test_k1;</code></pre>
+<p>增加一个复合索引</p>
+<pre><code class="sql">ALTER TABLE test_k1 ADD INDEX name_name1(name,name1); -- 先根据 name 查，如果 name 查询不到再根据 name1 查（如根据 name 查张三，如果全年级只有一个张三，就不用根据 name1 查了，如果全年级有两个张三，那再根据 name1（如班级）查，比如 1 班的张三）
+EXPLAIN SELECT * FROM test_k1 WHERE name1 = &#39;&#39;; -- 121</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206012205958.png" alt></p>
+<pre><code class="sql">EXPLAIN SELECT * FROM test_k1 WHERE name = &#39;&#39;; -- 60</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206012205418.png" alt></p>
+<pre><code class="sql">-- VARCHAR(20)
+ALTER TABLE test_k1 ADD COLUMN name2 VARCHAR(20); -- 增加一个 VARCHAR 类型的列
+ALTER TABLE test_k1 ADD INDEX name2_index(name2); -- 给 name2 加索引
+EXPLAIN SELECT * FROM test_k1 WHERE name2 = &#39;&#39;; -- 63   </code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206012211509.png" alt></p>
+<p>20*3=60，字段可以为NULL，60+1（null）=61 + 2（mysql用两个字节标识可变长度） = 63</p>
+<blockquote>
+<p>补充：</p>
+<p>utf8:1 个字符 3 个字节</p>
+<p>gbk8:1 个字符 2 个字节</p>
+<p>latin:1 个字符 1 个字节</p>
+</blockquote>
 
         </div>
         <!-- .entry-content -->

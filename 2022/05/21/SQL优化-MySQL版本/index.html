@@ -460,7 +460,9 @@ create table tb (
 </ul>
 </li>
 </ul>
+<hr>
 <h2 id="三、B树"><a href="#三、B树" class="headerlink" title="三、B树"></a>三、B树</h2><p><img src="https://fastly.jsdelivr.net/gh/Tenincense0714/imgbed@master/img/202205211923512.png" alt></p>
+<hr>
 <h2 id="四、索引"><a href="#四、索引" class="headerlink" title="四、索引"></a>四、索引</h2><h3 id="1、分类"><a href="#1、分类" class="headerlink" title="1、分类"></a>1、分类</h3><ul>
 <li><p><strong>主键索引</strong>：不能重复。id         不能是 null</p>
 </li>
@@ -498,6 +500,7 @@ create table tb (
 <pre><code class="sql">DROP INDEX `name_index` ON tb;</code></pre>
 <h3 id="4、查询索引"><a href="#4、查询索引" class="headerlink" title="4、查询索引"></a>4、查询索引</h3><pre><code class="sql">SHOW INDEX FROM 表名;
 SHOW INDEX FROM 表名 \G</code></pre>
+<hr>
 <h2 id="五、SQL性能问题"><a href="#五、SQL性能问题" class="headerlink" title="五、SQL性能问题"></a>五、SQL性能问题</h2><ul>
 <li>a.分析 SQL 的执行计划：<code>EXPLAIN</code>  ,可以模拟 SQL 优化器执行 SQL 语句，从而让开发人员知道自己编写的 SQL 状况</li>
 <li>b.MySQL 查询优化器会干扰我们的优化</li>
@@ -701,7 +704,7 @@ EXPLAIN SELECT tc.tcdesc FROM teacherCard tc WHERE tc.tcid = (SELECT t.tcid FROM
 <blockquote>
 <p>如果 possible_keys / keys 为 NULL，则说明没用索引</p>
 </blockquote>
-<h5 id="六、key-len"><a href="#六、key-len" class="headerlink" title="六、key_len"></a>六、key_len</h5><p>索引的长度</p>
+<h4 id="六、key-len"><a href="#六、key-len" class="headerlink" title="六、key_len"></a>六、key_len</h4><p>索引的长度</p>
 <p>作用：用于判断复合索引是否被完全使用。（a,b,c）</p>
 <pre><code class="sql">CREATE TABLE test_k1(
     name CHAR(20) NOT NULL DEFAULT &#39;&#39;
@@ -736,7 +739,100 @@ EXPLAIN SELECT * FROM test_k1 WHERE name2 = &#39;&#39;; -- 63   </code></pre>
 <p>gbk8:1 个字符 2 个字节</p>
 <p>latin:1 个字符 1 个字节</p>
 </blockquote>
+<h4 id="七、ref"><a href="#七、ref" class="headerlink" title="七、ref"></a>七、ref</h4><p>注意，这个 ref 与 type 中的 ref 值区分。</p>
+<p>作用：指明当前表所参照的字段。 </p>
+<p>​    select … where a.c = b.x; （其中 b.x可以是常量，const）</p>
+<pre><code class="sql">ALTER TABLE course ADD INDEX index_tid(tid); -- 给 tid 加索引
+EXPLAIN SELECT * FROM course c , teacher t WHERE c.tid = t.tid AND t.tname = &#39;tw&#39;;</code></pre>
+<h4 id="八、rows"><a href="#八、rows" class="headerlink" title="八、rows"></a>八、rows</h4><p>被索引优化查询的数据个数（实际通过索引而查询到的数据个数）</p>
+<pre><code class="sql">EXPLAIN SELECT * FROM course c,teacher t WHERE c.tid = t.tid AND t.tname = &#39;tz&#39;;
+SELECT * FROM course;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206031055089.png" alt></p>
+<pre><code class="sql">SELECT * FROM course c,teacher t WHERE c.tid = t.tid AND t.tname = &#39;tz&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206031057007.png" alt></p>
+<blockquote>
+<p>注意：执行计划中 t 表的 rows 为 1，去掉 EXPLAIN 后执行 SQL 查询，有两条数据，但是 tz 只有一个，所以课程有两个，teacher 只有一个，是没有问题的</p>
+</blockquote>
+<h4 id="九、Extra"><a href="#九、Extra" class="headerlink" title="九、Extra"></a>九、Extra</h4><h5 id="1、using-filesort"><a href="#1、using-filesort" class="headerlink" title="1、using filesort"></a>1、using filesort</h5><ul>
+<li>性能消耗大，需要“额外”的一次排序（查询）;常现于 <code>ORDER BY</code>  语句中</li>
+</ul>
+<p><code>单索引情况</code></p>
+<pre><code class="sql">CREATE TABLE test02 (
+    a1 CHAR(3),
+  a2 CHAR(3),
+  a3 CHAR(3),
+  INDEX idx_a1(a1),
+  INDEX idx_a2(a2),
+  INDEX idx_a3(a3)
+);
 
+EXPLAIN SELECT * FROM test02 WHERE a1 = &#39;&#39; ORDER BY a1;
+EXPLAIN SELECT * FROM test02 WHERE a1 = &#39;&#39; ORDER BY a2; -- using filesort</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206031106775.png" alt></p>
+<p>什么是排序</p>
+<ul>
+<li>排序的前提是先查询；比如 10 个人，根据年龄排序，前提是需要先查询出来，才能做排序</li>
+<li>看上面的 sql，第一个 sql 查 a1，查完之后再根据 a1 排序，是没有问题的</li>
+<li>而第二条 sql，我们可以把 a1 理解为姓名，a2 理解为年龄。先根据 a1 姓名查询完了，但是根据 a2 年龄排序，需要把年龄再查询一下，再根据年龄排序。所以说需要“额外”的一次排序（查询）</li>
+</ul>
+<blockquote>
+<p>小结：对于单索引，如果排序和查找是同一个字段，则不会出现 using filesort；</p>
+<p>反之如果排序和查找不是同一个字段，则会出现 using filesort</p>
+<p>避免：WHERE 哪些字段，就 ORDER BY 哪些字段</p>
+</blockquote>
+<p><code>复合索引情况</code></p>
+<p>不能跨列（最佳左前缀）</p>
+<pre><code class="sql">-- 防止单索引干扰，先把单索引删除
+DROP INDEX idx_a1 ON test02;
+DROP INDEX idx_a2 ON test02;
+DROP INDEX idx_a3 ON test02;
+
+-- 创建复合索引
+ALTER TABLE test02 ADD INDEX idx_a1_a2_a3(a1,a2,a3);
+
+EXPLAIN SELECT * FROM test02 WHERE a1 = &#39;&#39; ORDER BY a3; -- using filesort
+EXPLAIN SELECT * FROM test02 WHERE a2 = &#39;&#39; ORDER BY a3; -- using filesort
+EXPLAIN SELECT * FROM test02 WHERE a1 = &#39;&#39; ORDER BY a2; </code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206031120741.png" alt></p>
+<blockquote>
+<p>小结：避免：WHERE 和 ORDER BY 按照复合索引的顺序使用，不要跨列或无序使用</p>
+</blockquote>
+<h5 id="2、using-temporary"><a href="#2、using-temporary" class="headerlink" title="2、using temporary"></a>2、using temporary</h5><p>性能损耗大，用到了临时表。一般出现在 <code>GROUP BY</code> 语句中。</p>
+<pre><code class="sql">EXPLAIN SELECT a1 FROM test02 WHERE a1 IN (&#39;1&#39;,&#39;2&#39;,&#39;3&#39;) GROUP BY a1;
+EXPLAIN SELECT a1 FROM test02 WHERE a1 IN (&#39;1&#39;,&#39;2&#39;,&#39;3&#39;) GROUP BY a1; -- using temporary</code></pre>
+<blockquote>
+<p>避免：查询哪些列，就根据哪些列 GROUP BY</p>
+</blockquote>
+<h5 id="3、using-index"><a href="#3、using-index" class="headerlink" title="3、using index"></a>3、using index</h5><p>性能提升；索引覆盖（覆盖索引）。原因：不读取原文件，只从索引文件获取数据（不需要回表查询）</p>
+<ul>
+<li>不需要回表查询：比如说现在有一张表，有 id、name、age 等字段，age 字段加了索引，即索引树为 age 造成的。 现在有一条查询语句，SELECT age FROM table WHERE age = xxx ,因为 age 是索引，现在查询的时候也是只查 age，所以这条语句在查询时不需要查原表，只需要查索引表。</li>
+</ul>
+<blockquote>
+<p>只要使用到的列全部都在索引中，就是索引覆盖</p>
+</blockquote>
+<p>例如：test02 表中有一个复合索引（a1,a2,a3）</p>
+<pre><code class="sql">EXPLAIN SELECT a1,a2,a3 FROM test02 WHERE a1 = &#39;&#39; OR a2 = &#39;&#39;; -- using index</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206031159503.png" alt></p>
+<pre><code class="sql">-- 反例
+DROP INDEX idx_a1_a2_a3 ON test02; -- 删除复合索引
+ALTER TABLE test02 ADD INDEX  idx_a1_a2(a1,a2); -- 增加复合索引（只有a1,a2两列，没有a3）
+EXPLAIN SELECT a1,a2,a3 FROM test02 WHERE a1 = &#39;&#39; OR a3 = &#39;&#39;;    -- 查询 a1，a3 ，复合索引 a1，a2 覆盖不了 a1，a3，就不是覆盖索引，因此不会是 using index</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206031202917.png" alt></p>
+<p>如果用到了索引覆盖（using index 时），会对 possible_keys 和 key 造成影响；</p>
+<p>a. 如果没有 where，则索引只出现在 key 中；</p>
+<p>b. 如果有 where，则索引出现在 key 和 possible_keys中；</p>
+<h5 id="4、using-where"><a href="#4、using-where" class="headerlink" title="4、using where"></a>4、using where</h5><p>表示需要回表查询</p>
+<ul>
+<li>假设 age 是索引列，但查询语句select age ,name from .. where age = …</li>
+<li>此语句中必须回原表查 name，因此会显示 using where</li>
+</ul>
+<pre><code class="sql">EXPLAIN SELECT a1,a3 FROM test02 WHERE a3 = &#39;&#39;; -- a3需要回原表查询</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206031210158.png" alt></p>
+<h5 id="5、impossible-where"><a href="#5、impossible-where" class="headerlink" title="5、impossible where"></a>5、impossible where</h5><p>where 子句永远为 false</p>
+<pre><code class="sql">EXPLAIN SELECT * FROM test02 WHERE a1 = &#39;x&#39; AND a1 = &#39;y&#39;; -- a1 永远不可能是 &#39;x&#39; 又 是 &#39;y&#39; ,所以会出现 impossible where</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206031213045.png" alt></p>
+<hr>
+<h2 id="六、优化示例"><a href="#六、优化示例" class="headerlink" title="六、优化示例"></a>六、优化示例</h2>
         </div>
         <!-- .entry-content -->
         <div class="single-reward">

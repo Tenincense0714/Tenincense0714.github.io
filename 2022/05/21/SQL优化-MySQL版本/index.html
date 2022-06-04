@@ -832,7 +832,101 @@ EXPLAIN SELECT a1,a2,a3 FROM test02 WHERE a1 = &#39;&#39; OR a3 = &#39;&#39;;   
 <pre><code class="sql">EXPLAIN SELECT * FROM test02 WHERE a1 = &#39;x&#39; AND a1 = &#39;y&#39;; -- a1 永远不可能是 &#39;x&#39; 又 是 &#39;y&#39; ,所以会出现 impossible where</code></pre>
 <p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206031213045.png" alt></p>
 <hr>
-<h2 id="六、优化示例"><a href="#六、优化示例" class="headerlink" title="六、优化示例"></a>六、优化示例</h2>
+<h2 id="六、优化示例"><a href="#六、优化示例" class="headerlink" title="六、优化示例"></a>六、优化示例</h2><pre><code class="sql">-- 创建一个新表
+CREATE TABLE test03(
+    a1 INT(4) NOT NULL,
+  a2 INT(4) NOT NULL,
+  a3 INT(4) NOT NULL,
+  a4 INT(4) NOT NULL
+);
+-- 创建复合索引
+ALTER TABLE test03 ADD INDEX idx_a1_a2_a3_a4(a1,a2,a3,a4);
+
+EXPLAIN SELECT a1,a2,a3,a4 FROM test03 WHERE a1 = 1 AND a2 = 2 AND a3 = 3 AND a4 = 4; -- 推荐写法，因为索引的使用顺序（where 后面的顺序）和复合索引的顺序一致
+
+EXPLAIN SELECT a1,a2,a3,a4 FROM test03 WHERE a4 = 1 AND a3 = 2 AND a2 = 3 AND a1 = 4; -- 虽然编写的顺序和索引顺序不一致，但是 sql 在真正执行前经过了 sql优化器 的调整，结果与上条 sql 是一致的。
+
+# 以上 2 个 SQL，使用了全部的复合索引（key_len为 16）</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206040030673.png" alt></p>
+<pre><code class="sql">EXPLAIN SELECT a1,a2,a3,a4 FROM test03 WHERE a1 = 1 AND a2 = 2 AND a4 = 3 ORDER BY a3;
+-- a1 , a2是符合a1,a2,a3,a4复合索引的顺序的，所以不需要回表查询，a4 属于跨列，把 a3 跳过了，所以到 a4 的时候是无效索引，需要回表查询。 所以 Extra 的 Using where 是 a4 操作的，a1 , a2是 Using index
+-- 通过 key_len 也可以证明，a1 和 a2 两个索引，8 个字节，之前是 4 个* 4 = 16
+-- ref 也可以查看到，之前是 4 个 const，下面的只有两个 const
+# 所以以上 SQL 用到了 a1，a2 两个索引，该两个字段，不需要回表查询 using index； 而 a4 因为跨列使用，造成了该索引失效，因此是 using where； 以上可以通过 key_len 验证</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206040034191.png" alt></p>
+<pre><code class="sql">EXPLAIN SELECT a1,a2,a3,a4 FROM test03 WHERE a1 = 1 AND a4 = 4 ORDER BY a3; 
+-- 以上 SQL 出现了 using filesort （文件内排序，“多了一次额外的查找/排序”）：不要跨列使用（where 和 order by 拼起来，不要跨列使用）
+-- 即 where 后面是 a1， a4 跨列索引失效不管，order by 后面是 a3，就是 where a1 a3 ，属于跨列了</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206040042992.png" alt></p>
+<pre><code class="sql">EXPLAIN SELECT a1,a2,a3,a4 FROM test03 WHERE a1 = 1 AND a4 = 4 ORDER BY a2,a3;  -- a4 跨列索引失效不管，那么 where 后面就是 a1，拼 order by 后面 a2,a3， 符合复合索引的顺序，所以不会出现 using filesort </code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206040045228.png" alt></p>
+<blockquote>
+<p>总结：</p>
+<p>a. 如果 (a,b,c,d)复合索引 和使用的顺序全部一致（且不跨列使用），则复合索引全部使用。如果部分一致（且不跨列使用），则使用部分索引</p>
+<ul>
+<li>select a,c where a = … and b = … and c = … and d = …          (a , b , c ,d)顺序一致，复合索引全部使用</li>
+<li>select a,c where a= … and b = … and d = …                         (a,b,d)  a 和 b 顺序一致，d 跨列了，所以是部分一致，这里只用了 a,b ，没有使用d 和 c。这种就属于部分使用</li>
+</ul>
+<p>b. where 和 order by 拼起来，不要跨列使用</p>
+</blockquote>
+<hr>
+<h2 id="七、单表优化及总结"><a href="#七、单表优化及总结" class="headerlink" title="七、单表优化及总结"></a>七、单表优化及总结</h2><pre><code class="sql">CREATE TABLE book(
+    bid INT(4) PRIMARY KEY,
+  name VARCHAR(20) NOT NULL,
+  authorId INT(4) NOT NULL,
+  publicId INT(4) NOT NULL,
+  typeId INT(4) NOT NULL
+);
+
+INSERT INTO book VALUES(1,&#39;tjava&#39;,1,1,2);
+INSERT INTO book VALUES(2,&#39;tc&#39;,2,2,2);
+INSERT INTO book VALUES(3,&#39;wx&#39;,3,2,1);
+INSERT INTO book VALUES(4,&#39;math&#39;,4,2,3);
+COMMIT;</code></pre>
+<p><strong>查询 authorId = 1 且 typeId 为 2 或 3 的 bid</strong></p>
+<pre><code class="sql">EXPLAIN SELECT bid FROM book WHERE typeId IN (2,3) AND authorId = 1 ORDER BY typeId DESC;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206041133459.png" alt></p>
+<ul>
+<li><p>优化：加索引</p>
+<pre><code class="sql"># 加复合索引
+ALTER TABLE book ADD INDEX idx_bta (bid,typeId,authorId);
+-- 执行计划
+EXPLAIN SELECT bid FROM book WHERE typeId IN (2,3) AND authorId = 1 ORDER BY typeId DESC;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206041136517.png" alt></p>
+<ul>
+<li>可以看到 type 从 ALL 变为了 index，但是还是存在 Using where 和 Using filesort，比刚才有提升但是还不是很好</li>
+</ul>
+</li>
+<li><p>进一步优化：根据 SQL 实际解析的顺序，调整索引的顺序</p>
+<pre><code class="sql">-- 新增复合索引
+ALTER TABLE book ADD INDEX idx_tab (typeId,authorId,bid); -- 虽然可以回表查询 bid，但是将 bid 放到索引中可以提升使用 Using index
+-- 索引一旦进行升级优化，需要将之前废弃的索引删掉，防止干扰
+DROP INDEX idx_bta ON book;
+-- 执行计划
+EXPLAIN SELECT bid FROM book WHERE typeId IN (2,3) AND authorId = 1 ORDER BY typeId DESC;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206041413777.png" alt></p>
+</li>
+<li><p>再次优化</p>
+<ul>
+<li>思路：因为范围查询 IN 有时会失效，因此交互索引的顺序，将 typeId IN(2,3) 放到最后</li>
+</ul>
+<pre><code class="sql">DROP INDEX idx_tab ON book;
+ALTER TABLE book ADD INDEX idx_atb (authorId,typeId,bid);
+EXPLAIN SELECT bid FROM book WHERE authorId = 1 AND typeId IN (2,3) ORDER BY typeId DESC;</code></pre>
+</li>
+</ul>
+<blockquote>
+<p>小结：</p>
+<p>a. 最佳左前缀，保持索引的定义和使用的顺序一致性</p>
+<p>b. 索引需要逐步优化</p>
+<p>c. 将含 IN 的范围查询放到 WHERE 条件的最后，防止失效</p>
+<p>本例中同时出现了 Using where（需要回原表）；Using index（不需要回原表），原因 : WHERE authorId = 1 AND typeId IN (2,3) 中 authorId 在索引（authorId，typeId,bid）中，因此不需要回原表（直接在索引表能查到）；而 typeId 虽然也在索引（authorId，typeId,bid）中，但是含 IN 的范围查询已经使该 typeId 索引失效，因此相当于没有 typeId 这个索引，所以需要回原表（Using where）；</p>
+<p>如果把 IN 换成等号就没有 Using where 了,例如以下</p>
+</blockquote>
+<pre><code class="sql">EXPLAIN SELECT bid FROM book WHERE authorId = 1 AND typeId = 3 ORDER BY typeId DESC;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206041428480.png" alt></p>
+<hr>
+<h2 id="八、多表优化及避免索引失效原则"><a href="#八、多表优化及避免索引失效原则" class="headerlink" title="八、多表优化及避免索引失效原则"></a>八、多表优化及避免索引失效原则</h2>
         </div>
         <!-- .entry-content -->
         <div class="single-reward">

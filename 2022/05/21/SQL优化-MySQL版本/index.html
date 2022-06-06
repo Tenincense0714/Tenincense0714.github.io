@@ -926,7 +926,139 @@ EXPLAIN SELECT bid FROM book WHERE authorId = 1 AND typeId IN (2,3) ORDER BY typ
 <pre><code class="sql">EXPLAIN SELECT bid FROM book WHERE authorId = 1 AND typeId = 3 ORDER BY typeId DESC;</code></pre>
 <p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206041428480.png" alt></p>
 <hr>
-<h2 id="八、多表优化及避免索引失效原则"><a href="#八、多表优化及避免索引失效原则" class="headerlink" title="八、多表优化及避免索引失效原则"></a>八、多表优化及避免索引失效原则</h2>
+<h2 id="八、多表优化"><a href="#八、多表优化" class="headerlink" title="八、多表优化"></a>八、多表优化</h2><h3 id="1、两表优化"><a href="#1、两表优化" class="headerlink" title="1、两表优化"></a>1、两表优化</h3><p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206051240149.png" alt></p>
+<pre><code class="sql">-- 创建 teacher2 表
+CREATE TABLE teacher2(
+    tid INT(4) PRIMARY KEY,
+  cid INT(4) NOT NULL
+);
+-- 插入数据
+INSERT INTO teacher2 VALUES(1,2);
+INSERT INTO teacher2 VALUES(2,1);
+INSERT INTO teacher2 VALUES(3,3);
+
+-- 创建 course2 表
+CREATE TABLE course2(
+    cid INT(4),
+  cname VARCHAR(20)
+);
+-- 插入数据
+INSERT INTO course2 VALUES(1,&#39;java&#39;);
+INSERT INTO course2 VALUES(2,&#39;python&#39;);
+INSERT INTO course2 VALUES(3,&#39;kotlin&#39;);
+COMMIT;</code></pre>
+<p>左连接：</p>
+<pre><code class="sql">SELECT * FROM teacher2 t LEFT OUTER JOIN course2 c ON t.cid = c.cid WHERE c.cname = &#39;java&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206051247778.png" alt></p>
+<p><strong>索引往哪张表加？</strong> -小表驱动大表   - 索引建立在经常使用的字段上</p>
+<ul>
+<li><p>小表驱动大表</p>
+<ul>
+<li>小表：10</li>
+<li>大表：300</li>
+<li>where 小表.x 10 = 大表.y 300;  –循环了几次？10</li>
+<li>大表.y 300 = 小表.x 10；  –循环了 300 次</li>
+</ul>
+<pre><code class="sql"># 小表驱动大表
+&gt; select ... where 小表.x10 = 大表.x300;
+/* for(int i = 0; i &lt; 小表.length10; i++){
+        for(int j = 0; j &lt; 大表.length300; j++){
+            ...
+      }         
+     }
+*/
+
+# 大表驱动小表
+&gt; select ... where 大表.x300 = 小表.x10;
+/* for(int i = 0; i &lt; 大表.length300; i++){
+        for(int j = 0; j &lt; 小表.length10; j++){
+            ...
+      }         
+     }
+*/</code></pre>
+<ul>
+<li>以上 2 个 for 循环，最终都会循环 3000 次；但是对于双层循环来说；一般建议将数据小的循环放外层；数据大的循环放内层。</li>
+</ul>
+</li>
+<li><p>当编写   … ON t.cid = c.cid 时，将数据量小的表放左边（假设此时 t 表数据量小）</p>
+</li>
+<li><p>索引建立在经常使用的字段上</p>
+<ul>
+<li>本题 t.cid = c.cid 可知，t.cid字段使用频繁，因此给该字段加索引【一般情况对于左外连接，给左表加索引；右外连接，给右表加索引】</li>
+</ul>
+</li>
+</ul>
+<pre><code class="sql">-- 原 sql 执行计划
+EXPLAIN SELECT * FROM teacher2 t LEFT OUTER JOIN course2 c ON t.cid = c.cid WHERE c.cname = &#39;java&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206051306130.png" alt></p>
+<pre><code class="sql">-- 加索引
+ALTER TABLE teacher2 ADD INDEX index_teacher2_cid(cid);
+-- 执行计划
+EXPLAIN SELECT * FROM teacher2 t LEFT OUTER JOIN course2 c ON t.cid = c.cid WHERE c.cname = &#39;java&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206051307865.png" alt></p>
+<pre><code class="sql">-- WHERE 后面的cname加索引
+ALTER TABLE course2 ADD INDEX index_course2_cname(cname);
+-- 执行计划
+EXPLAIN SELECT * FROM teacher2 t LEFT OUTER JOIN course2 c ON t.cid = c.cid WHERE c.cname = &#39;java&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206051310981.png" alt></p>
+<blockquote>
+<p>Using join buffer： Extra 中的一个选项，作用：MySQL 引擎使用了连接缓存</p>
+</blockquote>
+<h3 id="2、三表优化"><a href="#2、三表优化" class="headerlink" title="2、三表优化"></a>2、三表优化</h3><ol>
+<li>小表驱动大表</li>
+<li>索引建立在经常查询的字段上</li>
+</ol>
+<hr>
+<h2 id="九、避免索引失效原则"><a href="#九、避免索引失效原则" class="headerlink" title="九、避免索引失效原则"></a>九、避免索引失效原则</h2><ol>
+<li><p>复合索引</p>
+<ul>
+<li><p>不要跨列或无序使用（最佳左前缀）</p>
+<ul>
+<li><p>(a,b,c)</p>
+</li>
+<li><p>where a… and b… order by c</p>
+</li>
+</ul>
+</li>
+<li><p>尽量使用全索引匹配</p>
+</li>
+</ul>
+</li>
+<li><p>不要在索引上进行任何操作（计算、函数、类型转换），否则索引失效</p>
+<ul>
+<li><p>SELECT … WHERE A.x = ..;    – 假设 A.x 是索引</p>
+</li>
+<li><p>不要SELECT … WHERE <code>A.x*3</code> = ..;</p>
+<ul>
+<li><p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206070036441.png" alt></p>
+<pre><code class="sql">EXPLAIN SELECT * FROM book WHERE authorId = 1 AND typeId = 2;     -- 用到了 at 2个索引 
+EXPLAIN SELECT * FROM book WHERE authorId = 1 AND typeId * 2 = 2;     -- 用到了 a 1个索引 
+EXPLAIN SELECT * FROM book WHERE authorId * 2 = 1 AND typeId * 2 = 2;     -- 用到了 0个索引 
+EXPLAIN SELECT * FROM book WHERE authorId * 2 = 1 AND typeId = 2;     -- 用到了 0个索引,原因：对于复合索引，如果左边失效，右侧全部失效。 (a ,b ,c) ,例如 b 失效，则 b c 同时失效</code></pre>
+</li>
+</ul>
+</li>
+<li><pre><code class="sql">-- 删除 idx_atb 复合索引
+DROP INDEX idx_atb ON book;
+-- 分别给 authorId 和 typeId字段加独立索引
+ALTER TABLE book ADD INDEX idx_authorId(authorId);
+ALTER TABLE book ADD INDEX idx_typeId(typeId);
+EXPLAIN SELECT * FROM book WHERE authorId * 2 = 1 AND typeId = 2; -- key_len是 4，说明单独索引是不像上面复合索引左边失效右侧全部失效情况的，以上只对复合索引有效</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206070043129.png" alt></p>
+</li>
+</ul>
+</li>
+<li><p>复合索引不能使用不等于（!=  &lt;&gt;） 或 IS NULL （IS NOT NULL），否则自身以及右侧索引全部失效</p>
+<pre><code class="sql">EXPLAIN SELECT * FROM book WHERE authorId = 1 AND typeId = 2; -- 我们感觉优化了两个，预测的 possible_keys 也是 2 个，但实际上根据key_len = 4 或者 key 为 idx_authorId说明只用了一个索引</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206070048444.png" alt></p>
+<p>SQL优化，是一种概率层面的优化。至于是否实际使用了我们的优化，需要通过EXPLAIN进行推测。</p>
+<pre><code class="sql">EXPLAIN SELECT * FROM book WHERE authorId != 1 AND typeId = 2; -- authorId 因使用了!= ，导致索引失效了</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206070052818.png" alt></p>
+</li>
+<li><p>体验概率情况：原因是服务层中有 SQL 优化器，可能会影响我们的优化</p>
+</li>
+</ol>
+
         </div>
         <!-- .entry-content -->
         <div class="single-reward">

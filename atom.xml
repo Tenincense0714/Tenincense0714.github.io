@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2022-05-30T17:04:43.713Z</updated>
+  <updated>2022-06-05T04:36:36.282Z</updated>
   <id>/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>课程:Mosh_完全掌握SQL</title>
+    <link href="/2022/06/05/%E8%AF%BE%E7%A8%8B-Mosh-%E5%AE%8C%E5%85%A8%E6%8E%8C%E6%8F%A1SQL/"/>
+    <id>/2022/06/05/课程-Mosh-完全掌握SQL/</id>
+    <published>2022-06-05T04:29:29.000Z</published>
+    <updated>2022-06-05T04:36:36.282Z</updated>
+    
+    <summary type="html">
+    
+      http://codewithmosh.com 网站的 Complete SQL Mastery（完全掌握SQL）课程可能是最清晰易懂又完整全面的SQL视频教程了。相关资源如下： - 课程官网链接（请尽量支持正版！） - B站搬运-版本1（按小节分p，中文字幕更新到第十一章，视频下方的置顶评论有课程资料下载地址） - B站搬运-版本2（按整章分p，有完整中文字幕，置顶评论有课程资料地址） - 参考知乎 https://zhuanlan.zhihu.com/p/222865842 笔记
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="SQL" scheme="/tags/SQL/"/>
+    
+      <category term="技术" scheme="/tags/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>PhotoShop教程</title>
@@ -41,7 +63,7 @@
     <link href="/2022/05/21/SQL%E4%BC%98%E5%8C%96-MySQL%E7%89%88%E6%9C%AC/"/>
     <id>/2022/05/21/SQL优化-MySQL版本/</id>
     <published>2022-05-21T03:08:49.000Z</published>
-    <updated>2022-06-04T06:30:07.317Z</updated>
+    <updated>2022-06-06T16:55:29.838Z</updated>
     
     <summary type="html">
     

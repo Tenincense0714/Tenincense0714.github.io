@@ -1055,9 +1055,345 @@ EXPLAIN SELECT * FROM book WHERE authorId * 2 = 1 AND typeId = 2; -- key_len是 
 <pre><code class="sql">EXPLAIN SELECT * FROM book WHERE authorId != 1 AND typeId = 2; -- authorId 因使用了!= ，导致索引失效了</code></pre>
 <p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206070052818.png" alt></p>
 </li>
-<li><p>体验概率情况：原因是服务层中有 SQL 优化器，可能会影响我们的优化</p>
+<li><p>体验概率情况(&lt; &gt; != ….)：原因是服务层中有 SQL 优化器，可能会影响我们的优化</p>
+<p>我们学习索引优化，是一个大部分情况适用的结论，但由于 SQL 优化器等原因，该结论不是 100% 正确。</p>
+<p>一般而言，范围查询（&gt;  &lt;  IN） 之后的索引失效。</p>
+</li>
+<li><p>补救。尽量使用索引覆盖（using index）</p>
+<p>如（a,b,c）是一个复合索引</p>
+<p>select a,b,c from xxx.. where a = ? and b = ? ; </p>
+</li>
+<li><p>like 尽量以“常量”开头，不要以 ‘%’ 开头，否则索引失效</p>
+<p>select a,b,c from xxx.. where name like ‘%x%’ ; – name索引失效</p>
+<blockquote>
+<p>如果必须使用 like ‘%x%’ 进行模糊查询，可以使用索引覆盖挽救一部分。</p>
+</blockquote>
+</li>
+<li><p>尽量不要使用类型转换(显示、隐式)，否则索引失效</p>
+<p>explain select * from teacher where tname = 123;   //程序底层将 123 -&gt; ‘123’，即进行了类型转换，因此索引失效</p>
+</li>
+<li><p>尽量不要使用 or，否则索引失效</p>
 </li>
 </ol>
+<h2 id="十、常见优化方法"><a href="#十、常见优化方法" class="headerlink" title="十、常见优化方法"></a>十、常见优化方法</h2><h3 id="1、EXISTS-和-IN"><a href="#1、EXISTS-和-IN" class="headerlink" title="1、EXISTS 和 IN"></a>1、EXISTS 和 IN</h3><p>select … from table where exists (子查询)；</p>
+<p>select … from table where 字段 IN (子查询)；</p>
+<ul>
+<li>==<strong>如果主查询的数据集大，则使用 IN ,效率高</strong>==</li>
+<li>==<strong>如果子查询的数据集大，则使用 EXISTS ，效率高</strong>==</li>
+</ul>
+<h4 id="EXISTS-语法"><a href="#EXISTS-语法" class="headerlink" title="EXISTS 语法"></a>EXISTS 语法</h4><p>将主查询的结果，放到子查询结果中进行条件校验（看子查询是否有数据，如果有数据则校验成功），如果符合校验，则保留数据。</p>
+<pre><code class="sql">SELECT tname FROM teacher WHERE EXISTS(SELECT * FROM teacher); -- 等价于SELECT tname FROM teacher
+
+SELECT tname FROM teacher WHERE EXISTS(SELECT * FROM teacher WHERE tid = &#39;9999&#39;); -- 数据库表中没有tid = &#39;9999&#39;的数据，所以子查询结果是 null。 相当于SELECT tname FROM teacher WHERE EXISTS(null);    </code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206111704110.png" alt></p>
+<h4 id="IN"><a href="#IN" class="headerlink" title="IN"></a>IN</h4><p>SELECT … FROM table tid IN (1,3,5);</p>
+<p>SELECT * FROM A WHERE id IN (SELECT id FROM B); </p>
+<h3 id="2、ORDER-BY-优化"><a href="#2、ORDER-BY-优化" class="headerlink" title="2、ORDER BY 优化"></a>2、ORDER BY 优化</h3><p>Using filesort 有两种算法： 双路排序、单路排序 （根据 IO 的次数）</p>
+<blockquote>
+<p>MySQL4.1 之前默认使用 双路排序； 双路：扫描两次磁盘 （1：从磁盘读取排序字段，对排序字段进行排序（在 buffer 缓冲区中进行的排序） 2：扫描其它字段）</p>
+<ul>
+<li>IO 较消耗性能</li>
+</ul>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206111724816.png" alt></p>
+<p>MySQL4.1 之后默认使用 单路排序：只读取一次（全部字段），在 buffer 中进行排序。但此种单路排序会有一定的隐患（不一定真的是“单路 1 次 IO”，有可能多次 IO）。原因：如果数据量特别大，则无法将所有字段的数据一次性读取完毕，因此会进行“分片读取、多次读取”。</p>
+<ul>
+<li>注意：单路排序比双路排序会占用更多的 buffer。</li>
+<li>单路排序在使用时，如果数据量大，可以考虑调大 buffer 的容量大小：<code>set max_length_for_sort_data = 值;</code> 单位在 byte</li>
+</ul>
+<p>如果set max_length_for_sort_data值<strong>太低</strong>，则 MySQL 会自动从单路 -&gt; 双路 （太低：需要排序的列的总大小超过了set max_length_for_sort_data定义的字节数） </p>
+</blockquote>
+<p>提高 ORDER BY 查询的策略：</p>
+<ol>
+<li>选择使用单路、双路；调整 buffer 的容量大小</li>
+<li>避免 select * … <ul>
+<li>* 代表全部，而且 mysql 还要计算 * 有什么字段</li>
+<li>索引覆盖，即 select a … where a ，写 select * 就很难索引覆盖了</li>
+</ul>
+</li>
+<li>复合索引不要跨列使用，避免Using filesort</li>
+<li>保证全部的排序字段排序的一致性（都是升序或降序）<ul>
+<li>order a asc , c desc ;</li>
+</ul>
+</li>
+</ol>
+<h2 id="十一、SQL-排查-慢查询日志"><a href="#十一、SQL-排查-慢查询日志" class="headerlink" title="十一、SQL 排查-慢查询日志"></a>十一、SQL 排查-慢查询日志</h2><p>MySQL 提供的一种日志记录，用于记录 MySQL 中响应时间超过阈值的 SQL 语句（long_query_time，默认 10 秒）</p>
+<ul>
+<li><p>慢查询日志默认是关闭的；建议：开发调优时打开，而最终部署时关闭。</p>
+</li>
+<li><p>检查是否开启了慢查询日志：</p>
+<pre><code class="sql">SHOW VARIABLES LIKE &#39;%slow_query_log%&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206111745703.png" alt></p>
+</li>
+<li><p>开启</p>
+<ul>
+<li><p>临时开启：</p>
+<pre><code class="sql">SET GLOBAL SLOW_QUERY_LOG = 1;    -- 内存中开启</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206111746622.png" alt></p>
+</li>
+<li><p>永久开启：</p>
+<pre><code class="markdown">/etc/my.cnf 中,[mysqld]的位置后面追加配置:  (修改完毕后需要重启服务生效)
+
+slow_query_log = 1
+slow_query_log_file = /var/lib/mysql/localhost-slow.log</code></pre>
+</li>
+</ul>
+</li>
+<li><p>慢查询阈值：</p>
+<pre><code class="sql">SHOW VARIABLES LIKE &#39;%LONG_QUERY_TIME%&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206111752873.png" alt></p>
+<ul>
+<li><p>临时设置阈值：</p>
+<pre><code class="sql">SET GLOBAL LONG_QUERY_TIME = 5; -- 修改完毕后，重新登录后起效（不需要重启服务）</code></pre>
+</li>
+<li><p>永久设置阈值：</p>
+<pre><code class="markdown">/etc/my.cnf 中,[mysqld]的位置后面追加配置: (修改完毕后需要重启服务生效)
+
+long_query_time = 3</code></pre>
+</li>
+</ul>
+</li>
+<li><p>测试</p>
+<ul>
+<li>线程休眠，模拟慢查询</li>
+</ul>
+<pre><code class="sql">SELECT SLEEP(11); </code></pre>
+<ul>
+<li>查询超过阈值的 SQL</li>
+</ul>
+<pre><code class="sql">SHOW GLOBAL STATUS LIKE &#39;%SLOW_QUERIES%&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206111800468.png" alt></p>
+<ul>
+<li>1.慢查询的 sql 被记录在了日志中，因此可以通过日志查询具体的慢 SQL。</li>
+</ul>
+<pre><code class="bash"># 在 linux 操作系统中通过 cat 命令查看慢查询日志
+cat /var/lib/mysql/localhost-slow.log</code></pre>
+<ul>
+<li><p>2.通过 <code>mysqldumpslow</code> 工具查看慢 SQL，可以通过一些过滤条件快速查找出需要定位的慢 SQL</p>
+<ul>
+<li>语法： mysqldumpslow 各种参数 慢查询日志的文件</li>
+</ul>
+<pre><code class="bash">mysqldumpslow --help
+s: 排序方式
+r: 逆序
+l: 锁定时间
+g: 正则匹配模式
+
+# 获取返回记录最多的 3 个 SQL
+mysqldumpslow -s r -t 3 /var/lib/mysql/localhost-slow.log
+# 获取访问次数最多的 3 个 SQL
+mysqldumpslow -s c -t 3 /var/lib/mysql/localhost-slow.log
+# 按照时间排序，前 10 条包含 left join 查询语句的慢 SQL
+mysqldumpslow -s t -t 10 -g &quot;left join&quot; /var/lib/mysql/localhost-slow.log</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="十二、锁机制"><a href="#十二、锁机制" class="headerlink" title="十二、锁机制"></a>十二、锁机制</h2><p>解决因资源共享而造成的并发问题。</p>
+<blockquote>
+<p>示例：买最后一件衣服</p>
+<p>A：    X    买：X 加锁 -&gt; 试衣服 。。。 下单 。。。 付款 。。。打包 -&gt; X解锁</p>
+<p>B：    X    买：发现 X 已被加锁，等待 X 解锁， X 已售空</p>
+</blockquote>
+<h3 id="1、分类-1"><a href="#1、分类-1" class="headerlink" title="1、分类"></a>1、分类</h3><ul>
+<li>操作类型<ul>
+<li>读锁（共享锁）：对同一个数据（如上面的衣服），多个读操作可以同时进行，互不干扰。</li>
+<li>写锁（互斥锁）：如果当前写操作没有完毕（买衣服的一系列操作），则无法进行其它的读操作、写操作</li>
+</ul>
+</li>
+<li>操作范围<ul>
+<li>表锁：一次性对一张表整体加锁。如 MyISAM 存储引擎使用表锁，开销小、加锁快；无死锁；但锁的范围大，容易发生锁冲突、并发度低。</li>
+<li>行锁：一次性对一条数据加锁。如 InnoDB 存储引擎使用行锁，开销大，加锁慢；容易出现死锁；锁的范围较小，不易发生锁冲突，并发度高（很小概率发生高并发问题：脏读、幻读、不可重复读、丢失更新等问题）</li>
+<li>页锁</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>示例：</p>
+<ul>
+<li>表锁</li>
+</ul>
+<pre><code class="sql">CREATE TABLE tablelock (
+    id INT PRIMARY KEY AUTO_INCREMENT ,    -- 自增操作 MySQL/SQLServer支持； ORACLE 需要借助于序列来实现自增
+  name VARCHAR(20)
+)ENGINE MYISAM;    -- MYISAM 自带表锁
+
+-- 插入数据
+INSERT INTO tablelock (name) VALUES (&#39;a1&#39;);
+INSERT INTO tablelock (name) VALUES (&#39;a2&#39;);
+INSERT INTO tablelock (name) VALUES (&#39;a3&#39;);
+INSERT INTO tablelock (name) VALUES (&#39;a4&#39;);
+INSERT INTO tablelock (name) VALUES (&#39;a5&#39;);
+COMMIT;</code></pre>
+<p><strong>增加锁: 语法</strong></p>
+<p>LOCK TABLE 表1 READ/WRITE , 表2 READ/WRITE , ….</p>
+<p><strong>查看加锁的表：</strong></p>
+<p>SHOW OPEN TABLES;</p>
+<p>==加读锁== </p>
+<p><code>会话0：</code></p>
+<pre><code class="sql">LOCK TABLE tablelock READ; -- 加读锁
+
+SELECT * FROM tablelock; -- 读(查)，可以
+DELETE FROM tablelock WHERE id = 1; -- 写(增删改),不可以</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206121829311.png" alt></p>
+<pre><code class="sql">SELECT * FROM teacher; -- 读，不可以
+DELETE FROM teacher WHERE tid = 1; -- 写，不可以</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206121833461.png" alt></p>
+<blockquote>
+<p><strong>结论1：</strong> </p>
+<p><em>如果某一个会话对 A表 加了 READ 锁，则该会话可以对 A 表进行读操作、不能进行写操作；且该会话不能对其它表进行读、写操作。</em> </p>
+<p>会话：session；每一个访问数据的 DOS 命令行、数据库客户端工具，都是一个会话</p>
+</blockquote>
+<p><code>会话1（其它会话）：</code></p>
+<pre><code class="sql">SELECT * FROM tablelock; -- 读(查)，可以
+DELETE FROM tablelock WHERE id = 1;  -- 写，会“等待”会话0将锁释放
+
+SELECT * FROM teacher; -- 读(查)，可以
+DELETE FROM teacher WHERE tid = 1; -- 写(增删改)，可以</code></pre>
+<blockquote>
+<p><strong>结论2：</strong> </p>
+<p>总结：</p>
+<p>会话0给 A表 加了锁：其它会话的操作</p>
+<ul>
+<li>可以对其它表(A表以外的表)进行读、写操作。</li>
+<li>对 A表：读-可以； 写-需要等待释放锁。</li>
+</ul>
+</blockquote>
+<p><strong>释放锁：UNLOCK TABLES;</strong></p>
+<pre><code class="sql">UNLOCK TABLES;</code></pre>
+<p>==加写锁==</p>
+<p><code>会话0：</code></p>
+<pre><code class="sql">LOCK TABLE tablelock WRITE;</code></pre>
+<blockquote>
+<p>当前会话(会话0)可以对加了写锁的表进行任何操作(增删改查)； 但是不能操作其它表</p>
+</blockquote>
+<p><code>其它会话</code></p>
+<blockquote>
+<p>对会话0中加写锁的表可以进行增删改查，前提是：等待会话0释放写锁</p>
+</blockquote>
+</blockquote>
+<h3 id="2、MySQL表级锁的锁模式"><a href="#2、MySQL表级锁的锁模式" class="headerlink" title="2、MySQL表级锁的锁模式"></a>2、MySQL表级锁的锁模式</h3><p>MyISAM执行查询语句(SELECT)前，会自动给涉及的所有表加读锁，在执行更新操作(DML)前，会自动给涉及的表加写锁。所以对 MyISAM 表进行操作，会有以下情况：</p>
+<ul>
+<li>对 MyISAM 表的读操作（加读锁），不会阻塞其它进程（会话）对同一表的读请求，但会阻塞对同一表的写请求。只有当读锁释放后，才会执行其它进程的写操作、</li>
+<li>对 MyISAM 表的写操作（加写锁），会阻塞其它进程（会话）对同一表的读和写操作，只有当写锁释放后，才会执行其它进程的读写操作。</li>
+</ul>
+<h2 id="十三、表锁情况分析及行锁解析"><a href="#十三、表锁情况分析及行锁解析" class="headerlink" title="十三、表锁情况分析及行锁解析"></a>十三、表锁情况分析及行锁解析</h2><h3 id="1、分析表锁定"><a href="#1、分析表锁定" class="headerlink" title="1、分析表锁定"></a>1、分析表锁定</h3><ul>
+<li>查看哪些表加了锁：</li>
+</ul>
+<pre><code class="sql">SHOW OPEN TABLES; -- 1代表被加了锁</code></pre>
+<ul>
+<li>分析表锁定的严重程度</li>
+</ul>
+<pre><code class="sql">SHOW STATUS LIKE &#39;table%&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206121858155.png" alt></p>
+<p>Table_locks_immediate：即可能获取到的锁</p>
+<p>Table_locks_waited：需要等待的表锁数（如果该值越大，说明存在越大的锁竞争）</p>
+<blockquote>
+<p>一般建议：</p>
+<p>Table_locks_immediate / Table_locks_waited &gt; 5000 ,建议采用 InnoDB 引擎。否则 MyISAM 引擎</p>
+</blockquote>
+<h3 id="2、行锁（InnoDB）"><a href="#2、行锁（InnoDB）" class="headerlink" title="2、行锁（InnoDB）"></a>2、行锁（InnoDB）</h3><pre><code class="sql">CREATE TABLE linelock (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(20)
+)ENGINE = InnoDB;
+
+-- 插入数据
+INSERT INTO linelock (name) VALUES (&#39;1&#39;);
+INSERT INTO linelock (name) VALUES (&#39;2&#39;);
+INSERT INTO linelock (name) VALUES (&#39;3&#39;);
+INSERT INTO linelock (name) VALUES (&#39;4&#39;);
+INSERT INTO linelock (name) VALUES (&#39;5&#39;);
+COMMIT; -- 可以不加，MySQL默认自动 COMMIT；ORACLE 默认不会自动 COMMIT；</code></pre>
+<p>为了研究行锁，暂时将自动 COMMIT 关闭；</p>
+<pre><code class="sql">SET AUTOCOMMIT = 0; -- 以后需要通过手写 COMMIT 手动提交</code></pre>
+<blockquote>
+<p>示例：</p>
+<p><code>会话0</code>：写操作</p>
+<pre><code class="sql">INSERT INTO linelock VALUES(6,&#39;a6&#39;);</code></pre>
+<p><code>会话1</code>：写操作，同样的数据</p>
+<pre><code class="sql">UPDATE linelock SET name = &#39;ax&#39; WHERE id = &#39;6&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206121937945.png" alt></p>
+<blockquote>
+<p>对行锁情况：</p>
+<ol>
+<li>如果会话x对某条数据 a 进行 DML 操作（关闭了自动 COMMIT 的情况下），则其它会话必须等待会话x结束事务后才能对数据 a 进行操作。</li>
+<li><strong>表锁时通过 UNLOCK TABLES;  或者通过事务解锁 。 行锁是通过事务解锁（commit/rollback）</strong> </li>
+</ol>
+</blockquote>
+<p>行锁，操作不同数据：</p>
+<p><code>会话0</code>：写操作</p>
+<pre><code class="sql">INSERT INTO linelock VALUES(8,&#39;a8&#39;);</code></pre>
+<p><code>会话1</code>：写操作，不同的数据</p>
+<pre><code class="sql">UPDATE linelock SET name = &#39;ax&#39; WHERE id = &#39;5&#39;;</code></pre>
+<blockquote>
+<p>行锁，一次锁一行数据；因此如果操作的是不同数据，则互不干扰。</p>
+</blockquote>
+</blockquote>
+<h3 id="3、行锁的注意事项及使用情况分析"><a href="#3、行锁的注意事项及使用情况分析" class="headerlink" title="3、行锁的注意事项及使用情况分析"></a>3、行锁的注意事项及使用情况分析</h3><h4 id="1、行锁的注意事项"><a href="#1、行锁的注意事项" class="headerlink" title="1、行锁的注意事项"></a>1、行锁的注意事项</h4><ul>
+<li><strong><em>如果没有索引，则行锁会转为表锁</em></strong> </li>
+</ul>
+<pre><code class="sql">SHOW INDEX FROM linelock;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206121943846.png" alt></p>
+<pre><code class="SQL">-- 给 linelock 表的 name 字段加索引
+ALTER table linelock ADD INDEX idx_linelock_name(name);</code></pre>
+<blockquote>
+<p><code>会话0</code>：写操作</p>
+<pre><code class="sql">UPDATE linelock SET name = &#39;ai&#39; WHERE name = &#39;3&#39;;
+COMMIT;</code></pre>
+<p><code>会话1</code>：写操作，不同的数据</p>
+<pre><code class="sql">UPDATE linelock SET name = &#39;aiX&#39; WHERE name = &#39;4&#39;;
+COMMIT;</code></pre>
+<blockquote>
+<p>发现没有问题</p>
+</blockquote>
+<p>把 name 的 ‘’ 去掉再查看</p>
+<p><code>会话0</code>：写操作</p>
+<pre><code class="sql">UPDATE linelock SET name = &#39;ai&#39; WHERE name = 3;</code></pre>
+<p><code>会话1</code>：写操作，不同的数据</p>
+<pre><code class="sql">UPDATE linelock SET name = &#39;aiX&#39; WHERE name = 4;</code></pre>
+<blockquote>
+<p>可以发现，数据被阻塞了（加锁）</p>
+<p><strong>原因：如果索引列发生了类型转换，则索引失效。因此此次操作，会从行锁转为表锁。</strong>（行锁转为表锁，会话0在操作数据的时候，将整个表给锁住了，会话1不管访问谁，都会被阻塞） </p>
+</blockquote>
+</blockquote>
+<ul>
+<li><strong><em>行锁的一种特殊情况：间隙锁</em></strong>:值在范围内，但却不存在</li>
+</ul>
+<p>示例：</p>
+<p>此时 linelock 表中没有 id = 7 的数据。</p>
+<pre><code class="sql">UPDATE linelock SET name = &#39;x&#39; WHERE id &gt; 1 AND id &lt; 9; -- 即在此WHERE范围中，没有 id = 7 的数据，则 id = 7 的数据称为间隙。</code></pre>
+<p><strong>间隙：MySQL 会自动给 间隙 加锁 -&gt; 间隙锁。</strong>即本题会自动给 id=7 的数据加间隙锁</p>
+<p><strong>行锁：如果有 WHERE ,则实际加锁的范围就是 WHERE 后面的范围（不是实际的值）</strong></p>
+<blockquote>
+<p>行锁：</p>
+<p>InnoDB 默认采用行锁</p>
+<p>缺点：比表锁性能损耗大。</p>
+<p>优点：并发能力强，效率高。</p>
+<p>因此建议，高并发用 InnoDB，否则用 MyISAM</p>
+</blockquote>
+<h4 id="2、行锁分析"><a href="#2、行锁分析" class="headerlink" title="2、行锁分析"></a>2、行锁分析</h4><pre><code class="sql">SHOW STATUS LIKE &#39;%innodb_row_lock%&#39;;</code></pre>
+<p><img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202206122003048.png" alt></p>
+<ul>
+<li>Innodb_row_lock_current_waits：当前正在等待锁的数量</li>
+<li>Innodb_row_lock_time：等待总时长。从系统启动到现在一共等待的时间</li>
+<li>Innodb_row_lock_time_avg：平均等待时长。从系统启动到现在平均等待的时间</li>
+<li>Innodb_row_lock_time_max：最大等待时长。从系统启动到现在最大一次等待的时间</li>
+<li>Innodb_row_lock_waits：等待次数。从系统启动到现在一共等待的次数。</li>
+</ul>
+<h4 id="3、FOR-UPDATE"><a href="#3、FOR-UPDATE" class="headerlink" title="3、FOR UPDATE"></a>3、FOR UPDATE</h4><p>如果仅仅是查询数据，能否加锁？ 可以    -&gt; <strong>FOR UPDATE</strong></p>
+<p>研究学习时，将自动提交关闭：</p>
+<ul>
+<li>set autocommit = 0;</li>
+<li>或start transaction;</li>
+<li>或begin;</li>
+</ul>
+<pre><code class="sql">-- 会话0查询
+SELECT * FROM linelock WHERE id = 2 FOR UPDATE; 
+-- 会话1修改
+UPDATE linelock SET name = &#39;x&#39; WHERE id = 2; -- 发现被锁住了</code></pre>
+<blockquote>
+<p>通过 FOR UPDATE 对 Query 语句进行加锁。</p>
+</blockquote>
 
         </div>
         <!-- .entry-content -->

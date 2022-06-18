@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2022-06-05T04:36:36.282Z</updated>
+  <updated>2022-06-18T05:32:33.755Z</updated>
   <id>/</id>
   
   <author>
@@ -15,6 +15,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>汇编语言</title>
+    <link href="/2022/06/16/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/"/>
+    <id>/2022/06/16/汇编语言/</id>
+    <published>2022-06-16T13:35:07.000Z</published>
+    <updated>2022-06-18T05:32:33.755Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;一、基础知识&quot;&gt;&lt;a href=&quot;#一、基础知识&quot; class=&quot;headerlink&quot; title=&quot;一、基础知识&quot;&gt;&lt;/a&gt;一、基础知识&lt;/h2&gt;&lt;h3 id=&quot;1、机器语言&quot;&gt;&lt;a href=&quot;#1、机器语言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="计算机基础" scheme="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机组成原理</title>
+    <link href="/2022/06/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/"/>
+    <id>/2022/06/12/计算机组成原理/</id>
+    <published>2022-06-12T13:04:15.000Z</published>
+    <updated>2022-06-18T05:39:47.230Z</updated>
+    
+    <summary type="html">
+    
+      根据b站视频学习所做笔记 链接：https://www.bilibili.com/video/BV1t4411e7LH?spm_id_from=333.880.my_history.page.click&amp;vd_source=b759ecc42919d98c0e519c9a5eae1909。
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="计算机基础" scheme="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
   
   <entry>
     <title>课程:Mosh_完全掌握SQL</title>

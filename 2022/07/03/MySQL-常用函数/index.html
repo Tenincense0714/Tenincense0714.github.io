@@ -437,6 +437,7 @@
 
 </li>
 </ul>
+<hr>
 <h2 id="二、space-N"><a href="#二、space-N" class="headerlink" title="二、space(N)"></a>二、space(N)</h2><blockquote>
 <p>返回空格组成的字符串。</p>
 </blockquote>
@@ -447,6 +448,7 @@
 &gt; &#39;      &#39;      </code></pre>
 </li>
 </ul>
+<hr>
 <h2 id="三、strcmp-expr1-expr2"><a href="#三、strcmp-expr1-expr2" class="headerlink" title="三、strcmp(expr1,expr2)"></a>三、strcmp(expr1,expr2)</h2><blockquote>
 <p>如果 expr1 大于 expr2 返回 1，也就是 true。 如果 expr1 小于 expr2 返回 -1也就是 false。如果 expr1 等于 expr2 返回0；</p>
 </blockquote>
@@ -469,6 +471,7 @@
 
 </li>
 </ul>
+<hr>
 <h2 id="四、length-str"><a href="#四、length-str" class="headerlink" title="四、length(str)"></a>四、length(str)</h2><blockquote>
 <p>length(str) : 返回值为字符串 str 的字节长度</p>
 </blockquote>
@@ -481,6 +484,7 @@
 
 </li>
 </ul>
+<hr>
 <h2 id="五、left-str-len"><a href="#五、left-str-len" class="headerlink" title="五、left(str,len)"></a>五、left(str,len)</h2><blockquote>
 <p>left(str,len) : 从左边开始截取指定长度的字符串</p>
 </blockquote>
@@ -493,6 +497,7 @@
 
 </li>
 </ul>
+<hr>
 <h2 id="六、right-str-len"><a href="#六、right-str-len" class="headerlink" title="六、right(str,len)"></a>六、right(str,len)</h2><blockquote>
 <p>right(str,len) : 从右边开始截取指定长度的字符串</p>
 </blockquote>
@@ -505,6 +510,7 @@
 
 </li>
 </ul>
+<hr>
 <h2 id="七、upper-str"><a href="#七、upper-str" class="headerlink" title="七、upper(str)"></a>七、upper(str)</h2><blockquote>
 <p>upper(str) : 返回大写字母</p>
 </blockquote>
@@ -517,6 +523,7 @@
 
 </li>
 </ul>
+<hr>
 <h2 id="八、lower-str"><a href="#八、lower-str" class="headerlink" title="八、lower(str)"></a>八、lower(str)</h2><blockquote>
 <p>lower(str) : 返回小写字母</p>
 </blockquote>
@@ -529,6 +536,7 @@
 
 </li>
 </ul>
+<hr>
 <h2 id="九、replace-str-str1-str2"><a href="#九、replace-str-str1-str2" class="headerlink" title="九、replace(str,str1,str2)"></a>九、replace(str,str1,str2)</h2><blockquote>
 <p>replace(str,str1,str2) : 将字符串str2替换掉 str 中的 str1</p>
 </blockquote>
@@ -541,6 +549,7 @@
 
 </li>
 </ul>
+<hr>
 <h2 id="十、reverse-str"><a href="#十、reverse-str" class="headerlink" title="十、reverse(str)"></a>十、reverse(str)</h2><blockquote>
 <p>reverse(str) : 反转字符串，返回str字符串的顺序相反</p>
 </blockquote>
@@ -553,6 +562,7 @@
 
 </li>
 </ul>
+<hr>
 <h2 id="十一、row-count"><a href="#十一、row-count" class="headerlink" title="十一、row_count()"></a>十一、row_count()</h2><blockquote>
 <p>row_count() : 返回上一句sql增/删/改影响的记录数</p>
 </blockquote>
@@ -571,6 +581,7 @@
 <p><code>注意：如果上一条SQL 是查询语句（SELECT/SHOW 等）则返回-1；</code></p>
 <p><code>如果上一条SQL 是删除表（DROP）则返回 0；</code></p>
 <p><code>如果上一条SQL 是建表语句，且创建的表是空表则返回 0；</code></p>
+<hr>
 <h2 id="十二、found-rows"><a href="#十二、found-rows" class="headerlink" title="十二、found_rows()"></a>十二、found_rows()</h2><blockquote>
 <p>found_rows() : 获取上一句SELECT语句（SHOW语句等）查询结果集的记录数</p>
 </blockquote>
@@ -608,6 +619,7 @@ SELECT FOUND_ROWS();
 <p>1、这两句 SQL一定要放在一个 session 中，不然结果数据是错误的；</p>
 <p>2、如果你要使用两句SQL 组合就不能用可视化软件 Navicat、SQLyon之类的执行这两句SQL 。</p>
 </blockquote>
+<hr>
 <h2 id="十三、if-expr1-expr2-expr3"><a href="#十三、if-expr1-expr2-expr3" class="headerlink" title="十三、if(expr1,expr2,expr3)"></a>十三、if(expr1,expr2,expr3)</h2><blockquote>
 <p>if(expr1,expr2,expr3) ：如果 expr1 是 true，则返回 expr2；如果 expr1 是 false 则返回 expr3</p>
 </blockquote>
@@ -625,6 +637,7 @@ SELECT FOUND_ROWS();
 
 </li>
 </ul>
+<hr>
 <h2 id="十四、ifnull-expr1-expr2"><a href="#十四、ifnull-expr1-expr2" class="headerlink" title="十四、ifnull(expr1,expr2)"></a>十四、ifnull(expr1,expr2)</h2><blockquote>
 <p>ifnull(expr1,expr2) : 当 expr1 不为 null，则返回 expr1，expr1为 null 则返回 expr2</p>
 </blockquote>
@@ -642,6 +655,7 @@ SELECT FOUND_ROWS();
 
 </li>
 </ul>
+<hr>
 <h2 id="十五、to-days-date"><a href="#十五、to-days-date" class="headerlink" title="十五、to_days(date)"></a>十五、to_days(date)</h2><blockquote>
 <p>to_days(date) : 给定一个日期date，返回一个天数（从年份 0 开始的天数）</p>
 </blockquote>
@@ -654,6 +668,7 @@ SELECT FOUND_ROWS();
 
 </li>
 </ul>
+<hr>
 <h2 id="十六、datediff-expr1-expr2"><a href="#十六、datediff-expr1-expr2" class="headerlink" title="十六、datediff(expr1,expr2)"></a>十六、datediff(expr1,expr2)</h2><blockquote>
 <p>datediff(expr1,expr2) : 返回expr1时间和 expr2时间之间的间隔天数。</p>
 <p>注意：注意参数顺序</p>
@@ -672,6 +687,7 @@ SELECT FOUND_ROWS();
 
 </li>
 </ul>
+<hr>
 <h2 id="十七、last-day-date"><a href="#十七、last-day-date" class="headerlink" title="十七、last_day(date)"></a>十七、last_day(date)</h2><blockquote>
 <p>last_day(date) : 返回该月最后一天对应的值。若参数 date无效，则返回NULL</p>
 </blockquote>
@@ -689,6 +705,7 @@ SELECT FOUND_ROWS();
 
 </li>
 </ul>
+<hr>
 <h2 id="十八、date-sub-date-INTERVAL-expr1-type"><a href="#十八、date-sub-date-INTERVAL-expr1-type" class="headerlink" title="十八、date_sub(date,INTERVAL expr1 type)"></a>十八、date_sub(date,INTERVAL expr1 type)</h2><blockquote>
 <p>date_sub(date,INTERVAL expr1 type) : 从日期里面减去指定的时间间隔。date参数是日期表达式，expr1参数是你希望减去多少天。</p>
 </blockquote>
@@ -704,9 +721,11 @@ SELECT FOUND_ROWS();
 
 </li>
 </ul>
+<hr>
 <h2 id="十九、date-add-date-INTERVAL-expr-type"><a href="#十九、date-add-date-INTERVAL-expr-type" class="headerlink" title="十九、date_add(date,INTERVAL expr type)"></a>十九、date_add(date,INTERVAL expr type)</h2><blockquote>
 <p>就是加几天</p>
 </blockquote>
+<hr>
 <h2 id="二十、format-X-D"><a href="#二十、format-X-D" class="headerlink" title="二十、format(X,D)"></a>二十、format(X,D)</h2><blockquote>
 <p>format(X,D) : 对字段的显示进行格式化</p>
 </blockquote>
@@ -724,6 +743,7 @@ SELECT FOUND_ROWS();
 
 </li>
 </ul>
+<hr>
 <h2 id="二十一、date-format-date-format"><a href="#二十一、date-format-date-format" class="headerlink" title="二十一、date_format(date,format)"></a>二十一、date_format(date,format)</h2><blockquote>
 <p>date_format(date,format) : 用于以不同的格式显示日期数据。format参数是输出的日期时间格式。date参数是日期类型</p>
 </blockquote>
@@ -741,6 +761,7 @@ SELECT FOUND_ROWS();
 
 </li>
 </ul>
+<hr>
 <h2 id="二十二、get-format-DATE-TIME-DATETIME-’EUR’-’USA’-’JIS’-’ISO’-’INTERNAL’"><a href="#二十二、get-format-DATE-TIME-DATETIME-’EUR’-’USA’-’JIS’-’ISO’-’INTERNAL’" class="headerlink" title="二十二、get_format(DATE|TIME|DATETIME,’EUR’|’USA’|’JIS’|’ISO’|’INTERNAL’)"></a>二十二、get_format(DATE|TIME|DATETIME,’EUR’|’USA’|’JIS’|’ISO’|’INTERNAL’)</h2><blockquote>
 <p>get_format(DATE|TIME|DATETIME,’EUR’|’USA’|’JIS’|’ISO’|’INTERNAL’) : 返回一个时间格式字符串。一般都结合date_format()使用</p>
 </blockquote>
@@ -760,6 +781,7 @@ SELECT FOUND_ROWS();
 &gt; &#39;%Y-%m-%d-%H.%i.%s&#39;</code></pre>
 </li>
 </ul>
+<hr>
 <h2 id="二十三、timestampdiff-interval-datetime-expr1-datetime-expr2"><a href="#二十三、timestampdiff-interval-datetime-expr1-datetime-expr2" class="headerlink" title="二十三、timestampdiff(interval,datetime_expr1,datetime_expr2)"></a>二十三、timestampdiff(interval,datetime_expr1,datetime_expr2)</h2><blockquote>
 <p>timestampdiff(interval,datetime_expr1,datetime_expr2) : 返回表达式datetime_expr1日期时间和datetime_expr2日期时间之间的整数差。</p>
 </blockquote>
@@ -774,6 +796,7 @@ SELECT FOUND_ROWS();
 &gt; -1 (注意参数顺序，值是负数了)</code></pre>
 </li>
 </ul>
+<hr>
 <h2 id="二十四、least-value1-value2-…"><a href="#二十四、least-value1-value2-…" class="headerlink" title="二十四、least(value1,value2,…)"></a>二十四、least(value1,value2,…)</h2><blockquote>
 <p>least(value1,value2,…) ： 返回值为最小值的参数</p>
 </blockquote>
@@ -788,35 +811,42 @@ SELECT FOUND_ROWS();
 &gt; &#39;A&#39;</code></pre>
 </li>
 </ul>
+<hr>
 <h2 id="二十五、greatest-value1-value2-…"><a href="#二十五、greatest-value1-value2-…" class="headerlink" title="二十五、greatest(value1,value2,…)"></a>二十五、greatest(value1,value2,…)</h2><blockquote>
 <p>greatest(value1,value2,…)返回值为最大值参数</p>
 </blockquote>
+<hr>
 <h2 id="二十六、find-in-set-str-strlist"><a href="#二十六、find-in-set-str-strlist" class="headerlink" title="二十六、find_in_set(str,strlist)"></a>二十六、find_in_set(str,strlist)</h2><blockquote>
 <p>find_in_set(str,strlist) :  查询str 在strlist的位置，strlist要以英文逗号 , 分割</p>
 </blockquote>
 <p>例：</p>
 <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031531640.png" style="zoom:50%;">
 
+<hr>
 <h2 id="二十七、unix-timestamp-date"><a href="#二十七、unix-timestamp-date" class="headerlink" title="二十七、unix_timestamp([date])"></a>二十七、unix_timestamp([date])</h2><blockquote>
 <p>unix_timestamp([date]) ： 将时间转化为时间戳</p>
 </blockquote>
 <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031533297.png" style="zoom:50%;">
 
+<hr>
 <h2 id="二十八、from-unixtime-unix-timestamp"><a href="#二十八、from-unixtime-unix-timestamp" class="headerlink" title="二十八、from_unixtime(unix_timestamp)"></a>二十八、from_unixtime(unix_timestamp)</h2><blockquote>
 <p>from_unixtime(unix_timestamp) : 格式化时间戳</p>
 </blockquote>
 <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031534602.png" style="zoom:50%;">
 
+<hr>
 <h2 id="二十九、coalesce-value-…"><a href="#二十九、coalesce-value-…" class="headerlink" title="二十九、coalesce(value,…)"></a>二十九、coalesce(value,…)</h2><blockquote>
 <p>coalesce(value,…) : 返回值为列表当中的第一个非NULL 值，如果值全为null则返回 null</p>
 </blockquote>
 <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031535701.png" style="zoom:50%;">
 
+<hr>
 <h2 id="三十、instr-str-substr"><a href="#三十、instr-str-substr" class="headerlink" title="三十、instr(str,substr)"></a>三十、instr(str,substr)</h2><blockquote>
 <p>instr(str,substr) : 返回substr在字符串str第一个出现位置，如果没有则返回 0 </p>
 </blockquote>
 <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031536443.png" style="zoom:50%;">
 
+<hr>
 <h2 id="三十一、locate-substr-str-pos"><a href="#三十一、locate-substr-str-pos" class="headerlink" title="三十一、locate(substr,str,[pos])"></a>三十一、locate(substr,str,[pos])</h2><blockquote>
 <p>locate(substr,str,[pos])： 返回substr在字符串str第一个出现位置，如果没有则返回0</p>
 </blockquote>
@@ -824,12 +854,50 @@ SELECT FOUND_ROWS();
 
 <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031538809.png" style="zoom:50%;">
 
+<hr>
 <h2 id="三十二、round-X-D"><a href="#三十二、round-X-D" class="headerlink" title="三十二、round(X,[D])"></a>三十二、round(X,[D])</h2><blockquote>
 <p>round(X,[D]) ： 返回参数 X最近的整数。参数 D可选的，表示保留小数点后几位</p>
 </blockquote>
 <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031540525.png" style="zoom:50%;">
 
-<h2 id="substring-str-pos-len"><a href="#substring-str-pos-len" class="headerlink" title="substring(str,pos,[len])"></a>substring(str,pos,[len])</h2>
+<hr>
+<h2 id="三十三、substring-str-pos-len"><a href="#三十三、substring-str-pos-len" class="headerlink" title="三十三、substring(str,pos,[len])"></a>三十三、substring(str,pos,[len])</h2><blockquote>
+<p>substring(str, pos)：从字符串的第 pos 个字符位置开始取，直到结束。</p>
+<p>substring(str,pos,len)： 从字符串的第 pos 个字符位置开始取，取 len 个字符。</p>
+</blockquote>
+<p>例：</p>
+<ul>
+<li><p>从字符串的第 4 个字符位置开始取，直到结束。</p>
+<pre><code class="sql">select substring(&#39;example.com&#39;, 4);
+&gt; mple.com</code></pre>
+</li>
+<li><p>从字符串的第 4 个字符位置开始取，只取 2 个字符。</p>
+<pre><code class="sql">select substring(&#39;example.com&#39;, 4, 2);
+&gt; mp</code></pre>
+</li>
+<li><p>从字符串的第 4 个字符位置（倒数）开始取，直到结束。</p>
+<pre><code class="sql">select substring(&#39;example.com&#39;, -4, 2);
+&gt; .c </code></pre>
+</li>
+</ul>
+<p><strong>注意：在函数 substring(str,pos, len)中， pos 可以是负值，但 len 不能取负值。</strong> </p>
+<hr>
+<h2 id="三十四、substring-index-str-delim-count"><a href="#三十四、substring-index-str-delim-count" class="headerlink" title="三十四、substring_index(str,delim,count)"></a>三十四、substring_index(str,delim,count)</h2><blockquote>
+<p>substring_index(str,delim,count) : 返回字符串 str 中在第 count 个分隔符 delim 之前的子串</p>
+<p>如果 count 是一个正数，返回从最后的（从左边开始计数）分隔符到左边所 有字符。 如果 count 是负数，返回从最后的（从右边开始计数）分隔符到右边所有字 符。</p>
+</blockquote>
+<p>例：</p>
+<ul>
+<li><p>count 是正数，返回从分隔符“.”到左边的所有字符</p>
+<pre><code class="sql">SELECT SUBSTRING_INDEX(&#39;www.generaldata.com.cn&#39;, &#39;.&#39;, 2) FROM t;
+&gt; www.generaldata</code></pre>
+</li>
+<li><p>count 是负数，返回从分隔符“.”到右边的所有字符</p>
+<pre><code class="sql">SELECT SUBSTRING_INDEX(&#39;www.generaldata.com.cn&#39;, &#39;.&#39;, -3) FROM t;
+&gt; generaldata.com.cn</code></pre>
+</li>
+</ul>
+
         </div>
         <!-- .entry-content -->
         <div class="single-reward">

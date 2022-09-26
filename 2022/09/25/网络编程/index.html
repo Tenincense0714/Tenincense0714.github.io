@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">MySQL 常用函数 | TenIncense</title>
+  <title itemprop="name">网络编程 | TenIncense</title>
   
     <link rel="shortcut icon" href="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E8%83%8C%E6%99%AF%202/601644262819_.pic.jpg">
   
@@ -366,30 +366,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
 
-  <div class="pattern-center single-center">
-    <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/13.jpg);" src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/13.jpg">
-    </div>
-    <header class="pattern-header single-header">
-      <h1 class="entry-title">
-      MySQL 常用函数</h1>
-      <p class="entry-census">
-        <span>
-          <a href="tenincense.cn">
-            <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202205291139260.jpg">
-          </a>
-        </span>
-        <span>
-          <a href="tenincense.cn">TenIncense</a>
-        </span>
-        <span class="bull">
-        ·</span>
-        2022-7-3<span class="bull">
-        ·</span>
-      <span id="busuanzi_value_page_pv"></span>次阅读</p>
-    </header>
-  </div>
-
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
@@ -397,506 +373,850 @@
         <div class="toc"></div>
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
+          <header class="entry-header">
+            <h1 class="entry-title">网络编程</h1>
+            <p class="entry-census">TenIncense&nbsp;·&nbsp;2022-9-25&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
         <div class="entry-content">
-          <h2 id="一、concat"><a href="#一、concat" class="headerlink" title="一、concat"></a>一、concat</h2><h3 id="1、concat-str1-str2"><a href="#1、concat-str1-str2" class="headerlink" title="1、concat(str1,str2)"></a>1、concat(str1,str2)</h3><blockquote>
-<p><code>concat(str1,str2)</code> 返回为连接参数后产生的字符串，如果参数中有 null，则返回结果为 null</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>参数中没有 null</strong> </p>
-<pre><code class="sql">SELECT concat(&#39;My&#39;,&#39;S&#39;,&#39;QL&#39;);
-&gt; &#39;MySQL&#39;</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031255237.png" style="zoom: 67%;">
-</li>
-<li><p><strong>参数中有 null</strong> </p>
-<pre><code class="sql">SELECT concat(&#39;My&#39;,NULL,&#39;QL&#39;);
-&gt; NULL</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031257376.png" style="zoom:67%;">
-
-</li>
-</ul>
-<h3 id="2、concat-ws-separator-str1-str2-…"><a href="#2、concat-ws-separator-str1-str2-…" class="headerlink" title="2、concat_ws(separator,str1,str2,…)"></a>2、concat_ws(separator,str1,str2,…)</h3><blockquote>
-<p><code>concat_ws(separator,str1,str2,...)</code> 类似于 concat，第一个参数是分隔符，分隔符会放在要连接的两个字符串之间，分隔符可以是字符串也可以是任意参数。如果分隔符为 NULL，则整个结果为 NULL。除了分隔符外的任何参数为 NULL，NULL 值会被忽略；</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>分隔符使用逗号连接</strong></p>
-<pre><code class="sql">SELECT concat_ws(&#39;,&#39;,&#39;First name&#39;,&#39;Second name&#39;,&#39;Last Name&#39;);
-&gt; First name,Second name,Last Name</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031303145.png" style="zoom:50%;">
-</li>
-<li><p><strong>分隔符参数使用 null 连接</strong></p>
-<pre><code class="sql">SELECT concat_ws(null,&#39;First name&#39;,&#39;Second name&#39;,&#39;Last Name&#39;);
-&gt; NULL</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031305433.png" style="zoom:50%;">
-</li>
-<li><p><strong>分隔符参数不为 null，但是其它参数为 null</strong></p>
-<pre><code class="sql">SELECT concat_ws(&#39;,&#39;,&#39;First name&#39;,NULL,&#39;Last Name&#39;);
-&gt; First name,Last name</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031307314.png" style="zoom:50%;">
-
-</li>
-</ul>
+          <h1 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h1><h2 id="1-1、概述"><a href="#1-1、概述" class="headerlink" title="1.1、概述"></a>1.1、概述</h2><p>信件：</p>
+<p><img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220925225502978.png" alt="image-20220925225502978"></p>
+<p>计算机网络：</p>
+<p>计算机网络是指将==地理位置不同==的具有独立功能的==多台计算机及其外部设备，通过通信线路连接起来==，在网络操作系统，网络管理软件及==网络通信协议==的管理和协调下，==实现资源共享==和信息传递的计算机系统。  </p>
+<p>网络编程的目的：</p>
+<p>无线电台。。。传播交流信息，数据交换。通信</p>
+<p>想要达到这个效果需要什么：</p>
+<ol>
+<li>如何准确的定位网络上的一台主机 192.168.3.30:端口 ，定位到这个计算机上的某个资源</li>
+<li>找到了这个主机，如何传输数据呢？</li>
+</ol>
+<p>javaweb：网页编程 B/S架构</p>
+<p>网络编程：TCP/IP C/S架构</p>
 <hr>
-<h2 id="二、space-N"><a href="#二、space-N" class="headerlink" title="二、space(N)"></a>二、space(N)</h2><blockquote>
-<p>返回空格组成的字符串。</p>
-</blockquote>
-<p>例</p>
+<h2 id="1-2、网络通信的要素"><a href="#1-2、网络通信的要素" class="headerlink" title="1.2、网络通信的要素"></a>1.2、网络通信的要素</h2><p>如何实现网络的通信？</p>
+<p>通信双方的地址：</p>
 <ul>
-<li><p><strong>想要 6 个空格位置</strong></p>
-<pre><code class="sql">SELECT SPACE(6);
-&gt; &#39;      &#39;      </code></pre>
-</li>
+<li>ip</li>
+<li>端口号</li>
 </ul>
+<p><strong>规则：网络通信的协议</strong> </p>
+<p>TCP/IP参考模型：</p>
+<p><img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220925231131396.png" alt="image-20220925231131396"></p>
+<p><img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220925231154415.png" alt="image-20220925231154415"></p>
+<p>小结：</p>
+<ol>
+<li>网络编程中有两个主要的问题<ul>
+<li>如何准确的定位到网络上的一台或者多台主机</li>
+<li>找到主机之后如何进行通信</li>
+</ul>
+</li>
+<li>网络编程中的要素<ul>
+<li>IP 和 端口号  要学IP的类</li>
+<li>网络通信协议  要学UDP，TCP的类</li>
+</ul>
+</li>
+<li>万物皆对象</li>
+</ol>
 <hr>
-<h2 id="三、strcmp-expr1-expr2"><a href="#三、strcmp-expr1-expr2" class="headerlink" title="三、strcmp(expr1,expr2)"></a>三、strcmp(expr1,expr2)</h2><blockquote>
-<p>如果 expr1 大于 expr2 返回 1，也就是 true。 如果 expr1 小于 expr2 返回 -1也就是 false。如果 expr1 等于 expr2 返回0；</p>
-</blockquote>
-<p>例</p>
+<h2 id="1-3、IP"><a href="#1-3、IP" class="headerlink" title="1.3、IP"></a>1.3、IP</h2><p>ip地址： InetAddress</p>
 <ul>
-<li><p><strong>expr1 小于 expr2</strong></p>
-<pre><code class="sql">SELECT STRCMP(&#39;text&#39;,&#39;text2&#39;);
-&gt; -1</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031313816.png" style="zoom:50%;">
+<li><p>唯一定位一台网络上计算机</p>
 </li>
-<li><p><strong>expr1 大于 expr2</strong></p>
-<pre><code class="sql">SELECT STRCMP(&#39;text2&#39;,&#39;text&#39;);
-&gt; 1</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031314382.png" style="zoom:50%;">
+<li><p>127.0.0.1：本机 localhost</p>
 </li>
-<li><p>*<em>expr1 等于 expr2 *</em></p>
-<pre><code class="sql">SELECT STRCMP(&#39;text&#39;,&#39;text&#39;);
-&gt; 0</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031316096.png" style="zoom:50%;">
-
+<li><p>ip 地址的分类</p>
+<ul>
+<li><p>IP 地址分类</p>
+<ul>
+<li><p>ipv4 / ipv6</p>
+<ul>
+<li><p>==IPV4== 127.0.0.1   ，4 个字节组成。 0<del>255 ， 42 亿</del>； 30 亿都在北美，亚洲 4 亿。2011 年就用尽；</p>
+</li>
+<li><p>==IPV6== fe80::5850:47ff:fe2e:111a%anpi2  , 128位。 8 个无符号整数！ </p>
+<ul>
+<li><pre><code>2001:0bb2:aaaa:0015:0000:0000:1aaa:1312</code></pre></li>
+</ul>
 </li>
 </ul>
+</li>
+</ul>
+</li>
+<li><p>公网(互联网) - 私网(局域网)</p>
+<ul>
+<li>ABCD 类地址</li>
+<li>192.168.xx.xx , 专门给组织内部使用的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>域名：记忆IP问题！</p>
+<ul>
+<li>IP：<a href="http://www.vip.com" target="_blank" rel="noopener">www.vip.com</a> </li>
+</ul>
+</li>
+</ul>
+<pre><code class="java">package com.tenincense.lesson01;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+/**
+ * @version v1.0
+ * @ClassName: TestInetAddress
+ * @Description: 测试 IP 地址类
+ * @Author: TenIncense
+ * @Date 2022/9/25
+ */
+public class TestInetAddress {
+    public static void main(String[] args) {
+        try {
+            //查询本机地址
+            InetAddress inetAddress1 = InetAddress.getByName(&quot;127.0.0.1&quot;);
+            System.out.println(inetAddress1);
+            InetAddress inetAddress2 = InetAddress.getByName(&quot;localhost&quot;);
+            System.out.println(inetAddress2);
+            InetAddress inetAddress3 = InetAddress.getLocalHost();
+            System.out.println(inetAddress3);
+
+            //查询网站 ip 地址
+            InetAddress inetAddress4 = InetAddress.getByName(&quot;www.baidu.com&quot;);
+            System.out.println(inetAddress4);
+
+            //常用方法
+            //System.out.println(inetAddress4.getAddress());
+            System.out.println(inetAddress4.getCanonicalHostName());  //规范的名字
+            System.out.println(inetAddress4.getHostAddress()); //ip
+            System.out.println(inetAddress4.getHostName()); //域名,或者自己电脑的名字
+
+        } catch (UnknownHostException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+}</code></pre>
 <hr>
-<h2 id="四、length-str"><a href="#四、length-str" class="headerlink" title="四、length(str)"></a>四、length(str)</h2><blockquote>
-<p>length(str) : 返回值为字符串 str 的字节长度</p>
-</blockquote>
-<p>例：</p>
+<h2 id="1-4、端口"><a href="#1-4、端口" class="headerlink" title="1.4、端口"></a>1.4、端口</h2><p>端口表示计算机上的一个程序的进程；</p>
 <ul>
-<li><p><strong>想知道一个字符串的长度是多少</strong></p>
-<pre><code class="sql">SELECT LENGTH(&#39;text&#39;);
-&gt; 4</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031319075.png" style="zoom:50%;">
+<li><p>不同的进程有不同的端口号！用来区分软件！</p>
+</li>
+<li><p>被规定 0~65535</p>
+</li>
+<li><p>TCP,UDP: 65535 * 2  tcp:80  ,udp:80可以吗， 单个协议下，端口号不能冲突</p>
+</li>
+<li><p>端口分类</p>
+<ul>
+<li><p>共有端口 0 ~ 1023</p>
+<ul>
+<li>HTTP : 80</li>
+<li>HTTPS : 443</li>
+<li>FTP : 21</li>
+<li>Telent : 23</li>
+</ul>
+</li>
+<li><p>程序注册端口：1024 ~ 49151， 分配用户或者程序</p>
+<ul>
+<li>Tomcat：8080</li>
+<li>MySQL：3306</li>
+<li>Oracle：1521</li>
+</ul>
+</li>
+<li><p>动态、私有：49152 ~ 65535</p>
+<pre><code class="bash">netstat -ano   #查看所有的端口
+netstat -ano|findstr &quot;端口号&quot;    #查询指定端口   |在 linux 中表示管道，过滤的意思
+tasklist|findstr &quot;端口号&quot;   #查看指定端口的进程</code></pre>
+</li>
+<li><pre><code class="java">package com.tenincense.lesson01;
 
+import java.net.InetSocketAddress;
+
+/**
+ * @version v1.0
+ * @ClassName: TestInetSocketAddress
+ * @Description: 测试套接字  (ip:端口)
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class TestInetSocketAddress {
+    public static void main(String[] args) {
+        InetSocketAddress socketAddress = new InetSocketAddress(&quot;127.0.0.1&quot;, 8080);
+        InetSocketAddress socketAddress2 = new InetSocketAddress(&quot;localhost&quot;, 8080);
+        System.out.println(socketAddress);
+        System.out.println(socketAddress2);
+
+        System.out.println(socketAddress.getAddress());
+        System.out.println(socketAddress.getHostName()); //地址
+        System.out.println(socketAddress.getPort()); //端口
+    }
+}</code></pre>
+</li>
+<li><p><img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220926001036780.png" alt="image-20220926001036780"></p>
 </li>
 </ul>
-<hr>
-<h2 id="五、left-str-len"><a href="#五、left-str-len" class="headerlink" title="五、left(str,len)"></a>五、left(str,len)</h2><blockquote>
-<p>left(str,len) : 从左边开始截取指定长度的字符串</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>想从字符串中的左边截取 5个长度的字符串</strong></p>
-<pre><code class="sql">SELECT LEFT(&#39;foobarbar&#39;,5);
-&gt; fooba</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031321480.png" style="zoom:50%;">
-
-</li>
-</ul>
-<hr>
-<h2 id="六、right-str-len"><a href="#六、right-str-len" class="headerlink" title="六、right(str,len)"></a>六、right(str,len)</h2><blockquote>
-<p>right(str,len) : 从右边开始截取指定长度的字符串</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>想从右边截取4 个长度的字符串</strong></p>
-<pre><code class="sql">SELECT RIGHT(&#39;foobarbar&#39;,4);
-&gt; rbar</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031323076.png" style="zoom:50%;">
-
-</li>
-</ul>
-<hr>
-<h2 id="七、upper-str"><a href="#七、upper-str" class="headerlink" title="七、upper(str)"></a>七、upper(str)</h2><blockquote>
-<p>upper(str) : 返回大写字母</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>给一个字符串升为大写</strong></p>
-<pre><code class="sql">SELECT UPPER(&#39;Hei&#39;);
-&gt; HEI</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031326098.png" style="zoom:50%;">
-
-</li>
-</ul>
-<hr>
-<h2 id="八、lower-str"><a href="#八、lower-str" class="headerlink" title="八、lower(str)"></a>八、lower(str)</h2><blockquote>
-<p>lower(str) : 返回小写字母</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>将一个字符串转为小写</strong> </p>
-<pre><code class="sql">SELECT LOWER(&#39;HELLO&#39;);
-&gt; hello</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031328623.png" style="zoom:50%;">
-
-</li>
-</ul>
-<hr>
-<h2 id="九、replace-str-str1-str2"><a href="#九、replace-str-str1-str2" class="headerlink" title="九、replace(str,str1,str2)"></a>九、replace(str,str1,str2)</h2><blockquote>
-<p>replace(str,str1,str2) : 将字符串str2替换掉 str 中的 str1</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>将每一个 w都替换成 a</strong></p>
-<pre><code class="sql">SELECT REPLACE(&#39;www.mysql.com&#39;,&#39;w&#39;,&#39;a&#39;);
-&gt;  aaa.mysql.com</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031331918.png" style="zoom:50%;">
-
-</li>
-</ul>
-<hr>
-<h2 id="十、reverse-str"><a href="#十、reverse-str" class="headerlink" title="十、reverse(str)"></a>十、reverse(str)</h2><blockquote>
-<p>reverse(str) : 反转字符串，返回str字符串的顺序相反</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>反转一个字符串的顺序</strong></p>
-<pre><code class="sql">SELECT REVERSE(&#39;abc&#39;);
-&gt; cba</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031333288.png" style="zoom:50%;">
-
-</li>
-</ul>
-<hr>
-<h2 id="十一、row-count"><a href="#十一、row-count" class="headerlink" title="十一、row_count()"></a>十一、row_count()</h2><blockquote>
-<p>row_count() : 返回上一句sql增/删/改影响的记录数</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p>先插入三条数据</p>
-<pre><code class="sql">INSERT INTO t_b VALUES(1),(2),(3);
-&gt; row 3(影响行数)</code></pre>
-</li>
-<li><p>获取上一个插入语句影响了几条记录</p>
-<pre><code class="sql">SELECT ROW_COUNT();
-&gt; 3
-</code></pre>
-</li>
-</ul>
-<p><code>注意：如果上一条SQL 是查询语句（SELECT/SHOW 等）则返回-1；</code></p>
-<p><code>如果上一条SQL 是删除表（DROP）则返回 0；</code></p>
-<p><code>如果上一条SQL 是建表语句，且创建的表是空表则返回 0；</code></p>
-<hr>
-<h2 id="十二、found-rows"><a href="#十二、found-rows" class="headerlink" title="十二、found_rows()"></a>十二、found_rows()</h2><blockquote>
-<p>found_rows() : 获取上一句SELECT语句（SHOW语句等）查询结果集的记录数</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p>先查一次表中的记录</p>
-<pre><code class="sql">SELECT * FROM teacher;
-&gt; 显示7行数据</code></pre>
-</li>
-<li><p>想知道上一次的查询记录数是多少</p>
-<pre><code class="sql">SELECT FOUND_ROWS();
-&gt; 7</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031342151.png" style="zoom:50%;">
-
-</li>
-</ul>
-<blockquote>
-<p>注意一下，这个FOUND_ROWS() 一般是搭配 <code>SQL_CALC_FOUND_ROWS</code> 用的</p>
-<p>例：</p>
-<pre><code class="sql"># 如现在表中有3000万条数据
-# 执行SQL_CALC_FOUND_ROWS的函数查询，查出3000 万条数据
-SELECT SQL_CALC_FOUND_ROWS * FROM t_b;
-&gt; 得到3000万条数据显示
-
-# 执行一次FOUND_ROWS()
-SELECT FOUND_ROWS();
-&gt; 30000000 -- (得到总记录数)</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031349414.png" style="zoom:50%;">
-
-<ul>
-<li>SQL_CALC_FOUND_ROWS ： 意思是将 sql所处理的行数记录下来</li>
-<li>FOUND_ROWS()：取到这个记录下来的数</li>
-</ul>
-<p>注意：</p>
-<p>1、这两句 SQL一定要放在一个 session 中，不然结果数据是错误的；</p>
-<p>2、如果你要使用两句SQL 组合就不能用可视化软件 Navicat、SQLyon之类的执行这两句SQL 。</p>
-</blockquote>
-<hr>
-<h2 id="十三、if-expr1-expr2-expr3"><a href="#十三、if-expr1-expr2-expr3" class="headerlink" title="十三、if(expr1,expr2,expr3)"></a>十三、if(expr1,expr2,expr3)</h2><blockquote>
-<p>if(expr1,expr2,expr3) ：如果 expr1 是 true，则返回 expr2；如果 expr1 是 false 则返回 expr3</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>表达式 expr1 为 false 的时候</strong></p>
-<pre><code class="sql">SELECT IF(1&gt;2,2,3);
-&gt; 3</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031355344.png" style="zoom:50%;">
-</li>
-<li><p><strong>表达式 expr1 为 true 的时候</strong></p>
-<pre><code class="sql">SELECT IF(1&lt;2,&#39;yes&#39;,&#39;no&#39;);
-&gt; yes</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031357235.png" style="zoom:50%;">
-
 </li>
 </ul>
 <hr>
-<h2 id="十四、ifnull-expr1-expr2"><a href="#十四、ifnull-expr1-expr2" class="headerlink" title="十四、ifnull(expr1,expr2)"></a>十四、ifnull(expr1,expr2)</h2><blockquote>
-<p>ifnull(expr1,expr2) : 当 expr1 不为 null，则返回 expr1，expr1为 null 则返回 expr2</p>
-</blockquote>
-<p>例：</p>
+<h2 id="1-5、通信协议"><a href="#1-5、通信协议" class="headerlink" title="1.5、通信协议"></a>1.5、通信协议</h2><p>协议：约定，就好比我们现在说的成普通话。</p>
+<p><strong>网络通信协议</strong>：速率，传输码率，代码结构，传输控制…… </p>
+<p><strong>问题</strong>：非常的复杂？ </p>
+<p>大事化小：分层！</p>
+<p><strong>TCP/IP协议簇：实际上是一组协议</strong> </p>
+<p>重要：</p>
 <ul>
-<li><p><strong>expr1 不为 NULL 的情况</strong></p>
-<pre><code class="sql">SELECT IFNULL(1,0);
-&gt; 1</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031359819.png" style="zoom:50%;">
+<li>TCP：用户传输协议</li>
+<li>UDP：用户数据报协议</li>
+</ul>
+<p>出名的协议：</p>
+<ul>
+<li>TCP:</li>
+<li>IP:网络互连协议</li>
+</ul>
+<p><img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220926001442252.png" alt="image-20220926001442252"></p>
+<p><strong>TCP UDP 对比</strong> </p>
+<p>TCP：打电话</p>
+<ul>
+<li><p>连接，稳定</p>
 </li>
-<li><p><strong>expr1 为 NULL 的情况</strong></p>
-<pre><code class="sql">SELECT IFNULL(NULL,10);
-&gt; 10</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031400653.png" style="zoom:50%;">
+<li><p><code>三次握手</code> <code>四次挥手</code> </p>
+<pre><code class="markdown"># （三次握手）最少需要三次，保证稳定连接！
+A:你瞅啥？
+B:瞅你咋地？
+A:干一场！
 
+# （四次挥手）
+A:我要走了
+B:我知道了
+B:我也要走了
+A:好的，我知道你也要走了</code></pre>
 </li>
 </ul>
-<hr>
-<h2 id="十五、to-days-date"><a href="#十五、to-days-date" class="headerlink" title="十五、to_days(date)"></a>十五、to_days(date)</h2><blockquote>
-<p>to_days(date) : 给定一个日期date，返回一个天数（从年份 0 开始的天数）</p>
-</blockquote>
-<p>例：</p>
 <ul>
-<li><p><strong>从 0 开始到 ‘1997-01-02’ 距离是多少天</strong></p>
-<pre><code class="sql">SELECT TO_DAYS(&#39;1997-01-02&#39;);
-&gt; 729391</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031403605.png" style="zoom:50%;">
-
+<li><p>客户端、服务端</p>
+</li>
+<li><p>传输完成，释放连接，效率低</p>
 </li>
 </ul>
-<hr>
-<h2 id="十六、datediff-expr1-expr2"><a href="#十六、datediff-expr1-expr2" class="headerlink" title="十六、datediff(expr1,expr2)"></a>十六、datediff(expr1,expr2)</h2><blockquote>
-<p>datediff(expr1,expr2) : 返回expr1时间和 expr2时间之间的间隔天数。</p>
-<p>注意：注意参数顺序</p>
-</blockquote>
-<p>例：</p>
+<p>UDP：发短信</p>
 <ul>
-<li><p>两个参数中的最大的日期在第一位情况下查看间隔天数</p>
-<pre><code class="sql">SELECT DATEDIFF(&#39;1997-12-31 23:59:59&#39;,&#39;1997-12-31&#39;);
-&gt; 1</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031457089.png" style="zoom:50%;">
-</li>
-<li><p>两个参数中最大的日期在第二位情况下查看间隔天数</p>
-<pre><code class="sql">SELECT DATEDIFF(&#39;1997-11-30 23:59:59&#39;,&#39;1997-12-31&#39;);
-&gt; -31</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031458908.png" style="zoom:50%;">
-
-</li>
+<li>不连接，不稳定</li>
+<li>客户端、服务端：没有明确的界限</li>
+<li>不管有没有准备好，都可以发给你..</li>
+<li>导弹</li>
+<li>DDOS：洪水攻击！（饱和攻击）</li>
 </ul>
 <hr>
-<h2 id="十七、last-day-date"><a href="#十七、last-day-date" class="headerlink" title="十七、last_day(date)"></a>十七、last_day(date)</h2><blockquote>
-<p>last_day(date) : 返回该月最后一天对应的值。若参数 date无效，则返回NULL</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p>获取2004-01-01 01:01:01的最后一天</p>
-<pre><code class="sql">SELECT LAST_DAY(&#39;2004-01-01 01:01:01&#39;);
-&gt; 2004-01-31</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031501294.png" style="zoom:50%;">
-</li>
-<li><p>DATE参数为非法的日期</p>
-<pre><code class="sql">SELECT LAST_DAY(&#39;str&#39;);
-&gt; NULL</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031502961.png" style="zoom:50%;">
+<h2 id="1-6、TCP"><a href="#1-6、TCP" class="headerlink" title="1.6、TCP"></a>1.6、TCP</h2><p><strong>客户端</strong></p>
+<ol>
+<li>连接服务器 Socket</li>
+<li>发送消息</li>
+</ol>
+<pre><code class="java">package com.tenincense.lesson02;
 
-</li>
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * @version v1.0
+ * @ClassName: TcpClientDemo01
+ * @Description: 测试 Tcp 客户端
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class TcpClientDemo01 {
+    public static void main(String[] args) {
+        Socket socket = null;
+        OutputStream os = null;
+        try {
+            //1. 要知道服务器的地址,端口号
+            InetAddress serverIP = InetAddress.getByName(&quot;127.0.0.1&quot;);
+            int port = 9999;
+            //2. 创建一个 socket 连接
+            socket = new Socket(serverIP,port);
+            //3. 发送消息 IO 流
+            os = socket.getOutputStream();
+            os.write(&quot;你好,欢迎学习TCP&quot;.getBytes());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (os != null) {
+                    os.close();
+                }
+
+                if (socket != null){
+                    socket.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}</code></pre>
+<p><strong>服务器</strong></p>
+<ol>
+<li>建立服务的端口 ServerSocket</li>
+<li>等待用户的连接 accept</li>
+<li>接收用户的消息</li>
+</ol>
+<pre><code class="java">package com.tenincense.lesson02;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+/**
+ * @version v1.0
+ * @ClassName: TcpServerDemo01
+ * @Description: 测试 Tcp 服务端
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class TcpServerDemo01 {
+    public static void main(String[] args) {
+        ServerSocket serverSocket = null;
+        Socket socket = null;
+        InputStream is = null;
+        ByteArrayOutputStream baos = null;
+
+        try {
+            //1. 我得有一个地址
+            serverSocket = new ServerSocket(9999);
+            //2. 等待客户端连接过来
+            while (true){
+                socket = serverSocket.accept();
+                //3. 读取客户端的消息
+                is = socket.getInputStream();
+
+            /*byte[] buffer = new byte[1024];
+            int len;
+            while ((len = is.read(buffer)) != -1){
+                String msg = new String(buffer, 0, len);
+                System.out.println(msg);
+            }*/
+
+                //管道流
+                baos = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int len;
+                while ((len = is.read(buffer)) != -1){
+                    baos.write(buffer,0,len);
+                }
+
+                System.out.println(baos.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //关闭资源
+            try {
+                if (baos != null){
+                    baos.close();
+                }
+                if (is != null){
+                    is.close();
+                }
+                if (socket != null){
+                    socket.close();
+                }
+                if (serverSocket != null){
+                    serverSocket.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}</code></pre>
+<h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><p><strong>客户端</strong> </p>
+<pre><code class="java">package com.tenincense.lesson02;
+
+import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
+
+/**
+ * @version v1.0
+ * @ClassName: TcpClientDemo02
+ * @Description: 测试 TCP 文件上传 客户端
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class TcpClientDemo02 {
+    public static void main(String[] args) throws Exception{
+        //1. 创建一个 Socket 连接
+        Socket socket = new Socket(InetAddress.getByName(&quot;127.0.0.1&quot;), 9000);
+        //2. 创建一个输出流
+        OutputStream os = socket.getOutputStream();
+
+        //3. 读取文件流
+        FileInputStream fis = new FileInputStream(new File(&quot;test.jpg&quot;));
+        //4. 写出文件
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = fis.read(buffer)) != -1){
+            os.write(buffer,0,len);
+        }
+
+        //通知服务器,我已经结束了
+        socket.shutdownOutput();// 我已经传输完了
+
+        //确定服务器接收完毕,才能够断开连接
+        InputStream is = socket.getInputStream();
+        //String byte[]
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(); //创建管道流输出
+        byte[] bytes = new byte[1024];
+        int lenth;
+        while ((lenth = is.read(bytes)) != -1){
+            baos.write(bytes,0,lenth);
+        }
+        System.out.println(baos.toString());
+
+
+        //关闭资源
+        baos.close();
+        fis.close();
+        os.close();
+        socket.close();
+    }
+}</code></pre>
+<p><strong>服务器端</strong> </p>
+<pre><code class="java">package com.tenincense.lesson02;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+/**
+ * @version v1.0
+ * @ClassName: TcpServerDemo2
+ * @Description: 测试 TCP 文件上传 客户端
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class TcpServerDemo2 {
+    public static void main(String[] args) throws Exception{
+        //1. 创建服务
+        ServerSocket serverSocket = new ServerSocket(9000);
+        //2. 监听客户端的连接
+        Socket socket = serverSocket.accept();//阻塞式监听,会一直等待客户端连接
+        //3. 获取输入流
+        InputStream is = socket.getInputStream();
+
+        //4. 文件输出
+        FileOutputStream fos = new FileOutputStream(new File(&quot;receive.jpg&quot;));
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = is.read(buffer)) != -1){
+            fos.write(buffer,0,len);
+        }
+
+
+        //通知客户端我接收完毕了
+        OutputStream os = socket.getOutputStream();
+        os.write(&quot;我接收完毕了,你可以断开了&quot;.getBytes());
+
+
+        //5. 关闭资源
+        os.close();
+        fos.close();
+        is.close();
+        socket.close();
+        serverSocket.close();
+
+    }
+}</code></pre>
+<h3 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h3><p>服务端</p>
+<ul>
+<li>自定义 S</li>
+<li>Tomcat服务器 S ： Java 后台开发！</li>
+</ul>
+<p>客户端</p>
+<ul>
+<li>自定义 C</li>
+<li>浏览器 B</li>
 </ul>
 <hr>
-<h2 id="十八、date-sub-date-INTERVAL-expr1-type"><a href="#十八、date-sub-date-INTERVAL-expr1-type" class="headerlink" title="十八、date_sub(date,INTERVAL expr1 type)"></a>十八、date_sub(date,INTERVAL expr1 type)</h2><blockquote>
-<p>date_sub(date,INTERVAL expr1 type) : 从日期里面减去指定的时间间隔。date参数是日期表达式，expr1参数是你希望减去多少天。</p>
-</blockquote>
-<p><strong>Type取值</strong></p>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031505122.png" style="zoom:50%;">
+<h2 id="1-7、UDP"><a href="#1-7、UDP" class="headerlink" title="1.7、UDP"></a>1.7、UDP</h2><p>发短信：不用连接，需要知道对方的地址！</p>
+<h3 id="发送消息"><a href="#发送消息" class="headerlink" title="发送消息"></a>发送消息</h3><pre><code class="java">package com.tenincense.lesson03;
 
-<p>例：</p>
-<ul>
-<li><p>希望2018-12-29 16:25:46.635 减去两天</p>
-<pre><code class="sql">SELECT DATE_SUB(&#39;2018-12-29 16:25:46.635&#39;,INTERVAL 2 DAY);
-&gt; 2018-12-27 16:25:46.635</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031507462.png" style="zoom:50%;">
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
-</li>
-</ul>
-<hr>
-<h2 id="十九、date-add-date-INTERVAL-expr-type"><a href="#十九、date-add-date-INTERVAL-expr-type" class="headerlink" title="十九、date_add(date,INTERVAL expr type)"></a>十九、date_add(date,INTERVAL expr type)</h2><blockquote>
-<p>就是加几天</p>
-</blockquote>
-<hr>
-<h2 id="二十、format-X-D"><a href="#二十、format-X-D" class="headerlink" title="二十、format(X,D)"></a>二十、format(X,D)</h2><blockquote>
-<p>format(X,D) : 对字段的显示进行格式化</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>格式化两位小数点</strong></p>
-<pre><code class="sql">SELECT FORMAT(10000,2);
-&gt; 10,000.00</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031510505.png" style="zoom:50%;">
-</li>
-<li><p>格式两位小数点后会进行四舍五入</p>
-<pre><code class="sql">SELECT FORMAT(42376482.234623,2);
-&gt; 42,376,482.23</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031511231.png" style="zoom:50%;">
+/**
+ * @version v1.0
+ * @ClassName: UDPClientDemo01
+ * @Description: 测试 UDP 发送包
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class UDPClientDemo01 {
+    //不需要连接服务器
+    public static void main(String[] args) throws Exception {
+        //1. 建立一个 Socket
+        DatagramSocket socket = new DatagramSocket();
 
-</li>
-</ul>
-<hr>
-<h2 id="二十一、date-format-date-format"><a href="#二十一、date-format-date-format" class="headerlink" title="二十一、date_format(date,format)"></a>二十一、date_format(date,format)</h2><blockquote>
-<p>date_format(date,format) : 用于以不同的格式显示日期数据。format参数是输出的日期时间格式。date参数是日期类型</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p><strong>查看今天并精确到天</strong></p>
-<pre><code class="sql">SELECT DATE_FORMAT(NOW(),&#39;%m-%d-%Y&#39;);
-&gt; 07-03-2022</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031514943.png" style="zoom:50%;">
-</li>
-<li><p><strong>查看今天，精确到分和时段</strong></p>
-<pre><code class="sql">SELECT DATE_FORMAT(NOW(),&#39;%b %d %Y %h:%i:%p&#39;);
-&gt; Jul 03 2022 03:15:PM</code></pre>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031515697.png" style="zoom:50%;">
+        //2. 建个包
+        String msg = &quot;你好啊,服务器!&quot;;
 
-</li>
-</ul>
-<hr>
-<h2 id="二十二、get-format-DATE-TIME-DATETIME-’EUR’-’USA’-’JIS’-’ISO’-’INTERNAL’"><a href="#二十二、get-format-DATE-TIME-DATETIME-’EUR’-’USA’-’JIS’-’ISO’-’INTERNAL’" class="headerlink" title="二十二、get_format(DATE|TIME|DATETIME,’EUR’|’USA’|’JIS’|’ISO’|’INTERNAL’)"></a>二十二、get_format(DATE|TIME|DATETIME,’EUR’|’USA’|’JIS’|’ISO’|’INTERNAL’)</h2><blockquote>
-<p>get_format(DATE|TIME|DATETIME,’EUR’|’USA’|’JIS’|’ISO’|’INTERNAL’) : 返回一个时间格式字符串。一般都结合date_format()使用</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p>想取精确到天的格式</p>
-<pre><code class="sql">SELECT GET_FORMAT(DATE,&#39;USA&#39;);
-&gt; &#39;%Y-%m-%d&#39;</code></pre>
-<ul>
-<li>这是结合date_format()使用</li>
-</ul>
-<pre><code class="sql">SELECT DATE_FORMAT(NOW(),GET_FORMAT(DATE,&#39;USA&#39;));
-&gt; 2022-07-03</code></pre>
-</li>
-<li><p>想取精确到秒的格式</p>
-<pre><code class="sql">SELECT GET_FORMAT(DATETIME,&#39;USA&#39;);
-&gt; &#39;%Y-%m-%d-%H.%i.%s&#39;</code></pre>
-</li>
-</ul>
-<hr>
-<h2 id="二十三、timestampdiff-interval-datetime-expr1-datetime-expr2"><a href="#二十三、timestampdiff-interval-datetime-expr1-datetime-expr2" class="headerlink" title="二十三、timestampdiff(interval,datetime_expr1,datetime_expr2)"></a>二十三、timestampdiff(interval,datetime_expr1,datetime_expr2)</h2><blockquote>
-<p>timestampdiff(interval,datetime_expr1,datetime_expr2) : 返回表达式datetime_expr1日期时间和datetime_expr2日期时间之间的整数差。</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p>（两个时间之间）差了几个月</p>
-<pre><code class="sql">SELECT TIMESTAMPDIFF(MONTH,&#39;2003-02-01&#39;,&#39;2003-05-01&#39;);
-&gt; 3</code></pre>
-</li>
-<li><p>（两个时间之间）相差几年</p>
-<pre><code class="sql">SELECT TIMESTAMPDIFF(YEAR,&#39;2002-05-01&#39;,&#39;2001-01-01&#39;);
-&gt; -1 (注意参数顺序，值是负数了)</code></pre>
-</li>
-</ul>
-<hr>
-<h2 id="二十四、least-value1-value2-…"><a href="#二十四、least-value1-value2-…" class="headerlink" title="二十四、least(value1,value2,…)"></a>二十四、least(value1,value2,…)</h2><blockquote>
-<p>least(value1,value2,…) ： 返回值为最小值的参数</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p>想在参数中取最小的值</p>
-<pre><code class="sql">SELECT LEAST(2,0);
-&gt; 0</code></pre>
-</li>
-<li><p>想在参数中取最小的字母</p>
-<pre><code class="sql">SELECT LEAST(&#39;B&#39;,&#39;A&#39;,&#39;C&#39;);
-&gt; &#39;A&#39;</code></pre>
-</li>
-</ul>
-<hr>
-<h2 id="二十五、greatest-value1-value2-…"><a href="#二十五、greatest-value1-value2-…" class="headerlink" title="二十五、greatest(value1,value2,…)"></a>二十五、greatest(value1,value2,…)</h2><blockquote>
-<p>greatest(value1,value2,…)返回值为最大值参数</p>
-</blockquote>
-<hr>
-<h2 id="二十六、find-in-set-str-strlist"><a href="#二十六、find-in-set-str-strlist" class="headerlink" title="二十六、find_in_set(str,strlist)"></a>二十六、find_in_set(str,strlist)</h2><blockquote>
-<p>find_in_set(str,strlist) :  查询str 在strlist的位置，strlist要以英文逗号 , 分割</p>
-</blockquote>
-<p>例：</p>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031531640.png" style="zoom:50%;">
+        //发送给谁
+        InetAddress localhost = InetAddress.getByName(&quot;localhost&quot;);
+        int port = 9090;
+        //数据,数据的长度起始,要发送
+        DatagramPacket packet = new DatagramPacket(msg.getBytes(), 0, msg.getBytes().length, localhost, port);
 
-<hr>
-<h2 id="二十七、unix-timestamp-date"><a href="#二十七、unix-timestamp-date" class="headerlink" title="二十七、unix_timestamp([date])"></a>二十七、unix_timestamp([date])</h2><blockquote>
-<p>unix_timestamp([date]) ： 将时间转化为时间戳</p>
-</blockquote>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031533297.png" style="zoom:50%;">
+        //3. 发送包
+        socket.send(packet);
 
-<hr>
-<h2 id="二十八、from-unixtime-unix-timestamp"><a href="#二十八、from-unixtime-unix-timestamp" class="headerlink" title="二十八、from_unixtime(unix_timestamp)"></a>二十八、from_unixtime(unix_timestamp)</h2><blockquote>
-<p>from_unixtime(unix_timestamp) : 格式化时间戳</p>
-</blockquote>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031534602.png" style="zoom:50%;">
+        //4.关闭流
+        socket.close();
+    }
+}</code></pre>
+<h3 id="接收端"><a href="#接收端" class="headerlink" title="接收端"></a>接收端</h3><pre><code class="java">package com.tenincense.lesson03;
 
-<hr>
-<h2 id="二十九、coalesce-value-…"><a href="#二十九、coalesce-value-…" class="headerlink" title="二十九、coalesce(value,…)"></a>二十九、coalesce(value,…)</h2><blockquote>
-<p>coalesce(value,…) : 返回值为列表当中的第一个非NULL 值，如果值全为null则返回 null</p>
-</blockquote>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031535701.png" style="zoom:50%;">
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 
-<hr>
-<h2 id="三十、instr-str-substr"><a href="#三十、instr-str-substr" class="headerlink" title="三十、instr(str,substr)"></a>三十、instr(str,substr)</h2><blockquote>
-<p>instr(str,substr) : 返回substr在字符串str第一个出现位置，如果没有则返回 0 </p>
-</blockquote>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031536443.png" style="zoom:50%;">
+/**
+ * @version v1.0
+ * @ClassName: UDPServer
+ * @Description: 测试 UDP 接收包
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class UDPServerDemo01 {
+    //还是要等待客户端的连接!
+    public static void main(String[] args) throws Exception {
+        //开放端口
+        DatagramSocket socket = new DatagramSocket(9090);
+        //接收数据包
+        byte[] buffer = new byte[1024];
+        DatagramPacket packet = new DatagramPacket(buffer, 0, buffer.length);
 
-<hr>
-<h2 id="三十一、locate-substr-str-pos"><a href="#三十一、locate-substr-str-pos" class="headerlink" title="三十一、locate(substr,str,[pos])"></a>三十一、locate(substr,str,[pos])</h2><blockquote>
-<p>locate(substr,str,[pos])： 返回substr在字符串str第一个出现位置，如果没有则返回0</p>
-</blockquote>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031538245.png" style="zoom:50%;">
+        socket.receive(packet);//阻塞接收
 
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031538809.png" style="zoom:50%;">
+        System.out.println(packet.getAddress().getHostAddress());
+        System.out.println(new String(packet.getData(), 0, packet.getLength()));
 
-<hr>
-<h2 id="三十二、round-X-D"><a href="#三十二、round-X-D" class="headerlink" title="三十二、round(X,[D])"></a>三十二、round(X,[D])</h2><blockquote>
-<p>round(X,[D]) ： 返回参数 X最近的整数。参数 D可选的，表示保留小数点后几位</p>
-</blockquote>
-<img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202207031540525.png" style="zoom:50%;">
+        //关闭连接
+        socket.close();
+    }
+}</code></pre>
+<h3 id="咨询"><a href="#咨询" class="headerlink" title="咨询"></a>咨询</h3><p><strong>循环发送消息</strong> </p>
+<pre><code class="java">package com.tenincense.chat;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+
+/**
+ * @version v1.0
+ * @ClassName: UpdSenderDemo01
+ * @Description: 测试 UDP 循环发送消息
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class UpdSenderDemo01 {
+    public static void main(String[] args) throws Exception {
+        DatagramSocket socket = new DatagramSocket(8888);
+
+        //准备数据: 控制台读取 System.in
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        while (true){
+            String data = reader.readLine();
+            byte[] datas = data.getBytes();
+            DatagramPacket packet = new DatagramPacket(datas,0,datas.length,new InetSocketAddress(&quot;localhost&quot;,6666));
+
+            //断开连接 输入bye
+            socket.send(packet);
+            if (data.equals(&quot;bye&quot;)){
+                break;
+            }
+        }
+
+        socket.close();
+    }
+}</code></pre>
+<p><strong>循环接收消息</strong></p>
+<pre><code class="java">package com.tenincense.chat;
+
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
+/**
+ * @version v1.0
+ * @ClassName: UdpReceiveDemo01
+ * @Description: 测试 Udp 循环接收消息
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class UdpReceiveDemo01 {
+    public static void main(String[] args) throws Exception {
+        DatagramSocket socket = new DatagramSocket(6666);
+
+        while (true){
+
+            //准备接收包裹
+            byte[] container = new byte[1024];
+            DatagramPacket packet = new DatagramPacket(container,0,container.length);
+            socket.receive(packet);//阻塞式接收包裹
+
+            //断开连接 输入bye
+            byte[] data = packet.getData();
+            String receiveData = new String(data, 0, data.length);
+            System.out.println(receiveData);
+            if (receiveData.equals(&quot;bye&quot;)){
+                break;
+            }
+
+        }
+
+        socket.close();
+    }
+}</code></pre>
+<h3 id="在线咨询"><a href="#在线咨询" class="headerlink" title="在线咨询"></a>在线咨询</h3><p><strong>两个人都可以是发送方，也都可以是接收方</strong></p>
+<p>发送线程</p>
+<pre><code class="java">package com.tenincense.chat;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+import java.net.SocketException;
+
+/**
+ * @version v1.0
+ * @ClassName: TalkSend
+ * @Description: 测试 UDP 在线咨询 发送(多线程)
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class TalkSend implements Runnable{
+    DatagramSocket socket = null;
+    BufferedReader reader = null;
+
+    private int fromPort;
+    private String toIP;
+    private int toPort;
+
+    public TalkSend(int fromIP, String toIP, int toPort) {
+        this.fromPort = fromPort;
+        this.toIP = toIP;
+        this.toPort = toPort;
+
+        try {
+            socket = new DatagramSocket(fromPort);
+            reader = new BufferedReader(new InputStreamReader(System.in));
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run() {
+
+        while (true){
+            try {
+                String data = reader.readLine();
+                byte[] datas = data.getBytes();
+                DatagramPacket packet = new DatagramPacket(datas,0,datas.length,new InetSocketAddress(this.toIP,this.toPort));
+
+                //断开连接 输入bye
+                socket.send(packet);
+                if (data.equals(&quot;bye&quot;)){
+                    break;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        socket.close();
+    }
+}</code></pre>
+<p>接收线程</p>
+<pre><code class="java">package com.tenincense.chat;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
+
+/**
+ * @version v1.0
+ * @ClassName: TalkReceive
+ * @Description: 测试 UDP 在线咨询 接收(多线程)
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class TalkReceive implements Runnable {
+
+    DatagramSocket socket = null;
+
+    private int port;
+    private String msgFrom;
+
+    public TalkReceive(int port, String msgFrom) {
+        this.port = port;
+        this.msgFrom = msgFrom;
+        try {
+            socket = new DatagramSocket(port);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run() {
+
+        while (true){
+
+            try {
+                //准备接收包裹
+                byte[] container = new byte[1024];
+                DatagramPacket packet = new DatagramPacket(container,0,container.length);
+                socket.receive(packet);//阻塞式接收包裹
+
+                //断开连接 输入bye
+                byte[] data = packet.getData();
+                String receiveData = new String(data, 0, data.length);
+                System.out.println(msgFrom + &quot;:&quot; + receiveData);
+                if (receiveData.equals(&quot;bye&quot;)){
+                    break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        socket.close();
+    }
+}</code></pre>
+<p>学生端</p>
+<pre><code class="java">package com.tenincense.chat;
+
+/**
+ * @version v1.0
+ * @ClassName: TalkStudent
+ * @Description: 学生端开启两个线程
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class TalkStudent {
+    public static void main(String[] args) {
+        //开启两个线程
+        new Thread(new TalkSend(7777,&quot;localhost&quot;,9999)).start();
+        new Thread(new TalkReceive(8888,&quot;老师&quot;)).start();
+    }
+}</code></pre>
+<p>老师端</p>
+<pre><code class="java">package com.tenincense.chat;
+
+/**
+ * @version v1.0
+ * @ClassName: TalkTeacher
+ * @Description: 老师端开启两个线程
+ * @Author: TenIncense
+ * @Date 2022/9/26
+ */
+public class TalkTeacher {
+    public static void main(String[] args) {
+        new Thread(new TalkSend(5555,&quot;localhost&quot;,8888)).start();
+        new Thread(new TalkReceive(9999,&quot;学生&quot;)).start();
+    }
+}</code></pre>
 <hr>
-<h2 id="三十三、substring-str-pos-len"><a href="#三十三、substring-str-pos-len" class="headerlink" title="三十三、substring(str,pos,[len])"></a>三十三、substring(str,pos,[len])</h2><blockquote>
-<p>substring(str, pos)：从字符串的第 pos 个字符位置开始取，直到结束。</p>
-<p>substring(str,pos,len)： 从字符串的第 pos 个字符位置开始取，取 len 个字符。</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p>从字符串的第 4 个字符位置开始取，直到结束。</p>
-<pre><code class="sql">select substring(&#39;example.com&#39;, 4);
-&gt; mple.com</code></pre>
-</li>
-<li><p>从字符串的第 4 个字符位置开始取，只取 2 个字符。</p>
-<pre><code class="sql">select substring(&#39;example.com&#39;, 4, 2);
-&gt; mp</code></pre>
-</li>
-<li><p>从字符串的第 4 个字符位置（倒数）开始取，直到结束。</p>
-<pre><code class="sql">select substring(&#39;example.com&#39;, -4, 2);
-&gt; .c </code></pre>
-</li>
-</ul>
-<p><strong>注意：在函数 substring(str,pos, len)中， pos 可以是负值，但 len 不能取负值。</strong> </p>
+<h2 id="1-8、URL"><a href="#1-8、URL" class="headerlink" title="1.8、URL"></a>1.8、URL</h2><p><a href="https://www.baidu.com/" target="_blank" rel="noopener">https://www.baidu.com/</a></p>
+<p>统一资源定位符：定位资源的，定位互联网上的某一个资源</p>
+<p>DNS域名解析 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>  -&gt; xxx.x..x..x (192.168.x.x)</p>
+<pre><code class="markdown">协议://ip地址:端口/项目名称/资源</code></pre>
+<h3 id="测试-URL-类"><a href="#测试-URL-类" class="headerlink" title="测试 URL 类"></a>测试 URL 类</h3><pre><code class="java">package com.tenincense.lesson04;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+/**
+ * @version v1.0
+ * @ClassName: URLDemo01
+ * @Description: 测试 URL 类
+ * @Author: TenIncense
+ * @Date 2022/9/27
+ */
+public class URLDemo01 {
+    public static void main(String[] args) throws MalformedURLException {
+        URL url = new URL(&quot;http://localhost:8080/helloworld/index.jsp?username=tenincense&amp;password=123&quot;);
+
+        System.out.println(url.getProtocol()); //协议
+        System.out.println(url.getHost()); //主机ip
+        System.out.println(url.getPort()); //端口
+        System.out.println(url.getFile()); //文件
+        System.out.println(url.getPath()); //全路径
+        System.out.println(url.getQuery()); //参数
+    }
+}</code></pre>
+<h3 id="测试-URL-下载网络资源"><a href="#测试-URL-下载网络资源" class="headerlink" title="测试 URL 下载网络资源"></a>测试 URL 下载网络资源</h3><pre><code class="java">package com.tenincense.lesson04;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+/**
+ * @version v1.0
+ * @ClassName: UrlDown
+ * @Description: 测试 URL 下载文件
+ * @Author: TenIncense
+ * @Date 2022/9/27
+ */
+// http://localhost:8080/tenincense/SecurityFile.txt
+public class UrlDown {
+
+    public static void main(String[] args) throws Exception{
+        //1. 下载地址
+        URL url = new URL(&quot;http://localhost:8080/tenincense/SecurityFile.txt&quot;);
+
+        //2. 连接到这个资源 HTTP
+        //URLConnection urlConnection = url.openConnection();
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+        InputStream inputStream = urlConnection.getInputStream();
+
+
+        /**
+         * 写的Response返回前端字节流或pdf
+         */
+        /*response.setContentType(&quot;application/octet-stream;charset=UTF-8&quot;); //以流返回
+        response.setContentType(&quot;application/pdf;charset=UTF-8&quot;); //以pdf返回
+        OutputStream os = response.getOutputStream();
+        IOUtil.copy(inputStream,os); //拷贝输入流内容到响应流
+        os.close();
+        inputStream.close();*/
+
+        FileOutputStream fos = new FileOutputStream(&quot;SecurityFile.txt&quot;);//输出到到本地
+
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = inputStream.read(buffer)) != -1){
+            fos.write(buffer,0,buffer.length);
+        }
+
+        fos.close();
+        inputStream.close();
+        urlConnection.disconnect();//断开连接
+    }
+}</code></pre>
 <hr>
-<h2 id="三十四、substring-index-str-delim-count"><a href="#三十四、substring-index-str-delim-count" class="headerlink" title="三十四、substring_index(str,delim,count)"></a>三十四、substring_index(str,delim,count)</h2><blockquote>
-<p>substring_index(str,delim,count) : 返回字符串 str 中在第 count 个分隔符 delim 之前的子串</p>
-<p>如果 count 是一个正数，返回从最后的（从左边开始计数）分隔符到左边所 有字符。 如果 count 是负数，返回从最后的（从右边开始计数）分隔符到右边所有字 符。</p>
-</blockquote>
-<p>例：</p>
-<ul>
-<li><p>count 是正数，返回从分隔符“.”到左边的所有字符</p>
-<pre><code class="sql">SELECT SUBSTRING_INDEX(&#39;www.generaldata.com.cn&#39;, &#39;.&#39;, 2) FROM t;
-&gt; www.generaldata</code></pre>
-</li>
-<li><p>count 是负数，返回从分隔符“.”到右边的所有字符</p>
-<pre><code class="sql">SELECT SUBSTRING_INDEX(&#39;www.generaldata.com.cn&#39;, &#39;.&#39;, -3) FROM t;
-&gt; generaldata.com.cn</code></pre>
-</li>
-</ul>
 
         </div>
         <!-- .entry-content -->
@@ -925,36 +1245,19 @@ SELECT FOUND_ROWS();
       <div class="toc" style="background: none;"></div>
       <section class="post-squares nextprev">
         
+        
           
-            <div class="post-nepre half previous">
+            <div class="post-nepre full next">
           
-            <a href="/2022/08/23/C语言/" rel="prev">
+            <a href="/2022/09/24/RocketMQ/" rel="next">
               <div class="background">
                 <img class="lazyload" src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
-              </div>
-              <span class="label">
-              Previous Post</span>
-              <div class="info">
-                <h3>
-                C语言</h3>
-                <hr>
-              </div>
-            </a>
-          </div>
-        
-        
-          
-            <div class="post-nepre half next">
-          
-            <a href="/2022/06/16/汇编语言/" rel="next">
-              <div class="background">
-                <img class="lazyload" src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/12.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E6%96%87%E7%AB%A0%E8%83%8C%E6%99%AF/12.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                汇编语言</h3>
+                RocketMQ</h3>
                 <hr>
               </div>
             </a>

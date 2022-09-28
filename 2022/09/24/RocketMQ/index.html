@@ -366,6 +366,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
 
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E8%83%8C%E6%99%AF%202/09.jpg);" src="https://fastly.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/%E8%83%8C%E6%99%AF%202/09.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      RocketMQ</h1>
+      <p class="entry-census">
+        <span>
+          <a href="tenincense.cn">
+            <img src="https://tenincense-1309094827.cos.ap-guangzhou.myqcloud.com/image/202205291139260.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="tenincense.cn">TenIncense</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2022-9-24<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
@@ -373,50 +397,25 @@
         <div class="toc"></div>
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
-          <header class="entry-header">
-            <h1 class="entry-title">RocketMQ</h1>
-            <p class="entry-census">TenIncense&nbsp;·&nbsp;2022-9-24&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
-
-            <hr>
-          </header>
-        
         <div class="entry-content">
-          <h2 id="1-MQ介绍"><a href="#1-MQ介绍" class="headerlink" title="1.MQ介绍"></a>1.MQ介绍</h2><h3 id="1-1-为什么要用-MQ"><a href="#1-1-为什么要用-MQ" class="headerlink" title="1.1 为什么要用 MQ"></a>1.1 为什么要用 MQ</h3><p>消息队列是一种“先进先出”的数据结构</p>
-<img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220924012242077.png" alt="image-20220924012242077" style="zoom:50%;">
-
-<p>其应用场景主要包含以下 3 个方面</p>
-<ul>
-<li>应用解耦</li>
-</ul>
-<p>系统的耦合性越高，容错率就越低。以电商应用为例，用户创建订单后，如果耦合调用库存系统、物流系统、支付系统，任何一个子系统出了故障或者因为升级等原因暂时不可用，都会造成下单操作异常，影响用户使用体验。</p>
-<img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220924012714633.png" alt="image-20220924012714633" style="zoom:50%;">
-
-<p>使用消息队列解耦合，系统的耦合性就会提高了。比如物流系统发生故障，需要几分钟才能来修复，在这段时间内，物流系统要处理的数据被缓存到消息队列中，用户的下单操作正常完成。当物流系统恢复后，补充处理存在消息队列中的订单消息即可，终端系统感知不到物流系统发生过几分钟故障。</p>
-<img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220924013007547.png" alt="image-20220924013007547" style="zoom:50%;">
-
-<ul>
-<li>流量削峰</li>
-</ul>
-<img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220924013137129.png" alt="image-20220924013137129" style="zoom:50%;">
-
-<p>应用系统如果遇到系统请求流量的瞬间猛增，有可能会将系统压垮。有了消息队列可以将大量请求缓存起来，分散到很长一段时间处理，这样可以大大提高系统的稳定性和用户体验。</p>
-<img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220924013356282.png" alt="image-20220924013356282" style="zoom:50%;">
-
-<p>一般情况，为了保证系统的稳定性，如果系统负载超过阈值，就会阻止用户请求，这会影响用户体验，而如果使用消息队列将请求缓存起来，等待系统处理完毕后通知用户下单完毕，这样总比不能下单体验要好。</p>
-<p><u>处于经济考量目的：</u></p>
-<p>业务系统正常时段的 QPS 如果是 1000，流量最高峰是 10000，为了应对流量高峰配置高性能的服务器显然不划算，这时可以使用消息队列对峰值流量削峰</p>
-<ul>
-<li>数据分发</li>
-</ul>
-<img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220924013807990.png" alt="image-20220924013807990" style="zoom:50%;">
-
-<p>通过消息队列可以让闪烁在多个系统更加直接进行流通。数据的产生方不需要关心谁来使用数据，只需要将数据发送到消息队列，数据使用方直接在消息队列中直接获取数据即可</p>
-<img src="/Users/shixiang/Library/Application%20Support/typora-user-images/image-20220924014120242.png" alt="image-20220924014120242" style="zoom:50%;">
-
-<hr>
-<h2 id="2-RocketMQ快速入门"><a href="#2-RocketMQ快速入门" class="headerlink" title="2.RocketMQ快速入门"></a>2.RocketMQ快速入门</h2><hr>
-<h2 id="3-RockeyMQ集群搭建"><a href="#3-RockeyMQ集群搭建" class="headerlink" title="3.RockeyMQ集群搭建"></a>3.RockeyMQ集群搭建</h2><hr>
-<h2 id="4-消息发送样例"><a href="#4-消息发送样例" class="headerlink" title="4.消息发送样例"></a>4.消息发送样例</h2>
+          <h2 id="分布式消息队列-RocketMQ"><a href="#分布式消息队列-RocketMQ" class="headerlink" title="分布式消息队列 RocketMQ"></a>分布式消息队列 RocketMQ</h2><h3 id="第一章、RocketMQ-概述"><a href="#第一章、RocketMQ-概述" class="headerlink" title="第一章、RocketMQ 概述"></a>第一章、RocketMQ 概述</h3><h4 id="一、MQ概述"><a href="#一、MQ概述" class="headerlink" title="一、MQ概述"></a>一、MQ概述</h4><h4 id="1、MQ简介"><a href="#1、MQ简介" class="headerlink" title="#1、MQ简介"></a>#1、MQ简介</h4><p>MQ，Message Queue，是一种提供消息队列服务的中间件，也称为消息中间件，是一套提供了消息生</p>
+<p>产、存储、消费全过程API的软件系统。消息即数据。一般消息的体量不会很大。</p>
+<h5 id="2、MQ用途"><a href="#2、MQ用途" class="headerlink" title="2、MQ用途"></a>2、MQ用途</h5><p>从网上可以查看到很多的关于MQ用途的叙述，但总结起来其实就以下三点。</p>
+<p><strong>限流削峰</strong> </p>
+<p>MQ可以将系统的超量请求暂存其中，以便系统后期可以慢慢进行处理，从而避免了请求的丢失或系统</p>
+<p>被压垮。</p>
+<p><strong>异步</strong> </p>
+<p><img src="/Users/shixiang/Test/TyporaImage/RocketMQ/image-20220928202720564.png" alt="image-20220928202720564"></p>
+<p><strong>异步解耦</strong></p>
+<p>上游系统对下游系统的调用若为同步调用，则会大大降低系统的吞吐量与并发度，且系统耦合度太高。</p>
+<p>而异步调用则会解决这些问题。所以两层之间若要实现由同步到异步的转化，一般性做法就是，在这两</p>
+<p>层间添加一个MQ层。</p>
+<p><img src="/Users/shixiang/Test/TyporaImage/RocketMQ/image-20220928202754370.png" alt="image-20220928202754370"></p>
+<p><strong>数据收集</strong> </p>
+<p>分布式系统会产生海量级数据流，如：业务日志、监控数据、用户行为等。针对这些数据流进行实时或</p>
+<p>批量采集汇总，然后对这些数据流进行大数据分析，这是当前互联网平台的必备技术。通过MQ完成此</p>
+<p>类数据收集是最好的选择。</p>
+<h3 id="第二章、RocketMQ-的安装与启动"><a href="#第二章、RocketMQ-的安装与启动" class="headerlink" title="第二章、RocketMQ 的安装与启动"></a>第二章、RocketMQ 的安装与启动</h3><h3 id="第三章、RocketMQ-工作原理"><a href="#第三章、RocketMQ-工作原理" class="headerlink" title="第三章、RocketMQ 工作原理"></a>第三章、RocketMQ 工作原理</h3><h3 id="第四章、RocketMQ应用"><a href="#第四章、RocketMQ应用" class="headerlink" title="第四章、RocketMQ应用"></a>第四章、RocketMQ应用</h3>
         </div>
         <!-- .entry-content -->
         <div class="single-reward">

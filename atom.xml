@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2022-09-28T12:38:50.480Z</updated>
+  <updated>2022-10-03T09:34:00.601Z</updated>
   <id>/</id>
   
   <author>
@@ -17,11 +17,59 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>linux配置安装jdk配置环境变量</title>
+    <link href="/2022/10/03/linux%E9%85%8D%E7%BD%AE%E5%AE%89%E8%A3%85jdk%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/"/>
+    <id>/2022/10/03/linux配置安装jdk配置环境变量/</id>
+    <published>2022-10-03T09:22:13.000Z</published>
+    <updated>2022-10-03T09:34:00.601Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;一、登录虚拟机切换到-root-用户&quot;&gt;&lt;a href=&quot;#一、登录虚拟机切换到-root-用户&quot; class=&quot;headerlink&quot; title=&quot;一、登录虚拟机切换到 root 用户&quot;&gt;&lt;/a&gt;一、登录虚拟机切换到 root
+        
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>虚拟机与主机网络配置</title>
+    <link href="/2022/10/03/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8E%E4%B8%BB%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/"/>
+    <id>/2022/10/03/虚拟机与主机网络配置/</id>
+    <published>2022-10-03T08:54:08.000Z</published>
+    <updated>2022-10-03T09:04:59.051Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;一、修改物理主机-IP&quot;&gt;&lt;a href=&quot;#一、修改物理主机-IP&quot; class=&quot;headerlink&quot; title=&quot;一、修改物理主机 IP&quot;&gt;&lt;/a&gt;一、修改物理主机 IP&lt;/h2&gt;&lt;p&gt;首先，我们按win +
+        
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>RocketMQ</title>
     <link href="/2022/09/24/RocketMQ/"/>
     <id>/2022/09/24/RocketMQ/</id>
     <published>2022-09-23T17:19:52.000Z</published>
-    <updated>2022-09-28T12:38:50.480Z</updated>
+    <updated>2022-10-16T11:18:28.441Z</updated>
     
     <summary type="html">
     
